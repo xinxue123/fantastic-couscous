@@ -20,7 +20,7 @@ import sphinx_rtd_theme
 project = 'tiny'
 copyright = '2019, Lihao'
 author = 'Lihao'
-
+master_doc = 'index'
 # The full version, including alpha/beta/rc tags
 release = '0.0.1'
 
