@@ -1,10 +1,10 @@
-Sphinx note
+Sphinx Note
 ===========
 
 通过sphinx创建web note
 
 *install*
-----------
+-------------
 
 前置条件：安装python,建议使用Anaconda安装：
 
@@ -13,7 +13,7 @@ Sphinx note
  pip install sphinx
 
 *create project*
------------------
+--------------------
 
 安装完成后可以使用如下命令创建工程::
 
@@ -86,7 +86,7 @@ Sphinx note
 最后重新make html 后就可以查看到自己的文档
 
 *some operations*
-------------------
+---------------------
 
 添加图片::
 

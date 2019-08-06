@@ -10,7 +10,8 @@ Welcome to tiny's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   sphinx_note 
+   sphinx_note
+   scala 
    support
 
 
