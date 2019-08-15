@@ -96,6 +96,29 @@ breeze计算::
  cal.set(time_piece3(0).toInt,time_piece3(1).toInt-1,time_piece3(2).toInt) 
  val day_of__year = cal.get(Calendar.DAY_OF_YEAR) // 获取一年中的第几天
 
+map转json::
+
+ import org.json4s.DefaultFormats
+ import org.json4s.jackson.Json
+ import scala.collection.immutable.{ListMap, Map}
+
+ var map1 = Map[String,String]()
+ for (i<- -1 to 3){map1 += ((-i).toString -> 0.2.toString)}
+ val m = Json(DefaultFormats).write(map1)
+ println(m)
+
+map排序::
+
+ import scala.collection.immutable.{ListMap, Map}
+
+ var map1 = Map[String,String]()
+ for (i<- -1 to 3){map1 += ((-i).toString -> 0.2.toString)}
+ // 根据key值的数值大小排序
+ println(ListMap(map1.toSeq.toList.sortBy(_._1.toDouble):_*)) 
+
+
+
+
 
 
 

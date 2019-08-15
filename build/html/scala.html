@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Support" href="support.html" />
+    <link rel="next" title="Linux" href="Linux.html" />
     <link rel="prev" title="Sphinx Note" href="sphinx_note.html" /> 
 </head>
 
@@ -89,6 +89,9 @@
 <li class="toctree-l2"><a class="reference internal" href="#id1"><em>scala关于时间的函数</em></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">spark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -249,6 +252,26 @@ cal.set(time_piece3(0).toInt,time_piece3(1).toInt-1,time_piece3(2).toInt)
 val day_of__year = cal.get(Calendar.DAY_OF_YEAR) // 获取一年中的第几天
 </pre></div>
 </div>
+<p>map转json:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">org.json4s.DefaultFormats</span>
+<span class="kn">import</span> <span class="nn">org.json4s.jackson.Json</span>
+<span class="kn">import</span> <span class="nn">scala.collection.immutable.</span><span class="p">{</span><span class="n">ListMap</span><span class="p">,</span> <span class="n">Map</span><span class="p">}</span>
+
+<span class="n">var</span> <span class="n">map1</span> <span class="o">=</span> <span class="n">Map</span><span class="p">[</span><span class="n">String</span><span class="p">,</span><span class="n">String</span><span class="p">]()</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">&lt;-</span> <span class="o">-</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">3</span><span class="p">){</span><span class="n">map1</span> <span class="o">+=</span> <span class="p">((</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span> <span class="o">-&gt;</span> <span class="mf">0.2</span><span class="o">.</span><span class="n">toString</span><span class="p">)}</span>
+<span class="n">val</span> <span class="n">m</span> <span class="o">=</span> <span class="n">Json</span><span class="p">(</span><span class="n">DefaultFormats</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">map1</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>map排序:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scala.collection.immutable.</span><span class="p">{</span><span class="n">ListMap</span><span class="p">,</span> <span class="n">Map</span><span class="p">}</span>
+
+<span class="n">var</span> <span class="n">map1</span> <span class="o">=</span> <span class="n">Map</span><span class="p">[</span><span class="n">String</span><span class="p">,</span><span class="n">String</span><span class="p">]()</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">&lt;-</span> <span class="o">-</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">3</span><span class="p">){</span><span class="n">map1</span> <span class="o">+=</span> <span class="p">((</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span> <span class="o">-&gt;</span> <span class="mf">0.2</span><span class="o">.</span><span class="n">toString</span><span class="p">)}</span>
+<span class="o">//</span> <span class="n">根据key值的数值大小排序</span>
+<span class="n">println</span><span class="p">(</span><span class="n">ListMap</span><span class="p">(</span><span class="n">map1</span><span class="o">.</span><span class="n">toSeq</span><span class="o">.</span><span class="n">toList</span><span class="o">.</span><span class="n">sortBy</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">toDouble</span><span class="p">):</span><span class="n">_</span><span class="o">*</span><span class="p">))</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -260,7 +283,7 @@ val day_of__year = cal.get(Calendar.DAY_OF_YEAR) // 获取一年中的第几天
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="support.html" class="btn btn-neutral float-right" title="Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Linux.html" class="btn btn-neutral float-right" title="Linux" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="sphinx_note.html" class="btn btn-neutral float-left" title="Sphinx Note" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

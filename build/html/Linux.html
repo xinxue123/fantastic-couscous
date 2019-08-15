@@ -1,0 +1,332 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Linux &mdash; tiny 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python" href="python.html" />
+    <link rel="prev" title="Scala Note" href="scala.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> tiny
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linux</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#vim">vim 基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">安装图形界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python">安装python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thrift">安装thrift</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Linux</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Linux.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linux">
+<h1>Linux<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<p>获得root权限:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">su</span> <span class="n">root</span>
+</pre></div>
+</div>
+<p>安装软件时：./ 或 bash</p>
+<div class="section" id="vim">
+<h2>vim 基本操作<a class="headerlink" href="#vim" title="Permalink to this headline">¶</a></h2>
+<p>在文本编辑器内部:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span><span class="n">gg</span> <span class="c1">#跳行到25行</span>
+<span class="n">shift</span><span class="o">+</span><span class="n">g</span> <span class="c1">#跳到文本末尾</span>
+<span class="n">shift</span><span class="o">+</span><span class="n">V</span> <span class="n">可视块</span>
+<span class="n">ctrl</span><span class="o">+</span><span class="n">v</span> <span class="n">垂直模式</span>
+<span class="n">x</span> <span class="ow">or</span> <span class="n">d</span> <span class="n">均是剪切操作</span>
+<span class="n">y</span> <span class="n">复制</span>
+<span class="n">p</span> <span class="n">粘贴</span>
+<span class="n">dd</span> <span class="n">删除命令</span>
+<span class="n">r</span> <span class="n">替换</span>
+<span class="n">R</span> <span class="n">可一直替换</span>
+<span class="o">&gt;</span> <span class="ow">or</span>  <span class="o">&lt;</span>    <span class="n">可视模式下缩进</span>
+<span class="o">&gt;&gt;</span> <span class="ow">or</span> <span class="o">&lt;&lt;</span>   <span class="n">正常模式下缩进</span>
+<span class="o">.</span>          <span class="n">重复以前的操作s</span>
+<span class="o">/</span><span class="nb">str</span>       <span class="n">查找命令</span>
+<span class="n">n</span>          <span class="n">向下查找</span>
+<span class="n">N</span>          <span class="n">向上查找</span>
+
+<span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="n">要替换文本</span><span class="o">/</span><span class="n">替换为</span><span class="o">/</span><span class="n">g</span>   <span class="n">全局查找替换</span>
+<span class="p">:</span><span class="n">s</span><span class="o">/</span><span class="n">要替换文本</span><span class="o">/</span><span class="n">替换为</span><span class="o">/</span><span class="n">g</span>    <span class="n">可视区查找替换</span>
+<span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="n">要替换文本</span><span class="o">/</span><span class="n">替换为</span><span class="o">/</span><span class="n">gc</span>  <span class="n">确认查找替换</span>
+</pre></div>
+</div>
+<p>在文本编辑器外部:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">+</span><span class="mi">114</span> <span class="n">file_name</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>安装图形界面<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>安装步骤:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.  yum groupinstall &quot;GNOME Desktop&quot; &quot;Graphical Administration Tools&quot;
+2.  ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target
+3.  startx
+4.  yum install tigervnc-server -y
+5.  cp /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service
+6.  vim /etc/systemd/system/vncserver@:1.service
+7.  systemctl daemon-reload
+8.  systemctl enable vncserver@:1.service  #开机启动
+    systemctl start vncserver@:1.service   #启动服务
+    systemctl stop vncserver@:1.service   #停止服务
+9. 下载vnc软件并连接：IP:1
+</pre></div>
+</div>
+</div>
+<div class="section" id="python">
+<h2>安装python<a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<p>安装步骤:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.  wget &quot;https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz&quot;
+2.  tar -zxvf Python-3.7.1.tgz
+3.  yum install libffi-devel zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make -y
+4.  ./configure --prefix=/usr/local/python3
+5.  make &amp;&amp; make install
+6.  ln -s /usr/local/python3/bin/python3 /usr/bin/python3
+7.  ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
+8.  pip3 install --upgrade pip
+9.  pip3 install ipython
+
+卸载：
+10. sudo apt-get purge --auto-remove python3.4
+
+
+修复误删除python
+ctrl+alt+F1进入console
+sudo apt-get install ubuntu-minimal ubuntu-standard ubuntu-desktop
+sudo reboot
+
+修改pip源
+~/.pip/pip.conf
+%HOMEPATH%\pip\pip.ini
+
+[global]
+index-url = http://pypi.douban.com/simple
+[install]
+trusted-host=pypi.douban.com  # 如果不添加这两行，将会出现错误提示
+
+
+阿里云 http://mirrors.aliyun.com/pypi/simple/
+中国科技大学 https://pypi.mirrors.ustc.edu.cn/simple/
+豆瓣(douban) http://pypi.douban.com/simple/
+清华大学 https://pypi.tuna.tsinghua.edu.cn/simple/
+中国科学技术大学 http://pypi.mirrors.ustc.edu.cn/simple/
+</pre></div>
+</div>
+</div>
+<div class="section" id="thrift">
+<h2>安装thrift<a class="headerlink" href="#thrift" title="Permalink to this headline">¶</a></h2>
+<p>安装步骤:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1&gt;安装依赖
+yum -y install automake libtool flex bison pkgconfig gcc-c++ boost-devel libevent-devel zlib-devel python-devel ruby-devel openssl-devel
+2&gt;安装thrift
+wget &quot;http://mirror.bit.edu.cn/apache/thrift/0.10.0/thrift-0.10.0.tar.gz&quot;
+3&gt;验证是否可行
+thrift -version
+4&gt;启动hbase的thrift服务
+hbase-daemon.sh start thrift
+
+wget http://iweb.dl.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.tar.gz
+./bootstrap.sh --prefix=/usr
+./b2 install
+
+在 make 这一步会发生一个错误 g++: error: /usr/lib64/libboost_unit_test_framework.a: No such file or directory,
+
+错误原因是：./configure 的时候是默认编译32位的，不会在 /usr/lib64/ 下产生文件
+修改方法：先查找文件 find / -name libboost_unit_test_framework.a,
+比如在 /usr/local/lib/libboost_unit_test_framework.a，
+就可以做如下操作，sudo ln -s /usr/local/lib/libboost_unit_test_framework.a /usr/lib64/libboost_unit_test_framework.a,
+然后重新执行 make
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.html" class="btn btn-neutral float-right" title="Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="scala.html" class="btn btn-neutral float-left" title="Scala Note" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Lihao
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
