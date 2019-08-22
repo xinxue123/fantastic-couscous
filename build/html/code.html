@@ -88,11 +88,11 @@
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">加密&amp;解密</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#des-3des-aes">对称加密:使用同一秘钥加解密,秘钥只有通信双方有(DES,3DES,AES)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">哈希函数:</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">非对称加密:使用不同秘钥对数据进行加解密</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">对称加密</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">哈希函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">非对称加密</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hmac">消息认证码(Hmac)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">数字签名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">数字签名</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
@@ -163,8 +163,9 @@
             
   <div class="section" id="id1">
 <h1>加密&amp;解密<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="des-3des-aes">
-<h2>对称加密:使用同一秘钥加解密,秘钥只有通信双方有(DES,3DES,AES)<a class="headerlink" href="#des-3des-aes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2>对称加密<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>使用同一秘钥加解密,秘钥只有通信双方有(DES,3DES,AES)</p>
 <ul class="simple">
 <li><p>按位异或:相同为0,不同为1</p></li>
 <li><p>ECB 电子密码本模式:对字节分组不够时,需要对明文进行填充,容易被破解</p></li>
@@ -188,8 +189,8 @@
 <li><p>秘钥长度:16字节(go语言中存在的),24,32</p></li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>哈希函数:<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>哈希函数<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div><ul class="simple">
 <li><p>md5/md4 散列值：16字节</p></li>
@@ -201,8 +202,9 @@
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id3">
-<h2>非对称加密:使用不同秘钥对数据进行加解密<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>非对称加密<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>使用不同秘钥对数据进行加解密</p>
 <div class="line-block">
 <div class="line">公钥:可以分发给任何人</div>
 <div class="line">私钥:只有自己拥有,数据对谁重要私钥就在谁手里</div>
@@ -223,8 +225,8 @@
 <li><p>不能防止否认</p></li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>数字签名<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>数字签名<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>解决了消息认证码的弊端,但是无法判断公钥的归属</p>
 <ol class="arabic simple">
 <li><p>签名</p></li>
@@ -245,31 +247,19 @@
 <li><p>数字签名用公钥解密</p></li>
 <li><p>对原始数据进行哈希运算得到散列值,进行比较</p></li>
 </ul>
+</div></blockquote>
 <p>签名的方式:RSA,椭圆曲线签名</p>
-<ul>
-<li><ol class="arabic simple">
+<blockquote>
+<div><ul class="simple">
 <li><p>生成密钥对</p></li>
-</ol>
-</li>
-<li><ol class="arabic simple" start="2">
 <li><p>分发公钥</p></li>
-</ol>
-</li>
-<li><ol class="arabic simple" start="3">
-<li><p>签名的人</p></li>
-</ol>
-<ul class="simple">
-<li><p>读私钥</p></li>
-<li><p>pem解码</p></li>
-<li><p>x509解码 -&gt; 私钥结构体</p></li>
-<li><p>对原始数据进行哈希</p></li>
-<li><p>私钥加密哈希散列值</p></li>
-</ul>
-</li>
-<li><ol class="arabic simple" start="4">
+<li><p>签名的人
+- 读私钥
+- pem解码
+- x509解码 -&gt; 私钥结构体
+- 对原始数据进行哈希
+- 私钥加密哈希散列值</p></li>
 <li><p>验证签名</p></li>
-</ol>
-</li>
 </ul>
 </div></blockquote>
 </div>

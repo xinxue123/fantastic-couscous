@@ -24,6 +24,9 @@ install
  // 编译完成后生成hello.exe，直接运行即可
  // 你可以go install 安装,go clean -i清除
 
+操作
+-------------------
+
 格式输入输出::
  
  %d int
@@ -34,7 +37,7 @@ install
  %x 十六进制显示
  %T 打印对应变量的类型
  
-fmt.Printf("%T",a) // 打印变量类型
+ fmt.Printf("%T",a) // 打印变量类型
 
  a := 10 // :=推断为int
  fmt.printf("%2d",a)
@@ -70,8 +73,10 @@ go的随机数生成::
 逻辑与(&&)高于逻辑或(||)
 
 
+管道
+----------------------
 
-chinnel::
+channel::
 
  定义chinnel
  channel := make(chan string) // string 为类型chinnel传输类型
@@ -85,6 +90,9 @@ chinnel::
  // 单向写channel var sendch chan <- int make(chan <- int)
  // 单向读channel var sendch <- chan int make(<-chan int)
 
+
+函数定义
+---------------------
 
 函数的定义及参数传递::
 

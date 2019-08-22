@@ -90,6 +90,9 @@
 <li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">golang(够浪)</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#install">install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">管道</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">函数定义</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
@@ -181,6 +184,9 @@ go build hello.go
 // 你可以go install 安装,go clean -i清除
 </pre></div>
 </div>
+</div>
+<div class="section" id="id1">
+<h2>操作<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>格式输入输出:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">d</span> <span class="nb">int</span>
 <span class="o">%</span><span class="n">f</span> <span class="nb">float</span>
@@ -189,19 +195,21 @@ go build hello.go
 <span class="o">%</span><span class="n">s</span> <span class="n">string</span>
 <span class="o">%</span><span class="n">x</span> <span class="n">十六进制显示</span>
 <span class="o">%</span><span class="n">T</span> <span class="n">打印对应变量的类型</span>
+
+<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s2">&quot;%T&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span> <span class="n">打印变量类型</span>
+
+<span class="n">a</span> <span class="p">:</span><span class="o">=</span> <span class="mi">10</span> <span class="o">//</span> <span class="p">:</span><span class="o">=</span><span class="n">推断为int</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%2d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span><span class="p">:</span><span class="o">=</span> <span class="mf">10.1</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span><span class="n">保留三位有效数字</span>
+
+<span class="n">var</span> <span class="n">a</span> <span class="nb">int</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>fmt.Printf(“%T”,a) // 打印变量类型</p>
-<blockquote>
-<div><p>a := 10 // :=推断为int
-fmt.printf(“%2d”,a)</p>
-<p>a:= 10.1
-fmt.printf(“%.3f”,a) //保留三位有效数字</p>
-<p>var a int
-fmt.Scan(&amp;a)
-// fmt.Scanf(“%d”,&amp;a)
-fmt.println(a)</p>
-</div></blockquote>
 <p>go的随机数生成:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rand</span><span class="o">.</span><span class="n">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">//</span> <span class="n">生成小于100的整型数据</span>
 </pre></div>
@@ -223,7 +231,10 @@ fmt.println(a)</p>
 </pre></div>
 </div>
 <p>逻辑与(&amp;&amp;)高于逻辑或(||)</p>
-<p>chinnel:</p>
+</div>
+<div class="section" id="id2">
+<h2>管道<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>channel:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">定义chinnel</span>
 <span class="n">channel</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">(</span><span class="n">chan</span> <span class="n">string</span><span class="p">)</span> <span class="o">//</span> <span class="n">string</span> <span class="n">为类型chinnel传输类型</span>
 <span class="n">go</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span><span class="n">channel</span> <span class="o">&lt;-</span> <span class="s2">&quot;hello&quot;</span><span class="p">}()</span>
@@ -237,6 +248,9 @@ fmt.println(a)</p>
 <span class="o">//</span> <span class="n">单向读channel</span> <span class="n">var</span> <span class="n">sendch</span> <span class="o">&lt;-</span> <span class="n">chan</span> <span class="nb">int</span> <span class="n">make</span><span class="p">(</span><span class="o">&lt;-</span><span class="n">chan</span> <span class="nb">int</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="id3">
+<h2>函数定义<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>函数的定义及参数传递:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="n">test1</span><span class="p">(</span><span class="n">a</span> <span class="o">...</span><span class="n">int</span><span class="p">)</span>  <span class="p">{</span>
        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
