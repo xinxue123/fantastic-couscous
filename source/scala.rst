@@ -26,9 +26,13 @@ breeze的创建函数::
  import breeze.linalg._
  val s1 = DenseVector.tabulate(20){i=>i*2} 
  val s2 = DenseMatrix.tabulate(2,3){(i,j)=> i+j}
- //创建随机数(0,1)
+ // 创建随机数(0,1)
  val s3 = DenseVector.rand(20)
  val s3 = DenseMatrix.rand(20)
+ // 创建0,1向量
+ val s4 = DenseVector.zeros[Double](4)
+ val s5 = DenseVector.ones[Int](5)
+
  
 breeze切片::
 
@@ -38,6 +42,11 @@ breeze切片::
  println(s2(2,3)) // 
  println(s2(::,3)) // 所有行的第四列数据
  println(s2(-1,::)) //最后一行的所有列数据
+ // example
+ val rand_seq = IndexedSeq(1,3,5)
+ val target = breeze.linalg.DenseVector.zeros[Double](10) // 构造一个double型的向量
+ val values = breeze.linalg.DenseVector(3.0,2.4,2.5)
+ target(rand_seq) := value
 
 breeze计算::
 

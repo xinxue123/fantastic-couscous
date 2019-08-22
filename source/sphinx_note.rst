@@ -97,6 +97,14 @@ Sphinx Note
     :alt: alternate text
     :align: center
 
+上传到github::
+ 
+ git add . // 添加所有
+ git commit -m "sphinx start" // 上传到本地
+ // git remote add origin https:......(your repository)
+ git push origin master
+
+
 
 
 

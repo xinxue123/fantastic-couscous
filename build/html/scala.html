@@ -91,7 +91,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
-<li class="toctree-l1"><a class="reference internal" href="spark.html">spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -181,9 +183,12 @@ val bytes = org.apache.commons.codec.binary.Base64.encodeBase64(data)
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">breeze.linalg._</span>
 <span class="n">val</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="mi">20</span><span class="p">){</span><span class="n">i</span><span class="o">=&gt;</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">}</span>
 <span class="n">val</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">DenseMatrix</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">){(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=&gt;</span> <span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">}</span>
-<span class="o">//</span><span class="n">创建随机数</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">创建随机数</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">val</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">DenseMatrix</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">创建0</span><span class="p">,</span><span class="mi">1</span><span class="n">向量</span>
+<span class="n">val</span> <span class="n">s4</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="p">[</span><span class="n">Double</span><span class="p">](</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">s5</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">ones</span><span class="p">[</span><span class="n">Int</span><span class="p">](</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>breeze切片:</p>
@@ -193,6 +198,11 @@ val bytes = org.apache.commons.codec.binary.Base64.encodeBase64(data)
 <span class="n">println</span><span class="p">(</span><span class="n">s2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="o">//</span>
 <span class="n">println</span><span class="p">(</span><span class="n">s2</span><span class="p">(::,</span><span class="mi">3</span><span class="p">))</span> <span class="o">//</span> <span class="n">所有行的第四列数据</span>
 <span class="n">println</span><span class="p">(</span><span class="n">s2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,::))</span> <span class="o">//</span><span class="n">最后一行的所有列数据</span>
+<span class="o">//</span> <span class="n">example</span>
+<span class="n">val</span> <span class="n">rand_seq</span> <span class="o">=</span> <span class="n">IndexedSeq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">target</span> <span class="o">=</span> <span class="n">breeze</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="p">[</span><span class="n">Double</span><span class="p">](</span><span class="mi">10</span><span class="p">)</span> <span class="o">//</span> <span class="n">构造一个double型的向量</span>
+<span class="n">val</span> <span class="n">values</span> <span class="o">=</span> <span class="n">breeze</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">DenseVector</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">2.4</span><span class="p">,</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="n">target</span><span class="p">(</span><span class="n">rand_seq</span><span class="p">)</span> <span class="p">:</span><span class="o">=</span> <span class="n">value</span>
 </pre></div>
 </div>
 <p>breeze计算:</p>

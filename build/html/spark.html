@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Support" href="support.html" />
+    <link rel="next" title="加密&amp;解密" href="code.html" />
     <link rel="prev" title="Python" href="python.html" /> 
 </head>
 
@@ -91,8 +91,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#id2">spark 相关端口及配置：</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">spark 执行流程：</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">spark 优化：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windowsideamysql">windows下运行idea连接MySQL</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -161,7 +164,7 @@
   <div class="section" id="spark">
 <h1>Spark<a class="headerlink" href="#spark" title="Permalink to this headline">¶</a></h1>
 <p>创建sparkcontext:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">SparkConf</span><span class="p">()</span><span class="o">.</span><span class="n">setMaster</span><span class="p">(</span><span class="s2">&quot;local[2]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s2">&quot;dataframe&quot;</span><span class="p">)</span>  <span class="o">//</span> <span class="n">创建配置</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">conf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">SparkConf</span><span class="p">()</span><span class="o">.</span><span class="n">setMaster</span><span class="p">(</span><span class="s2">&quot;local[2]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s2">&quot;dataframe&quot;</span><span class="p">)</span>  <span class="o">//</span> <span class="n">创建配置</span>
 <span class="n">val</span> <span class="n">sc</span> <span class="o">=</span> <span class="n">new</span> <span class="n">spark</span><span class="o">.</span><span class="n">SparkContext</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>  <span class="o">//</span>
 <span class="n">SparkSession</span><span class="o">.</span><span class="n">Builder</span><span class="p">()</span><span class="o">.</span><span class="n">master</span><span class="p">(</span><span class="s2">&quot;local[2]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
 </pre></div>
@@ -243,6 +246,26 @@ conf.registerKryoClasses(classof[])
 </pre></div>
 </div>
 </div>
+<div class="section" id="windowsideamysql">
+<h2>windows下运行idea连接MySQL<a class="headerlink" href="#windowsideamysql" title="Permalink to this headline">¶</a></h2>
+<dl class="simple">
+<dt>::</dt><dd><p>Exception in thread “main” java.sql.SQLException: No suitable driver
+需要下载mysql-connector-java,只要在meven repository 搜索然后添加到sbt中
+例: libraryDependencies += “mysql” % “mysql-connector-java” % “8.0.17”
+val prop = new java.util.Properties()
+prop.put(“user”,”root”)
+prop.put(“password”,”123456”)
+prop.put(“driver”,”com.mysql.cj.jdbc.Driver”)
+val table = “userinfo”
+val url = “<a class="reference external" href="jdbc:mysql://192.168.0.132/db">jdbc:mysql://192.168.0.132/db</a>”
+val sparksession = SparkSession.builder().master(“local[*]”).appName(“interpolation”).getOrCreate()
+val df = sparksession.read.jdbc(url,table,prop) // 读取整个表
+df.createOrReplaceTempView(“t”) // 将表注册为临时表以便使用sql语句
+val s = sparksession.sql(“select id from t”) // 使用sql语句
+s.show() // 将表展示出来</p>
+</dd>
+</dl>
+</div>
 </div>
 
 
@@ -253,7 +276,7 @@ conf.registerKryoClasses(classof[])
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="support.html" class="btn btn-neutral float-right" title="Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="code.html" class="btn btn-neutral float-right" title="加密&amp;解密" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="python.html" class="btn btn-neutral float-left" title="Python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

@@ -2,7 +2,7 @@ Spark
 =================
 创建sparkcontext::
 
- spark.SparkConf().setMaster("local[2]").setAppName("dataframe")  // 创建配置
+ val conf = spark.SparkConf().setMaster("local[2]").setAppName("dataframe")  // 创建配置
  val sc = new spark.SparkContext(conf)  // 
  SparkSession.Builder().master("local[2]").appName("data").getOrCreate()
 
@@ -90,3 +90,20 @@ Kryo 类库进行序列化::
  conf.set("spark.serializer","org.apache.spark.serializer.KryoSerializer")
  conf.registerKryoClasses(classof[])
 
+windows下运行idea连接MySQL
+-----------------------------------
+::
+ Exception in thread "main" java.sql.SQLException: No suitable driver
+ 需要下载mysql-connector-java,只要在meven repository 搜索然后添加到sbt中
+ 例: libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.17"
+ val prop = new java.util.Properties()
+ prop.put("user","root")
+ prop.put("password","123456")
+ prop.put("driver","com.mysql.cj.jdbc.Driver")
+ val table = "userinfo"
+ val url = "jdbc:mysql://192.168.0.132/db"
+ val sparksession = SparkSession.builder().master("local[*]").appName("interpolation").getOrCreate()
+ val df = sparksession.read.jdbc(url,table,prop) // 读取整个表
+ df.createOrReplaceTempView("t") // 将表注册为临时表以便使用sql语句
+ val s = sparksession.sql("select id from t") // 使用sql语句
+ s.show() // 将表展示出来

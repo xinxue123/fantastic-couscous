@@ -15,6 +15,8 @@ Welcome to tiny's documentation!
    Linux
    python
    spark
+   code
+   go
    support
    
 

