@@ -195,6 +195,7 @@ go build hello.go
 <span class="o">%</span><span class="n">s</span> <span class="n">string</span>
 <span class="o">%</span><span class="n">x</span> <span class="n">十六进制显示</span>
 <span class="o">%</span><span class="n">T</span> <span class="n">打印对应变量的类型</span>
+<span class="o">%</span><span class="n">p</span> <span class="n">打印地址</span>
 
 <span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s2">&quot;%T&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span> <span class="n">打印变量类型</span>
 
@@ -231,12 +232,163 @@ go build hello.go
 </pre></div>
 </div>
 <p>逻辑与(&amp;&amp;)高于逻辑或(||)</p>
+<p>定义结构体:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">Student</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="nb">id</span> <span class="nb">int</span> <span class="o">//</span> <span class="n">字段名</span> <span class="n">类型</span>
+       <span class="n">name</span> <span class="n">string</span>
+       <span class="n">age</span> <span class="nb">int</span>
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">结构体赋值</span>
+       <span class="n">s</span><span class="p">:</span><span class="o">=</span><span class="n">Student</span><span class="p">{</span><span class="nb">id</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+               <span class="n">name</span><span class="p">:</span><span class="s2">&quot;ff&quot;</span><span class="p">,</span>
+               <span class="n">age</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="o">//</span> <span class="n">结构体作为map的value</span>
+<span class="n">m</span><span class="p">:</span><span class="o">=</span><span class="n">make</span><span class="p">(</span><span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span><span class="n">Student</span><span class="p">)</span>
+<span class="n">m</span><span class="p">[</span><span class="mi">103</span><span class="p">]</span><span class="o">=</span><span class="n">Student</span><span class="p">{</span><span class="nb">id</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;S&quot;</span><span class="p">}</span>
+
+<span class="o">//</span> <span class="n">遍历map</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="nb">range</span> <span class="n">m</span><span class="p">{</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">结构体切片作为map的值</span>
+<span class="n">m</span><span class="p">:</span><span class="o">=</span><span class="n">make</span><span class="p">(</span><span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">][]</span><span class="n">Student</span><span class="p">)</span>  <span class="o">//</span> <span class="n">结构体传参</span><span class="p">,</span><span class="n">值传递</span>
+
+<span class="o">//</span> <span class="n">创建指针</span>
+<span class="n">var</span> <span class="n">p</span> <span class="o">*</span><span class="nb">int</span> <span class="o">//</span> <span class="nb">int</span> <span class="n">型指针空指针nil</span>
+<span class="n">p</span><span class="p">:</span><span class="o">=</span><span class="n">new</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="mi">3</span> <span class="o">//</span> <span class="n">为指针赋值</span>
+
+<span class="o">//</span> <span class="n">数组指针</span>
+<span class="n">a</span><span class="p">:</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="nb">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s2">&quot;%T</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">var</span> <span class="n">p</span> <span class="o">*</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="nb">int</span> <span class="o">//</span>
+<span class="n">p</span><span class="o">=&amp;</span><span class="n">a</span>
+<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>定义结构体:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">person</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="n">name</span> <span class="n">string</span>
+       <span class="n">age</span> <span class="nb">int</span>
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">继承自person</span>
+<span class="nb">type</span> <span class="n">Student1</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="n">person</span>
+       <span class="nb">id</span> <span class="nb">int</span>
+       <span class="n">score</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">方法接收者</span><span class="p">)</span><span class="n">方法名</span><span class="p">(</span><span class="n">参数列表</span><span class="p">)</span><span class="n">返回值类型</span>
+<span class="o">//</span> <span class="n">操作两个对象并返回值</span>
+<span class="n">func</span> <span class="p">(</span><span class="n">a</span> <span class="n">Student1</span><span class="p">)</span><span class="n">add</span><span class="p">(</span><span class="n">b</span> <span class="n">Student1</span><span class="p">)</span>  <span class="nb">int</span><span class="p">{</span>
+       <span class="n">t</span><span class="p">:</span><span class="o">=</span><span class="n">a</span><span class="o">.</span><span class="n">age</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">age</span>
+       <span class="k">return</span> <span class="n">t</span>
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">打印学生信息的方法</span>
+<span class="n">func</span> <span class="p">(</span><span class="n">a</span> <span class="n">Student1</span><span class="p">)</span><span class="n">printInfo</span><span class="p">()</span>  <span class="p">{</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">接口定义</span>
+<span class="nb">type</span> <span class="n">接口名</span> <span class="n">interface</span><span class="p">{</span><span class="n">方法列表</span><span class="p">}</span>
+<span class="o">//</span> <span class="n">方法名</span><span class="p">(</span><span class="n">参数列表</span><span class="p">)(</span><span class="n">返回值列表</span><span class="p">)</span>
+<span class="nb">type</span> <span class="n">Hum</span> <span class="n">interface</span> <span class="p">{</span>
+       <span class="n">sayHello</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">接口继承</span>
+<span class="nb">type</span> <span class="n">Hum1</span> <span class="n">interface</span> <span class="p">{</span>
+       <span class="n">Hum</span>
+       <span class="n">Sing</span><span class="p">(</span><span class="n">song</span> <span class="n">string</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">面向对象实例</span>
+<span class="n">package</span> <span class="n">main</span>
+
+<span class="kn">import</span> <span class="s2">&quot;fmt&quot;</span>
+
+<span class="nb">type</span> <span class="n">AddOperation</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="n">num1</span> <span class="nb">int</span>
+       <span class="n">num2</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span><span class="n">AddOperation</span><span class="p">)</span><span class="n">opera</span><span class="p">()</span>  <span class="nb">int</span><span class="p">{</span>
+       <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">num1</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="n">num2</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">SubOperation</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="n">num1</span> <span class="nb">int</span>
+       <span class="n">num2</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">SubOperation</span><span class="p">)</span><span class="n">opera</span><span class="p">()</span>  <span class="nb">int</span><span class="p">{</span>
+       <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">num1</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">num2</span>
+<span class="p">}</span>
+<span class="nb">type</span> <span class="n">Calculate</span> <span class="n">interface</span> <span class="p">{</span>
+       <span class="n">opera</span><span class="p">()</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">Factory</span> <span class="n">struct</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">f</span> <span class="o">*</span><span class="n">Factory</span><span class="p">)</span><span class="n">reckon</span><span class="p">(</span><span class="n">num1</span> <span class="nb">int</span><span class="p">,</span><span class="n">num2</span> <span class="nb">int</span><span class="p">,</span><span class="n">op</span> <span class="n">string</span><span class="p">)</span>  <span class="p">(</span><span class="n">value</span> <span class="nb">int</span><span class="p">){</span>
+       <span class="n">var</span> <span class="n">interFace</span> <span class="n">Calculate</span>
+       <span class="n">switch</span> <span class="n">op</span> <span class="p">{</span>
+       <span class="n">case</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+               <span class="n">a</span><span class="p">:</span><span class="o">=</span><span class="n">AddOperation</span><span class="p">{</span><span class="n">num1</span><span class="p">,</span><span class="n">num2</span><span class="p">}</span>
+               <span class="n">interFace</span><span class="o">=&amp;</span><span class="n">a</span>
+       <span class="n">case</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+               <span class="n">a</span><span class="p">:</span><span class="o">=</span><span class="n">SubOperation</span><span class="p">{</span><span class="n">num1</span><span class="p">,</span><span class="n">num2</span><span class="p">}</span>
+               <span class="n">interFace</span><span class="o">=&amp;</span><span class="n">a</span>
+       <span class="p">}</span>
+       <span class="o">//</span><span class="n">value</span> <span class="o">=</span> <span class="n">interFace</span><span class="o">.</span><span class="n">opera</span><span class="p">()</span>
+       <span class="n">value</span> <span class="o">=</span> <span class="n">Fs</span><span class="p">(</span><span class="n">interFace</span><span class="p">)</span> <span class="o">//</span> <span class="n">多态实现</span>
+       <span class="k">return</span>
+
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">多态</span>
+<span class="n">func</span> <span class="n">Fs</span><span class="p">(</span><span class="n">o</span> <span class="n">Calculate</span><span class="p">)</span>  <span class="nb">int</span><span class="p">{</span>
+       <span class="k">return</span> <span class="n">o</span><span class="o">.</span><span class="n">opera</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+       <span class="n">var</span> <span class="n">s</span> <span class="n">Factory</span>
+       <span class="n">d</span><span class="p">:</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">reckon</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">&quot;rsult is &quot;</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+<span class="p">}</span>
+
+
+<span class="o">//</span> <span class="n">类型断言</span>
+       <span class="n">arr</span><span class="p">:</span><span class="o">=</span><span class="n">make</span><span class="p">([]</span><span class="n">interface</span><span class="p">{},</span><span class="mi">3</span><span class="p">)</span>
+       <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+       <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+       <span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>
+       <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">v</span> <span class="p">:</span><span class="o">=</span><span class="nb">range</span> <span class="n">arr</span><span class="p">{</span>
+               <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+               <span class="n">d</span><span class="p">,</span><span class="n">ok</span><span class="p">:</span><span class="o">=</span><span class="n">v</span><span class="o">.</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">//</span> <span class="n">进行类型断言</span>
+               <span class="k">if</span> <span class="n">ok</span><span class="p">{</span>
+                       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="s2">&quot;is int&quot;</span><span class="p">)</span>
+               <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+                       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">&quot;is not a int&quot;</span><span class="p">)</span>
+               <span class="p">}</span>
+       <span class="p">}</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="id2">
 <h2>管道<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>channel:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">定义chinnel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">定义channel</span>
+<span class="o">//</span> <span class="n">无缓冲channel</span>
 <span class="n">channel</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">(</span><span class="n">chan</span> <span class="n">string</span><span class="p">)</span> <span class="o">//</span> <span class="n">string</span> <span class="n">为类型chinnel传输类型</span>
+<span class="o">//</span> <span class="n">有缓冲channel</span>
+<span class="n">channel1</span> <span class="p">:</span><span class="o">=</span> <span class="n">make</span><span class="p">(</span><span class="n">chan</span> <span class="n">string</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="n">缓冲区有五个数据</span>
 <span class="n">go</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span><span class="n">channel</span> <span class="o">&lt;-</span> <span class="s2">&quot;hello&quot;</span><span class="p">}()</span>
 <span class="nb">str</span> <span class="p">:</span><span class="o">=</span> <span class="o">&lt;-</span><span class="n">channel</span>
 <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
@@ -310,6 +462,16 @@ go build hello.go
        <span class="n">file</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
 </pre></div>
 </div>
+<ol class="arabic simple">
+<li><p>defer func() // 延时调用</p></li>
+<li><p>defer func() {recover()}() // recover 拦截panic错误,错误发生前使用</p></li>
+</ol>
+<div class="line-block">
+<div class="line">捕获错误 err:=recover()</div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>errors.New() // 返回错误信息</p></li>
+</ol>
 </div>
 </div>
 

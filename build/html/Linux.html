@@ -89,6 +89,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id1">安装图形界面</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#python">安装python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#thrift">安装thrift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shell">shell相关知识</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
@@ -277,6 +278,54 @@ wget http://iweb.dl.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.tar.
 比如在 /usr/local/lib/libboost_unit_test_framework.a，
 就可以做如下操作，sudo ln -s /usr/local/lib/libboost_unit_test_framework.a /usr/lib64/libboost_unit_test_framework.a,
 然后重新执行 make
+</pre></div>
+</div>
+</div>
+<div class="section" id="shell">
+<h2>shell相关知识<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h2>
+<p>变量定义:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span><span class="o">=</span><span class="mi">666</span> <span class="c1"># 定义不同变量</span>
+<span class="n">env</span> <span class="n">查看系统变量</span>
+<span class="nb">set</span> <span class="n">GOROOT</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">go</span><span class="o">/</span><span class="n">src</span> <span class="c1"># 设置系统变量</span>
+<span class="n">export</span> <span class="n">GOROOT</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">go</span><span class="o">/</span><span class="n">src</span> <span class="c1"># 设置系统变量</span>
+<span class="o">~/.</span><span class="n">bashrc</span>
+</pre></div>
+</div>
+<p>变量类型:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 位置变量
+# 执行脚本 ./test.sh a b c
+# a,b,c为传递的参数
+$0 执行的脚本名字
+$1
+$2
+$3
+
+# 特殊变量
+$# 传递参数的个数
+$@ 所有参数
+$? 脚本完成状态,0:success other:failed
+$$ 进程id
+
+# 取值操作
+v=$变量名
+var=$(pwd)
+var=`pwd`
+</pre></div>
+</div>
+<p>条件判断和循环:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if [条件判断];then
+逻辑处理
+fi
+
+list=`ls`
+for var in $list;do
+ echo &quot;$var&quot;
+done
+
+funcName(){
+函数体(逻辑循环判断)
+}
+funcName $1 传参
 </pre></div>
 </div>
 </div>

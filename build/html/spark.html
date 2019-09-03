@@ -87,10 +87,10 @@
 <li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Spark</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">spark 特性及其配置：</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">spark 相关端口及配置：</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">spark 执行流程：</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">spark 优化：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">spark 特性及其配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">spark 相关端口及配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">spark 执行流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">spark 优化</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#windowsideamysql">windows下运行idea连接MySQL</a></li>
 </ul>
 </li>
@@ -170,16 +170,16 @@
 </pre></div>
 </div>
 <div class="section" id="id1">
-<h2>spark 特性及其配置：<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>rdd是由一系列的partition组成；
-算子作用在partition上；
-rdd的容错性，partition可多可少；
-rdd的tuple是kv格式；
-partition提供计算最佳位置，使运算本地化；</p>
+<h2>spark 特性及其配置<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>rdd是由一系列的partition组成;
+算子作用在partition上;
+rdd的容错性,partition可多可少;
+rdd的tuple是kv格式;
+partition提供计算最佳位置,使运算本地化;</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>driver,worker,master 是节点上的jvm进程
 checkpoint:很少对RDD持久化;惰性
 1.当job完成后,spark回溯找到checkpoint
-2.回溯完启动job重新计算并放到checkpoint目录，
+2.回溯完启动job重新计算并放到checkpoint目录,
 3.放到目录后会切断RDD的依赖关系
 4.注意可以在checkpoint前进行cache
 5.指定目录sc.setCheckpointDir(&quot;&quot;)
@@ -199,7 +199,7 @@ export HADOOP_CONF_DIR=/
 </div>
 </div>
 <div class="section" id="id2">
-<h2>spark 相关端口及配置：<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>spark 相关端口及配置<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>web页面port:8080</p>
 <p>历史服务器port:18080</p>
 <p>spark-default.sh 文件中配置以下几项:</p>
@@ -218,7 +218,7 @@ export HADOOP_CONF_DIR=/
 <p>ntpdate ntp1.aliyun.com 同步时间</p>
 </div>
 <div class="section" id="id3">
-<h2>spark 执行流程：<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>spark 执行流程<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>nm中的executor是执行者</p>
 <p>spark 基于yarn(:8088):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.客户端启动driver
@@ -227,20 +227,22 @@ export HADOOP_CONF_DIR=/
 4.am向rs申请资源用于启动executor
 5.rs找到资源后返回给am节点信息
 6.am找到节点启动executor()
-7.executor反向注册给driver（client:driver在客户端，cluster:driver为am）
+7.executor反向注册给driver（client:driver在客户端,cluster:driver为am）
 8.driver发送任务
 </pre></div>
 </div>
 </div>
 <div class="section" id="id4">
-<h2>spark 优化：<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2>spark 优化<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>Kryo 类库进行序列化:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>--conf &quot;spark.executor.extraJavaOption=-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps&quot;
-rdd的缓存空间调整（降低缓存，增加任务的内存）
+rdd的缓存空间调整（降低缓存,增加任务的内存）
 sparkconf.set(&quot;spark storage memoryFraction&quot;,&quot;0,5&quot;) 0.2 都可以
 分配给task的内存就是jvm堆空间大小
 -XX:SurvivorRatio=4 如果值为4 代表两个Survivor 跟Eden 的比例市2：4
 -XX:NewRatio=4 调节新生代和老年的比例
+
+// 调整序列化的方式
 conf.set(&quot;spark.serializer&quot;,&quot;org.apache.spark.serializer.KryoSerializer&quot;)
 conf.registerKryoClasses(classof[])
 </pre></div>
@@ -248,23 +250,22 @@ conf.registerKryoClasses(classof[])
 </div>
 <div class="section" id="windowsideamysql">
 <h2>windows下运行idea连接MySQL<a class="headerlink" href="#windowsideamysql" title="Permalink to this headline">¶</a></h2>
-<dl class="simple">
-<dt>::</dt><dd><p>Exception in thread “main” java.sql.SQLException: No suitable driver
-需要下载mysql-connector-java,只要在meven repository 搜索然后添加到sbt中
-例: libraryDependencies += “mysql” % “mysql-connector-java” % “8.0.17”
-val prop = new java.util.Properties()
-prop.put(“user”,”root”)
-prop.put(“password”,”123456”)
-prop.put(“driver”,”com.mysql.cj.jdbc.Driver”)
-val table = “userinfo”
-val url = “<a class="reference external" href="jdbc:mysql://192.168.0.132/db">jdbc:mysql://192.168.0.132/db</a>”
-val sparksession = SparkSession.builder().master(“local[*]”).appName(“interpolation”).getOrCreate()
-val df = sparksession.read.jdbc(url,table,prop) // 读取整个表
-df.createOrReplaceTempView(“t”) // 将表注册为临时表以便使用sql语句
-val s = sparksession.sql(“select id from t”) // 使用sql语句
-s.show() // 将表展示出来</p>
-</dd>
-</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="ow">in</span> <span class="n">thread</span> <span class="s2">&quot;main&quot;</span> <span class="n">java</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">SQLException</span><span class="p">:</span> <span class="n">No</span> <span class="n">suitable</span> <span class="n">driver</span>
+<span class="n">需要下载mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">java</span><span class="p">,</span><span class="n">只要在meven</span> <span class="n">repository</span> <span class="n">搜索然后添加到sbt中</span>
+<span class="n">例</span><span class="p">:</span> <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s2">&quot;mysql&quot;</span> <span class="o">%</span> <span class="s2">&quot;mysql-connector-java&quot;</span> <span class="o">%</span> <span class="s2">&quot;8.0.17&quot;</span>
+<span class="n">val</span> <span class="n">prop</span> <span class="o">=</span> <span class="n">new</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">Properties</span><span class="p">()</span>
+<span class="n">prop</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="n">prop</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">,</span><span class="s2">&quot;123456&quot;</span><span class="p">)</span>
+<span class="n">prop</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;driver&quot;</span><span class="p">,</span><span class="s2">&quot;com.mysql.cj.jdbc.Driver&quot;</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">table</span> <span class="o">=</span> <span class="s2">&quot;userinfo&quot;</span>
+<span class="n">val</span> <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;jdbc:mysql://192.168.0.132/db&quot;</span>
+<span class="n">val</span> <span class="n">sparksession</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="p">()</span><span class="o">.</span><span class="n">master</span><span class="p">(</span><span class="s2">&quot;local[*]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;interpolation&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">sparksession</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">jdbc</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">table</span><span class="p">,</span><span class="n">prop</span><span class="p">)</span> <span class="o">//</span> <span class="n">读取整个表</span>
+<span class="n">df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">将表注册为临时表以便使用sql语句</span>
+<span class="n">val</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sparksession</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select id from t&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">使用sql语句</span>
+<span class="n">s</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">将表展示出来</span>
+</pre></div>
+</div>
 </div>
 </div>
 

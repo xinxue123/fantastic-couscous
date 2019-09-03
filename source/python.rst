@@ -1,6 +1,19 @@
 Python
 ==============
 
+修改pip/conda的安装源
+::
+
+ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+ conda config --set show_channel_urls yes
+
+ 新建pip/pip.ini
+ [global]
+ timeout = 6000
+ index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+ trusted-host = pypi.tuna.tsinghua.edu.cn
+
+
 词云
 ---------------
 
@@ -131,3 +144,84 @@ arp投毒,抓包::
         restore_target(gateway_ip, gateway_mac, target_ip, target_mac) # 恢复原先设置
 
     poison_thread.join()
+
+opencv库的使用
+
+opencv 安装
+
+1. pip install opencv-python==3.4.2.16
+
+2. pip install opencv-contrib-python==3.4.2.16
+
+::
+ 
+ # 读取图片
+ cv2.imread(img_path)
+ # 读取影像
+ video = cv2.VideoCapture(0) # 0 读取本地摄像头
+ ret,frame = video.read() # frame 是每一帧,ret 是读取成功与否标志
+ cv2.waitKey(10) # 每帧的间隔时间为10 0xFF==27(Esc键)
+ 
+ # 基本操作
+ b,g,r = cv2.split(img) # 拆分通道
+ cv2.merge((b,g,r)) # 合并通道
+ img = cv2.copyMakeBorder(img,20,20,10,10,cv2.BORDER_REFLECT) # 边界填充
+ img = cv2.resize(img,(0,0),fx=0.5,fy=0.5) # 重新调整大小
+ img = cv2.addWeighted(img,0.5,img,0.6,0) # 图像按权重融合
+
+ # 阈值操作
+ ret,img = cv2.threshold(img,127,255,cv2.THRESH_BINARY) 
+ 
+ # 图像平滑
+ img = cv2.blur(img,(3,3),borderType=cv2.BORDER_REFLECT) # 均值滤波
+ img = cv2.boxFilter(img,-1,(3,3),normalize=True) # 方框滤波 不标准化越界后赋值为255
+ img = cv2.medianBlur(img,3) # 中值滤波
+ img = cv2.GaussianBlur(img,(3,3),1) # 权重处理
+ 
+ # 形态学操作
+ img = cv2.erode(img,np.ones((5,5),dtype=np.uint8),iterations=1) # 腐蚀最大值,针对最大值
+ img = cv2.dilate(img,np.ones((5,5),dtype=np.uint8),iterations=1) # 膨胀
+ img = cv2.morphologyEx(img,cv2.MORPH_OPEN,np.ones((5,5),dtype=np.uint8)) # 先腐蚀再膨胀
+ img = cv2.morphologyEx(img,cv2.MORPH_CLOSE,np.ones((5,5),dtype=np.uint8)) # 先膨胀再腐蚀
+ img = cv2.morphologyEx(img,cv2.MORPH_GRADIENT,kernel) # 梯度 膨胀-腐蚀
+ # 礼帽=原始输入-开运算结果; 黑帽=闭运算-原始输入
+
+ # 梯度
+ img = cv2.Sobel(img,-1,dx=1,dy=1,ksize=3) # sober算子
+ img = cv2.Scharr(img,cv2.CV_64F,dx=0,dy=1) # 细节更为丰富
+ img = cv2.Laplacian(img,-1,ksize=3) # 对噪音敏感
+
+ # 边缘检测
+ # canny 1.高斯滤波 2.梯度(sober) 3.非极大值抑制 4.双阈值检测
+ img = cv2.Canny(img,100,120) # 双阈值: minvalue 100,maxvalue 120
+
+ # 高斯金字塔
+ img = cv2.pyrUp(img) # 上采样
+ img = cv2.pyrDown(img) # 下采样
+
+ # 图像轮廓
+ img,contours,hierarchy = cv2.findContours(img,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+ res = cv2.drawContours(img,contours,-1,(0,255,0),1) # 绘制轮廓
+ area = cv2.contourArea(contours[0]) # 计算轮廓面积
+ arcLen = cv2.arcLength(contours[0],True) # 计算周长
+ res = cv2.approxPolyDP(contours[0],0.1*cv2.arcLength(contours[0],True),True) # 近似周长(点)
+ x, y, w, h = cv2.boundingRect(contours[0]) # 外界矩形
+ rec = cv2.rectangle(img,(x,y),(x+w,y+h),(0,255,0)) # 绘制矩形
+
+ # 直方图
+ res = cv2.calcHist([img],[0],None,[256],[0,256]) # 计算直方图
+ mask[50:150,50:150] = 255 # 制作mask
+
+ # SIFT
+ cv2.xfeature2d.SIFT_create() # 构建sift
+ kp = sift.detect(gray,None) # 检测
+ img = cv2.drawKeypoints(gray,kp,img)
+ kp,des = sift.compute(gray,kp) # 128维向量
+
+ # 特征匹配
+ bf = cv2.BFMatcher(crossCheck=True) # 蛮力匹配
+ bf.match()
+
+ # 背景建模
+ # 1. 帧差法
+ # 2. 混合高斯模型(GMM)

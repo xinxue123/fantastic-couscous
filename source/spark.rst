@@ -6,20 +6,20 @@ Spark
  val sc = new spark.SparkContext(conf)  // 
  SparkSession.Builder().master("local[2]").appName("data").getOrCreate()
 
-spark 特性及其配置：
+spark 特性及其配置
 ----------------------------
-rdd是由一系列的partition组成；
-算子作用在partition上；
-rdd的容错性，partition可多可少；
-rdd的tuple是kv格式；
-partition提供计算最佳位置，使运算本地化；
+rdd是由一系列的partition组成;
+算子作用在partition上;
+rdd的容错性,partition可多可少;
+rdd的tuple是kv格式;
+partition提供计算最佳位置,使运算本地化;
 
 ::
 
  driver,worker,master 是节点上的jvm进程
  checkpoint:很少对RDD持久化;惰性
  1.当job完成后,spark回溯找到checkpoint
- 2.回溯完启动job重新计算并放到checkpoint目录，
+ 2.回溯完启动job重新计算并放到checkpoint目录,
  3.放到目录后会切断RDD的依赖关系
  4.注意可以在checkpoint前进行cache
  5.指定目录sc.setCheckpointDir("")
@@ -36,7 +36,7 @@ partition提供计算最佳位置，使运算本地化；
  export SPARK_WORKER_MEMORY=3g
  export HADOOP_CONF_DIR=/
 
-spark 相关端口及配置：
+spark 相关端口及配置
 ---------------------------------
 web页面port:8080
 
@@ -60,7 +60,7 @@ date -s ""         查看时间
 
 ntpdate ntp1.aliyun.com 同步时间
 
-spark 执行流程：
+spark 执行流程
 --------------------------------
 nm中的executor是执行者
 
@@ -72,27 +72,30 @@ spark 基于yarn(:8088)::
  4.am向rs申请资源用于启动executor
  5.rs找到资源后返回给am节点信息
  6.am找到节点启动executor()
- 7.executor反向注册给driver（client:driver在客户端，cluster:driver为am）
+ 7.executor反向注册给driver（client:driver在客户端,cluster:driver为am）
  8.driver发送任务
 
 
 
-spark 优化：
+spark 优化
 ---------------------------
 Kryo 类库进行序列化::
 
  --conf "spark.executor.extraJavaOption=-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps"
- rdd的缓存空间调整（降低缓存，增加任务的内存）
+ rdd的缓存空间调整（降低缓存,增加任务的内存）
  sparkconf.set("spark storage memoryFraction","0,5") 0.2 都可以
  分配给task的内存就是jvm堆空间大小
  -XX:SurvivorRatio=4 如果值为4 代表两个Survivor 跟Eden 的比例市2：4
  -XX:NewRatio=4 调节新生代和老年的比例
+
+ // 调整序列化的方式
  conf.set("spark.serializer","org.apache.spark.serializer.KryoSerializer")
  conf.registerKryoClasses(classof[])
 
 windows下运行idea连接MySQL
 -----------------------------------
 ::
+
  Exception in thread "main" java.sql.SQLException: No suitable driver
  需要下载mysql-connector-java,只要在meven repository 搜索然后添加到sbt中
  例: libraryDependencies += "mysql" % "mysql-connector-java" % "8.0.17"

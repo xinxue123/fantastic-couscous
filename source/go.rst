@@ -36,6 +36,7 @@ install
  %s string
  %x 十六进制显示
  %T 打印对应变量的类型
+ %p 打印地址
  
  fmt.Printf("%T",a) // 打印变量类型
 
@@ -72,14 +73,166 @@ go的随机数生成::
 
 逻辑与(&&)高于逻辑或(||)
 
+定义结构体::
+
+ type Student struct {
+	id int // 字段名 类型
+	name string
+	age int
+ }
+ // 结构体赋值
+ 	s:=Student{id:1,
+		name:"ff",
+		age:4}
+	fmt.Println(s)
+
+ // 结构体作为map的value
+ m:=make(map[int],Student)
+ m[103]=Student{id:1,name="S"}
+
+ // 遍历map
+ for k,v range m{
+ fmt.println(k,v)
+ }
+
+ // 结构体切片作为map的值
+ m:=make(map[int][]Student)  // 结构体传参,值传递
+
+ // 创建指针
+ var p *int // int 型指针空指针nil
+ p:=new(int)
+ *p=3 // 为指针赋值
+
+ // 数组指针
+ a:=[3]int{1,2,3}
+ fmt.Printf("%T\n",a)
+ fmt.Println(a)
+ var p *[3]int // 
+ p=&a
+ p[0]=100
+ fmt.Println(p)
+
+定义结构体::
+ 
+ type person struct {
+	name string
+	age int
+ }
+ // 继承自person
+ type Student1 struct {
+	person
+	id int
+	score int
+ }
+ 
+ func (方法接收者)方法名(参数列表)返回值类型
+ // 操作两个对象并返回值
+ func (a Student1)add(b Student1)  int{
+	t:=a.age + b.age
+	return t
+ }
+ // 打印学生信息的方法
+ func (a Student1)printInfo()  {
+	fmt.Println(a.score)
+	fmt.Println(a.age)
+ }
+
+ // 接口定义
+ type 接口名 interface{方法列表}
+ // 方法名(参数列表)(返回值列表)
+ type Hum interface {
+	sayHello()
+ }
+ // 接口继承
+ type Hum1 interface {
+	Hum
+	Sing(song string)
+ }
+
+ // 面向对象实例
+ package main
+
+ import "fmt"
+
+ type AddOperation struct {
+	num1 int
+	num2 int
+ }
+
+ func (a *AddOperation)opera()  int{
+	return a.num1 + a.num2
+ }
+
+ type SubOperation struct {
+	num1 int
+	num2 int
+ }
+
+ func (s *SubOperation)opera()  int{
+	return s.num1 - s.num2
+ }
+ type Calculate interface {
+	opera() int
+ }
+
+ type Factory struct {
+
+ }
+
+ func (f *Factory)reckon(num1 int,num2 int,op string)  (value int){
+	var interFace Calculate
+	switch op {
+	case "+":
+		a:=AddOperation{num1,num2}
+		interFace=&a
+	case "-":
+		a:=SubOperation{num1,num2}
+		interFace=&a
+	}
+	//value = interFace.opera()
+	value = Fs(interFace) // 多态实现
+	return
+
+ }
+ // 多态
+ func Fs(o Calculate)  int{
+	return o.opera()
+ }
+
+ func main() {
+	var s Factory
+	d:=s.reckon(7,2,"-")
+	fmt.Println("rsult is ",d)
+ }
+
+
+ // 类型断言
+ 	arr:=make([]interface{},3)
+	arr[0] = 1
+	arr[1] = "2"
+	arr[2] = "hello"
+	for i,v :=range arr{
+		fmt.Println(i)
+		d,ok:=v.(int) // 进行类型断言
+		if ok{
+			fmt.Println(d,"is int")
+		}else {
+			fmt.Println("is not a int")
+		}
+	}
+
+
 
 管道
 ----------------------
 
 channel::
 
- 定义chinnel
+ 定义channel
+ // 无缓冲channel
  channel := make(chan string) // string 为类型chinnel传输类型
+ // 有缓冲channel 
+ channel1 := make(chan string,5) // 缓冲区有五个数据
  go func() {channel <- "hello"}()
  str := <-channel
  fmt.Println(str)
@@ -153,4 +306,12 @@ channel::
 	}
 	pem.Encode(file, &block)
 	file.Close()
+
+1. defer func() // 延时调用
+
+2. defer func() {recover()}() // recover 拦截panic错误,错误发生前使用
+
+| 捕获错误 err:=recover()
+ 
+3. errors.New() // 返回错误信息
 

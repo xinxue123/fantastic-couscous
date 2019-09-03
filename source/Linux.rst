@@ -123,4 +123,50 @@ vim 基本操作
  就可以做如下操作，sudo ln -s /usr/local/lib/libboost_unit_test_framework.a /usr/lib64/libboost_unit_test_framework.a,
  然后重新执行 make
 
+shell相关知识
+---------------------------
 
+变量定义::
+ 
+ temp=666 # 定义不同变量
+ env 查看系统变量
+ set GOROOT=/usr/local/go/src # 设置系统变量
+ export GOROOT=/usr/local/go/src # 设置系统变量
+ ~/.bashrc
+
+变量类型::
+ 
+ # 位置变量
+ # 执行脚本 ./test.sh a b c 
+ # a,b,c为传递的参数
+ $0 执行的脚本名字
+ $1
+ $2
+ $3
+
+ # 特殊变量
+ $# 传递参数的个数
+ $@ 所有参数
+ $? 脚本完成状态,0:success other:failed
+ $$ 进程id
+
+ # 取值操作
+ v=$变量名
+ var=$(pwd)
+ var=`pwd`
+
+条件判断和循环::
+
+ if [条件判断];then
+ 逻辑处理
+ fi
+
+ list=`ls`
+ for var in $list;do
+  echo "$var"
+ done
+
+ funcName(){
+ 函数体(逻辑循环判断)
+ }
+ funcName $1 传参
