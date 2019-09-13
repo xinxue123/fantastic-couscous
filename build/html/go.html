@@ -229,6 +229,25 @@ go build hello.go
 <span class="n">w</span><span class="p">[</span><span class="s2">&quot;s2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">//</span> <span class="nb">map</span> <span class="n">中添加数据</span>
 <span class="n">fmt</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="s2">&quot;s2&quot;</span><span class="p">])</span> <span class="o">//</span> <span class="n">取出s2的值</span><span class="p">,</span><span class="n">如果没有键值返回0</span>
 <span class="n">delete</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="s2">&quot;s1&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">删除数据</span>
+
+ <span class="o">//</span> <span class="n">遍历map</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="nb">range</span> <span class="n">m</span><span class="p">{</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">创建指针</span>
+<span class="n">var</span> <span class="n">p</span> <span class="o">*</span><span class="nb">int</span> <span class="o">//</span> <span class="nb">int</span> <span class="n">型指针空指针nil</span>
+<span class="n">p</span><span class="p">:</span><span class="o">=</span><span class="n">new</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="mi">3</span> <span class="o">//</span> <span class="n">为指针赋值</span>
+
+ <span class="o">//</span> <span class="n">数组指针</span>
+<span class="n">a</span><span class="p">:</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="nb">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s2">&quot;%T</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">var</span> <span class="n">p</span> <span class="o">*</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="nb">int</span> <span class="o">//</span>
+<span class="n">p</span><span class="o">=&amp;</span><span class="n">a</span>
+<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>逻辑与(&amp;&amp;)高于逻辑或(||)</p>
@@ -248,30 +267,14 @@ go build hello.go
 <span class="n">m</span><span class="p">:</span><span class="o">=</span><span class="n">make</span><span class="p">(</span><span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span><span class="n">Student</span><span class="p">)</span>
 <span class="n">m</span><span class="p">[</span><span class="mi">103</span><span class="p">]</span><span class="o">=</span><span class="n">Student</span><span class="p">{</span><span class="nb">id</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;S&quot;</span><span class="p">}</span>
 
-<span class="o">//</span> <span class="n">遍历map</span>
-<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="nb">range</span> <span class="n">m</span><span class="p">{</span>
-<span class="n">fmt</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
-<span class="p">}</span>
 
 <span class="o">//</span> <span class="n">结构体切片作为map的值</span>
 <span class="n">m</span><span class="p">:</span><span class="o">=</span><span class="n">make</span><span class="p">(</span><span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">][]</span><span class="n">Student</span><span class="p">)</span>  <span class="o">//</span> <span class="n">结构体传参</span><span class="p">,</span><span class="n">值传递</span>
-
-<span class="o">//</span> <span class="n">创建指针</span>
-<span class="n">var</span> <span class="n">p</span> <span class="o">*</span><span class="nb">int</span> <span class="o">//</span> <span class="nb">int</span> <span class="n">型指针空指针nil</span>
-<span class="n">p</span><span class="p">:</span><span class="o">=</span><span class="n">new</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-<span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="mi">3</span> <span class="o">//</span> <span class="n">为指针赋值</span>
-
-<span class="o">//</span> <span class="n">数组指针</span>
-<span class="n">a</span><span class="p">:</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="nb">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
-<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s2">&quot;%T</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
-<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
-<span class="n">var</span> <span class="n">p</span> <span class="o">*</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="nb">int</span> <span class="o">//</span>
-<span class="n">p</span><span class="o">=&amp;</span><span class="n">a</span>
-<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">100</span>
-<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>定义结构体:</p>
+<div class="line-block">
+<div class="line">为结构体添加方法</div>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">person</span> <span class="n">struct</span> <span class="p">{</span>
        <span class="n">name</span> <span class="n">string</span>
        <span class="n">age</span> <span class="nb">int</span>
@@ -294,9 +297,12 @@ go build hello.go
        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
        <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>
 <span class="p">}</span>
-
-<span class="o">//</span> <span class="n">接口定义</span>
-<span class="nb">type</span> <span class="n">接口名</span> <span class="n">interface</span><span class="p">{</span><span class="n">方法列表</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">接口定义</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">接口名</span> <span class="n">interface</span><span class="p">{</span><span class="n">方法列表</span><span class="p">}</span>
 <span class="o">//</span> <span class="n">方法名</span><span class="p">(</span><span class="n">参数列表</span><span class="p">)(</span><span class="n">返回值列表</span><span class="p">)</span>
 <span class="nb">type</span> <span class="n">Hum</span> <span class="n">interface</span> <span class="p">{</span>
        <span class="n">sayHello</span><span class="p">()</span>
@@ -306,9 +312,12 @@ go build hello.go
        <span class="n">Hum</span>
        <span class="n">Sing</span><span class="p">(</span><span class="n">song</span> <span class="n">string</span><span class="p">)</span>
 <span class="p">}</span>
-
-<span class="o">//</span> <span class="n">面向对象实例</span>
-<span class="n">package</span> <span class="n">main</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">面向对象实例</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">main</span>
 
 <span class="kn">import</span> <span class="s2">&quot;fmt&quot;</span>
 
@@ -462,14 +471,13 @@ go build hello.go
        <span class="n">file</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line">错误处理::</div>
+</div>
 <ol class="arabic simple">
 <li><p>defer func() // 延时调用</p></li>
-<li><p>defer func() {recover()}() // recover 拦截panic错误,错误发生前使用</p></li>
-</ol>
-<div class="line-block">
-<div class="line">捕获错误 err:=recover()</div>
-</div>
-<ol class="arabic simple" start="3">
+<li><p>defer func() {recover()}() // recover 拦截panic错误,错误发生前使用
+- 捕获错误 err:=recover()</p></li>
 <li><p>errors.New() // 返回错误信息</p></li>
 </ol>
 </div>

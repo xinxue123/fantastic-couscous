@@ -44,7 +44,7 @@ Python
  plt.axis('off')
  plt.show()
 
-requests库的使用
+requests
 ------------------
 
 发送http请求::
@@ -58,7 +58,45 @@ requests库的使用
 
  response = request.post(url,data) # post 请求
 
-scapy库的使用
+urllib 
+-----------------------
+
+|    urllib 可以导入request(最为常用)、response、parse
+
+>>> proxy = request.ProxyHandler({"http":"192.122.132.1"})
+    opener = request.build_opener(proxy)
+    opener.open(url)
+ 
+lxml(XPath)
+-------------------
+
+::
+
+ //div  任意位置div
+
+ /div   根节点查找
+
+ *      匹配任意节点
+
+ @*     匹配任意属性
+
+ @      匹配某一属性  
+
+ 1. //input[@id="str"] 精确匹配
+ 2. //input[@class,"f"] 模糊匹配
+
+在python中的导入
+
+>>> from lxml import html
+html.etree.parse() # 传入文件地址
+html.etree.fromstring() # 传入字符串
+
+
+
+
+
+
+scapy
 -------------------------
 模拟三次握手::
  
@@ -145,8 +183,8 @@ arp投毒,抓包::
 
     poison_thread.join()
 
-opencv库的使用
-
+opencv
+---------------------
 opencv 安装
 
 1. pip install opencv-python==3.4.2.16
@@ -225,3 +263,23 @@ opencv 安装
  # 背景建模
  # 1. 帧差法
  # 2. 混合高斯模型(GMM)
+
+basemap
+------------------
+::
+
+ projection
+ # Albers Equal Area Projection
+ # lat_1 is first standard parallel.
+ # lat_2 is second standard parallel.
+ # lon_0,lat_0 is central point
+ m = Basemap(width=8000000,height=7000000, resolution='l',projection='aea', lat_1=40.,lat_2=60,lon_0=35,lat_0=50)
+ m.drawcoastlines() # 海岸线
+ m.drawcountries() # 国家界限
+ m.drawparallels(np.arange(-80.,81.,20.)) # 纬线
+ m.drawmeridians(np.arange(-180.,181.,20.)) # 经线
+ m.drawgreatcircle(90,35,100,50,color="r") # 连接线
+ m.bluemarble() # draw a NASA Blue Marble image as a map background.卫星背景
+ m.shadedrelief() # draw a shaded relief image as a map background,阴影背景
+ m.etopo() # 浮雕(背景)
+ m.quiver(90,45,1,5,color='g') # 添加矢量箭头

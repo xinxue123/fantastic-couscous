@@ -87,8 +87,12 @@
 <li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id1">词云</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#requests">requests库的使用</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#scapy">scapy库的使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#requests">requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#urllib">urllib</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#lxml-xpath">lxml(XPath)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scapy">scapy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#opencv">opencv</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basemap">basemap</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
@@ -202,7 +206,7 @@
 </div>
 </div>
 <div class="section" id="requests">
-<h2>requests库的使用<a class="headerlink" href="#requests" title="Permalink to this headline">¶</a></h2>
+<h2>requests<a class="headerlink" href="#requests" title="Permalink to this headline">¶</a></h2>
 <p>发送http请求:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.baidu.com&#39;</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user-agent&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}</span>
@@ -215,8 +219,42 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="urllib">
+<h2>urllib<a class="headerlink" href="#urllib" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">urllib 可以导入request(最为常用)、response、parse</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">proxy</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">ProxyHandler</span><span class="p">({</span><span class="s2">&quot;http&quot;</span><span class="p">:</span><span class="s2">&quot;192.122.132.1&quot;</span><span class="p">})</span>
+<span class="go">    opener = request.build_opener(proxy)</span>
+<span class="go">    opener.open(url)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="lxml-xpath">
+<h2>lxml(XPath)<a class="headerlink" href="#lxml-xpath" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">div</span>  <span class="n">任意位置div</span>
+
+<span class="o">/</span><span class="n">div</span>   <span class="n">根节点查找</span>
+
+<span class="o">*</span>      <span class="n">匹配任意节点</span>
+
+<span class="o">@*</span>     <span class="n">匹配任意属性</span>
+
+<span class="o">@</span>      <span class="n">匹配某一属性</span>
+
+<span class="mf">1.</span> <span class="o">//</span><span class="nb">input</span><span class="p">[</span><span class="nd">@id</span><span class="o">=</span><span class="s2">&quot;str&quot;</span><span class="p">]</span> <span class="n">精确匹配</span>
+<span class="mf">2.</span> <span class="o">//</span><span class="nb">input</span><span class="p">[</span><span class="nd">@class</span><span class="p">,</span><span class="s2">&quot;f&quot;</span><span class="p">]</span> <span class="n">模糊匹配</span>
+</pre></div>
+</div>
+<p>在python中的导入</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lxml</span> <span class="k">import</span> <span class="n">html</span>
+<span class="go">html.etree.parse() # 传入文件地址</span>
+<span class="go">html.etree.fromstring() # 传入字符串</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="scapy">
-<h2>scapy库的使用<a class="headerlink" href="#scapy" title="Permalink to this headline">¶</a></h2>
+<h2>scapy<a class="headerlink" href="#scapy" title="Permalink to this headline">¶</a></h2>
 <p>模拟三次握手:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>windows查看端口 netstat
 
@@ -302,7 +340,9 @@ recv1=srp1(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,seq=ack,ac
    <span class="n">poison_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>opencv库的使用</p>
+</div>
+<div class="section" id="opencv">
+<h2>opencv<a class="headerlink" href="#opencv" title="Permalink to this headline">¶</a></h2>
 <p>opencv 安装</p>
 <ol class="arabic simple">
 <li><p>pip install opencv-python==3.4.2.16</p></li>
@@ -378,6 +418,26 @@ recv1=srp1(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,seq=ack,ac
 <span class="c1"># 背景建模</span>
 <span class="c1"># 1. 帧差法</span>
 <span class="c1"># 2. 混合高斯模型(GMM)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="basemap">
+<h2>basemap<a class="headerlink" href="#basemap" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">projection</span>
+<span class="c1"># Albers Equal Area Projection</span>
+<span class="c1"># lat_1 is first standard parallel.</span>
+<span class="c1"># lat_2 is second standard parallel.</span>
+<span class="c1"># lon_0,lat_0 is central point</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">Basemap</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">8000000</span><span class="p">,</span><span class="n">height</span><span class="o">=</span><span class="mi">7000000</span><span class="p">,</span> <span class="n">resolution</span><span class="o">=</span><span class="s1">&#39;l&#39;</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;aea&#39;</span><span class="p">,</span> <span class="n">lat_1</span><span class="o">=</span><span class="mf">40.</span><span class="p">,</span><span class="n">lat_2</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span><span class="n">lon_0</span><span class="o">=</span><span class="mi">35</span><span class="p">,</span><span class="n">lat_0</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">drawcoastlines</span><span class="p">()</span> <span class="c1"># 海岸线</span>
+<span class="n">m</span><span class="o">.</span><span class="n">drawcountries</span><span class="p">()</span> <span class="c1"># 国家界限</span>
+<span class="n">m</span><span class="o">.</span><span class="n">drawparallels</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">80.</span><span class="p">,</span><span class="mf">81.</span><span class="p">,</span><span class="mf">20.</span><span class="p">))</span> <span class="c1"># 纬线</span>
+<span class="n">m</span><span class="o">.</span><span class="n">drawmeridians</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mf">180.</span><span class="p">,</span><span class="mf">181.</span><span class="p">,</span><span class="mf">20.</span><span class="p">))</span> <span class="c1"># 经线</span>
+<span class="n">m</span><span class="o">.</span><span class="n">drawgreatcircle</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="c1"># 连接线</span>
+<span class="n">m</span><span class="o">.</span><span class="n">bluemarble</span><span class="p">()</span> <span class="c1"># draw a NASA Blue Marble image as a map background.卫星背景</span>
+<span class="n">m</span><span class="o">.</span><span class="n">shadedrelief</span><span class="p">()</span> <span class="c1"># draw a shaded relief image as a map background,阴影背景</span>
+<span class="n">m</span><span class="o">.</span><span class="n">etopo</span><span class="p">()</span> <span class="c1"># 浮雕(背景)</span>
+<span class="n">m</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span> <span class="c1"># 添加矢量箭头</span>
 </pre></div>
 </div>
 </div>

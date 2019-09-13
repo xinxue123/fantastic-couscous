@@ -71,6 +71,27 @@ go的随机数生成::
  fmt.println(w["s2"]) // 取出s2的值,如果没有键值返回0
  delete(w,"s1") // 删除数据
 
+  // 遍历map
+ for k,v range m{
+ fmt.println(k,v)
+ }
+
+ // 创建指针
+ var p *int // int 型指针空指针nil
+ p:=new(int)
+ *p=3 // 为指针赋值
+
+  // 数组指针
+ a:=[3]int{1,2,3}
+ fmt.Printf("%T\n",a)
+ fmt.Println(a)
+ var p *[3]int // 
+ p=&a
+ p[0]=100
+ fmt.Println(p)
+
+
+
 逻辑与(&&)高于逻辑或(||)
 
 定义结构体::
@@ -90,29 +111,13 @@ go的随机数生成::
  m:=make(map[int],Student)
  m[103]=Student{id:1,name="S"}
 
- // 遍历map
- for k,v range m{
- fmt.println(k,v)
- }
 
  // 结构体切片作为map的值
  m:=make(map[int][]Student)  // 结构体传参,值传递
 
- // 创建指针
- var p *int // int 型指针空指针nil
- p:=new(int)
- *p=3 // 为指针赋值
 
- // 数组指针
- a:=[3]int{1,2,3}
- fmt.Printf("%T\n",a)
- fmt.Println(a)
- var p *[3]int // 
- p=&a
- p[0]=100
- fmt.Println(p)
-
-定义结构体::
+|  为结构体添加方法
+::
  
  type person struct {
 	name string
@@ -137,7 +142,9 @@ go的随机数生成::
 	fmt.Println(a.age)
  }
 
- // 接口定义
+|  接口定义
+::
+
  type 接口名 interface{方法列表}
  // 方法名(参数列表)(返回值列表)
  type Hum interface {
@@ -149,7 +156,9 @@ go的随机数生成::
 	Sing(song string)
  }
 
- // 面向对象实例
+|  面向对象实例
+::
+
  package main
 
  import "fmt"
@@ -307,11 +316,10 @@ channel::
 	pem.Encode(file, &block)
 	file.Close()
 
+| 错误处理::
+
 1. defer func() // 延时调用
-
 2. defer func() {recover()}() // recover 拦截panic错误,错误发生前使用
-
-| 捕获错误 err:=recover()
- 
+   - 捕获错误 err:=recover()
 3. errors.New() // 返回错误信息
 
