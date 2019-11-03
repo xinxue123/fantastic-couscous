@@ -94,6 +94,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#opencv">opencv</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#basemap">basemap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#modis-download-script">modis download script</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mysql">MySQL 语句</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
@@ -455,10 +456,505 @@ recv1=srp1(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,seq=ack,ac
 <ol class="arabic simple" start="3">
 <li><p>运行下载脚本(down_modis.py为下载脚本,需要给出脚本的本地全路径,本示例仅有文件名)</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">..</span>
-<span class="n">python</span> <span class="n">down_modis</span><span class="o">.</span><span class="n">py</span>
+<dl class="simple">
+<dt>::</dt><dd><p>cd ..
+python down_modis.py</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="mysql">
+<h2>MySQL 语句<a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
+<dl>
+<dt>– 数据的准备</dt><dd><p>– 创建一个数据库
+create database python_test charset=utf8;</p>
+<p>– 使用一个数据库
+use python_test;</p>
+<p>– 显示使用的当前数据是哪个?
+select database();</p>
+<p>– 创建一个数据表
+– students表</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create</span> <span class="n">table</span> <span class="n">students</span><span class="p">(</span>
+<span class="nb">id</span> <span class="nb">int</span> <span class="n">unsigned</span> <span class="n">primary</span> <span class="n">key</span> <span class="n">auto_increment</span> <span class="ow">not</span> <span class="n">null</span><span class="p">,</span>
+<span class="n">name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="n">default</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+<span class="n">age</span> <span class="n">tinyint</span> <span class="n">unsigned</span> <span class="n">default</span> <span class="mi">0</span><span class="p">,</span>
+<span class="n">height</span> <span class="n">decimal</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span>
+<span class="n">gender</span> <span class="n">enum</span><span class="p">(</span><span class="s1">&#39;男&#39;</span><span class="p">,</span><span class="s1">&#39;女&#39;</span><span class="p">,</span><span class="s1">&#39;中性&#39;</span><span class="p">,</span><span class="s1">&#39;保密&#39;</span><span class="p">)</span> <span class="n">default</span> <span class="s1">&#39;保密&#39;</span><span class="p">,</span>
+<span class="n">cls_id</span> <span class="nb">int</span> <span class="n">unsigned</span> <span class="n">default</span> <span class="mi">0</span><span class="p">,</span>
+<span class="n">is_delete</span> <span class="n">bit</span> <span class="n">default</span> <span class="mi">0</span>
+<span class="p">);</span>
 </pre></div>
 </div>
+<p>– classes表</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">create</span> <span class="n">table</span> <span class="n">classes</span> <span class="p">(</span>
+<span class="nb">id</span> <span class="nb">int</span> <span class="n">unsigned</span> <span class="n">auto_increment</span> <span class="n">primary</span> <span class="n">key</span> <span class="ow">not</span> <span class="n">null</span><span class="p">,</span>
+<span class="n">name</span> <span class="n">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="ow">not</span> <span class="n">null</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</dd>
+<dt>– 查询</dt><dd><blockquote>
+<div><p>– 查询所有字段
+– select * from 表名;</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">classes</span><span class="p">;</span>
+<span class="n">select</span> <span class="nb">id</span><span class="p">,</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">classes</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—查询指定字段
+– select 列1,列2,… from 表名;</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—使用 as 给字段起别名
+– select 字段 as 名字…. from 表名;</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="k">as</span> <span class="n">姓名</span><span class="p">,</span> <span class="n">age</span> <span class="k">as</span> <span class="n">年龄</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—select 表名.字段 …. from 表名;</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">students</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">students</span><span class="o">.</span><span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—可以通过 as 给表起别名</p>
+</div></blockquote>
+<blockquote>
+<div><p>– select 别名.字段 …. from 表名 as 别名;</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">students</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">students</span><span class="o">.</span><span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—失败的select students.name, students.age from students as s;</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 消除重复行</p>
+<p class="attribution">—distinct 字段</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">distinct</span> <span class="n">gender</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+</dl>
+<p>– 条件查询</p>
+<blockquote>
+<div><dl>
+<dt>– 比较运算符</dt><dd><p>– select …. from 表名 where …..</p>
+<p>– &gt;</p>
+<p>– 查询大于18岁的信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span><span class="p">;</span>
+<span class="n">select</span> <span class="nb">id</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="n">gender</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– &lt;</p>
+<p>– 查询小于18岁的信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">&lt;</span><span class="mi">18</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– &gt;=</p>
+<p>– &lt;=</p>
+<p>– 查询小于或者等于18岁的信息</p>
+<p>– =</p>
+<p>– 查询年龄为18岁的所有学生的名字</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">=</span><span class="mi">18</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– != 或者 &lt;&gt;</p>
+</dd>
+</dl>
+<p class="attribution">—逻辑运算符
+– and</p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p>– 18到28之间的所以学生信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span> <span class="ow">and</span> <span class="n">age</span><span class="o">&lt;</span><span class="mi">28</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—失败select * from students where age&gt;18 and &lt;28;</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 18岁以上的女性</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="s2">&quot;女&quot;</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—or</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 18以上或者身高查过180(包含)以上</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span> <span class="ow">or</span> <span class="n">height</span><span class="o">&gt;=</span><span class="mi">180</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—not</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 不在 18岁以上的女性 这个范围内的信息</p>
+<p class="attribution">—select * from students where not age&gt;18 and gender=2;</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="ow">not</span> <span class="p">(</span><span class="n">age</span><span class="o">&gt;</span><span class="mi">18</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+<p class="attribution">—年龄不是小于或者等于18 并且是女性</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="ow">not</span> <span class="n">age</span><span class="o">&lt;=</span><span class="mi">18</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p class="attribution">—模糊查询
+– like</p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p>– % 替换1个或者多个</p>
+<p class="attribution">—_ 替换1个</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 查询姓名中 以 “小” 开始的名字</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;小&quot;</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span> <span class="n">like</span> <span class="s2">&quot;小%&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—查询姓名中 有 “小” 所有的名字</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span> <span class="n">like</span> <span class="s2">&quot;%小%&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—查询有2个字的名字</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span> <span class="n">like</span> <span class="s2">&quot;__&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—查询有3个字的名字</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span> <span class="n">like</span> <span class="s2">&quot;__&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—查询至少有2个字的名字</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span> <span class="n">like</span> <span class="s2">&quot;__%&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—rlike 正则</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 查询以 周开始的姓名</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span> <span class="n">rlike</span> <span class="s2">&quot;^周.*&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—查询以 周开始、伦结尾的姓名</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span> <span class="n">rlike</span> <span class="s2">&quot;^周.*伦$&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p class="attribution">—范围查询
+– in (1, 3, 8)表示在一个非连续的范围内</p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p>– 查询 年龄为18、34的姓名</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span><span class="p">,</span><span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">=</span><span class="mi">18</span> <span class="ow">or</span> <span class="n">age</span><span class="o">=</span><span class="mi">34</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">name</span><span class="p">,</span><span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span><span class="o">=</span><span class="mi">18</span> <span class="ow">or</span> <span class="n">age</span><span class="o">=</span><span class="mi">34</span> <span class="ow">or</span> <span class="n">age</span><span class="o">=</span><span class="mi">12</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">name</span><span class="p">,</span><span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">34</span><span class="p">);</span>
+</pre></div>
+</div>
+<p class="attribution">—not in 不非连续的范围之内</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 年龄不是 18、34岁之间的信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span><span class="p">,</span><span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">34</span><span class="p">);</span>
+</pre></div>
+</div>
+<p class="attribution">—between … and …表示在一个连续的范围内</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 查询 年龄在18到34之间的的信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span><span class="p">,</span> <span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—not between … and …表示不在一个连续的范围内</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 查询 年龄不在在18到34之间的的信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">age</span> <span class="ow">not</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="ow">not</span> <span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—失败的select * from students where age not (between 18 and 34);</p>
+</div></blockquote>
+<p class="attribution">—空判断
+– 判空is null</p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p>– 查询身高为空的信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">height</span> <span class="ow">is</span> <span class="n">null</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">height</span> <span class="ow">is</span> <span class="n">NULL</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">height</span> <span class="ow">is</span> <span class="n">Null</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—判非空is not null</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">height</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">null</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div></blockquote>
+<dl>
+<dt>– 排序</dt><dd><p>– order by 字段</p>
+<p>– asc从小到大排列，即升序</p>
+<p>– desc从大到小排序，即降序</p>
+<p>– 查询年龄在18到34岁之间的男性，按照年龄从小到到排序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">order</span> <span class="n">by</span> <span class="n">age</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">order</span> <span class="n">by</span> <span class="n">age</span> <span class="n">asc</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询年龄在18到34岁之间的女性，身高从高到矮排序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span> <span class="n">order</span> <span class="n">by</span> <span class="n">height</span> <span class="n">desc</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– order by 多个字段</p>
+<p>– 查询年龄在18到34岁之间的女性，身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span> <span class="n">order</span> <span class="n">by</span> <span class="n">height</span> <span class="n">desc</span><span class="p">,</span><span class="nb">id</span> <span class="n">desc</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询年龄在18到34岁之间的女性，身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序,</p>
+<p>– 如果年龄也相同那么按照id从大到小排序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span> <span class="n">order</span> <span class="n">by</span> <span class="n">height</span> <span class="n">desc</span><span class="p">,</span><span class="n">age</span> <span class="n">asc</span><span class="p">,</span><span class="nb">id</span> <span class="n">desc</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 按照年龄从小到大、身高从高到矮的排序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">order</span> <span class="n">by</span> <span class="n">age</span> <span class="n">asc</span><span class="p">,</span> <span class="n">height</span> <span class="n">desc</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt>– 聚合函数</dt><dd><p>– 总数</p>
+<p>– count</p>
+<p>– 查询男性有多少人，女性有多少人</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">as</span> <span class="n">男性人数</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">as</span> <span class="n">女性人数</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 最大值</p>
+<p>– max</p>
+<p>– 查询最大的年龄</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">age</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+<span class="n">select</span> <span class="nb">max</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询女性的最高 身高</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="nb">max</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 最小值
+– min</p>
+<p>– 求和
+– sum</p>
+<p>– 计算所有人的年龄总和</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="nb">sum</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 平均值
+– avg</p>
+<p>– 计算平均年龄</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">avg</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 计算平均年龄 sum(age)/count(*)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="nb">sum</span><span class="p">(</span><span class="n">age</span><span class="p">)</span><span class="o">/</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 四舍五入 round(123.23 , 1) 保留1位小数</p>
+<p>– 计算所有人的平均年龄，保留2位小数</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">age</span><span class="p">)</span><span class="o">/</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+<span class="n">select</span> <span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">age</span><span class="p">)</span><span class="o">/</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 计算男性的平均身高 保留2位小数</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="nb">round</span><span class="p">(</span><span class="n">avg</span><span class="p">(</span><span class="n">height</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– select name, round(avg(height), 2) from students where gender=1;</p>
+</dd>
+</dl>
+<p>– 分组</p>
+<blockquote>
+<div><p>– group by
+– 按照性别分组,查询所有的性别</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">gender</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—失败select * from students group by gender;</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 计算每种性别中的人数</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">gender</span><span class="p">,</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—计算男性的人数</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">gender</span><span class="p">,</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—group_concat(…)</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 查询同种性别中的姓名</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">gender</span><span class="p">,</span><span class="n">group_concat</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">gender</span><span class="p">,</span><span class="n">group_concat</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">gender</span><span class="p">,</span><span class="n">group_concat</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—having</p>
+</div></blockquote>
+<blockquote>
+<div><p>– 查询平均年龄超过30岁的性别，以及姓名 having avg(age) &gt; 30</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">gender</span><span class="p">,</span> <span class="n">group_concat</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="n">avg</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span> <span class="n">having</span> <span class="n">avg</span><span class="p">(</span><span class="n">age</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">30</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—查询每种性别中的人数多于2个的信息</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">gender</span><span class="p">,</span> <span class="n">group_concat</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span> <span class="n">having</span> <span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl>
+<dt>– 分页</dt><dd><p>– limit start, count</p>
+<p>– 限制查询出来的数据个数</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">limit</span> <span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询前5个数据</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询id6-10（包含）的书序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 每页显示2个，第1个页面</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 每页显示2个，第2个页面</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 每页显示2个，第3个页面</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 每页显示2个，第4个页面</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span> <span class="o">--</span> <span class="o">-----&gt;</span> <span class="n">limit</span> <span class="p">(</span><span class="n">第N页</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">每个的个数</span><span class="p">,</span> <span class="n">每页的个数</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 每页显示2个，显示第6页的信息, 按照年龄从小到大排序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">order</span> <span class="n">by</span> <span class="n">age</span> <span class="n">asc</span> <span class="n">limit</span> <span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
+
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span> <span class="n">order</span> <span class="n">by</span> <span class="n">height</span> <span class="n">desc</span> <span class="n">limit</span> <span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
+</pre></div>
+</div>
+</dd>
+<dt>– 连接查询</dt><dd><p>– inner join … on</p>
+<p>– select … from 表A inner join 表B;</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询 有能够对应班级的学生以及班级信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="n">on</span> <span class="n">students</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">classes</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 按照要求显示姓名、班级</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">students</span><span class="o">.*</span><span class="p">,</span> <span class="n">classes</span><span class="o">.</span><span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="n">on</span> <span class="n">students</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">classes</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">students</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">classes</span><span class="o">.</span><span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="n">on</span> <span class="n">students</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">classes</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 给数据表起名字</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询 有能够对应班级的学生以及班级信息，显示学生的所有信息，只显示班级名称</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">s</span><span class="o">.*</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 在以上的查询中，将班级姓名显示在第1列</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询 有能够对应班级的学生以及班级信息, 按照班级进行排序</p>
+<p>– select c.xxx s.xxx from student as s inner join clssses as c on …. order by ….;</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="n">order</span> <span class="n">by</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 当时同一个班级的时候，按照学生的id进行从小到大排序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="n">order</span> <span class="n">by</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">s</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– left join
+– 查询每位学生对应的班级信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">left</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– 查询没有对应班级信息的学生</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">left</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="n">having</span> <span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="n">null</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">left</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="n">where</span> <span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="ow">is</span> <span class="n">null</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>– right join   on
+– 将数据表名字互换位置，用left join完成</p>
+</dd>
+</dl>
+<p>– 自关联</p>
+<blockquote>
+<div><p>– 查询所有省份
+select * from areas where pid is null;</p>
+<p class="attribution">—查询出山东省有哪些市</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">areas</span> <span class="k">as</span> <span class="n">province</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">areas</span> <span class="k">as</span> <span class="n">city</span> <span class="n">on</span> <span class="n">city</span><span class="o">.</span><span class="n">pid</span><span class="o">=</span><span class="n">province</span><span class="o">.</span><span class="n">aid</span> <span class="n">having</span> <span class="n">province</span><span class="o">.</span><span class="n">atitle</span><span class="o">=</span><span class="s2">&quot;山东省&quot;</span><span class="p">;</span>
+<span class="n">select</span> <span class="n">province</span><span class="o">.</span><span class="n">atitle</span><span class="p">,</span> <span class="n">city</span><span class="o">.</span><span class="n">atitle</span> <span class="kn">from</span> <span class="nn">areas</span> <span class="k">as</span> <span class="n">province</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">areas</span> <span class="k">as</span> <span class="n">city</span> <span class="n">on</span> <span class="n">city</span><span class="o">.</span><span class="n">pid</span><span class="o">=</span><span class="n">province</span><span class="o">.</span><span class="n">aid</span> <span class="n">having</span> <span class="n">province</span><span class="o">.</span><span class="n">atitle</span><span class="o">=</span><span class="s2">&quot;山东省&quot;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p class="attribution">—查询出青岛市有哪些县城</p>
+</div></blockquote>
+<blockquote>
+<div><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">province</span><span class="o">.</span><span class="n">atitle</span><span class="p">,</span> <span class="n">city</span><span class="o">.</span><span class="n">atitle</span> <span class="kn">from</span> <span class="nn">areas</span> <span class="k">as</span> <span class="n">province</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">areas</span> <span class="k">as</span> <span class="n">city</span> <span class="n">on</span> <span class="n">city</span><span class="o">.</span><span class="n">pid</span><span class="o">=</span><span class="n">province</span><span class="o">.</span><span class="n">aid</span> <span class="n">having</span> <span class="n">province</span><span class="o">.</span><span class="n">atitle</span><span class="o">=</span><span class="s2">&quot;青岛市&quot;</span><span class="p">;</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">areas</span> <span class="n">where</span> <span class="n">pid</span><span class="o">=</span><span class="p">(</span><span class="n">select</span> <span class="n">aid</span> <span class="kn">from</span> <span class="nn">areas</span> <span class="n">where</span> <span class="n">atitle</span><span class="o">=</span><span class="s2">&quot;青岛市&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<dl>
+<dt>– 子查询</dt><dd><p>– 标量子查询
+– 查询出高于平均身高的信息</p>
+<p>– 查询最高的男生信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">188</span><span class="p">;</span>
+<span class="n">sselect</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">height</span> <span class="o">=</span> <span class="p">(</span><span class="n">select</span> <span class="nb">max</span><span class="p">(</span><span class="n">height</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>– 列级子查询
+– 查询学生的班级号能够对应的学生信息
+– select * from students where cls_id in (select id from classes);</p>
+</dd>
+</dl>
 </div>
 </div>
 
