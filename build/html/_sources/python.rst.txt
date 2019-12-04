@@ -93,8 +93,93 @@ html.etree.fromstring() # 传入字符串
 
 
 
+ctypes
+-------------------------
+python中使用ctypes模块可以在python中直接调用C/C++。首先要将C/C++编译成动态库（.dll或.so)，之后python中调用即可。
 
+在linux的编译命令如下::
 
+ gcc -shared -fPIC -o code.so code.c
+
+普通方法
+
+c代码::
+
+	int add(int a, int b)
+	{
+		int c;
+		c = a + b;
+		return c;
+	}
+
+python代码::
+
+	import ctypes
+	Cfun = ctypes.DLL('code.so')  ##动态链接库所在目录
+	Num1 = ctypes.c_int(10)         ##创建第一个输入参数，将参数类型指定为c_int即C语言中的int类型
+	Num2 = ctypes.c_int(30)
+	Cfun.add.restype=ctypes.c_int   ##将C函数的返回值类型定位c_int即C语言中的int类型，如果不先声明类型在使用非int变量时，返回值会不对
+	Sum=Cfun.add(Num1,Num2)
+	print(Sum)
+
+使用指针
+
+c代码::
+
+	void add_point(float* a, float* b, float* c)
+	{
+		*c = *a + *b;
+		*a = 129.7;
+	}
+
+python代码::
+
+	import ctypes
+	Cfun = ctypes.DLL('code.so')  ##动态链接库所在目录
+	x1 = ctypes.c_float(1.9)
+	x2 = ctypes.c_float(10.1)
+	x3 = ctypes.c_float(0)
+	Cfun.add_point(ctypes.pointer(x1), ctypes.pointer(x2), ctypes.pointer(x3)) ## ctypes.pointer()将参数指定为C中的指针类型
+	print(x3.contents.value, x1.contents.value)  ##value代表变量的值
+
+接收返回的指针
+
+c代码::
+
+	int*  point(int* x)
+	{
+		int* y=NULL;
+		y = x;
+		return y;
+	}
+
+python代码::
+
+	x = ctypes.c_int(2560)
+	Cfun.point.restype = ctypes.POINTER(ctypes.c_int)  ##声明函数返回值为int*
+	y = Cfun.point(ctypes.pointer(x))
+	print(y.contents.value)
+
+接收返回的指针
+
+c代码::
+
+	void  array(int x[])
+	{
+	     *x = 100;
+	}
+
+python代码::
+
+	Array = ctypes.c_int * 4;  ##声明一维数组,数组长度为4
+	a = Array(0, 1, 2, 3)  ##初始化数组
+	Cfun.array(a)
+	print(a[0], a[1], a[2], a[3])
+
+声明二维数组::
+
+	Array = (ctypes.c_int * 4)*5  ##声明二维数组
+	a=Array()
 
 scapy
 -------------------------

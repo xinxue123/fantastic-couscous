@@ -94,8 +94,10 @@
 <li class="toctree-l2"><a class="reference internal" href="#shell">shell相关知识</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">linux 时间处理</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#crontab">crontab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#anacron">anacron</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#samba">samba</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#ftp">FTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">其他命令</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
@@ -199,6 +201,7 @@
 <p>在文本编辑器内部:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span><span class="n">gg</span> <span class="c1">#跳行到25行</span>
 <span class="n">shift</span><span class="o">+</span><span class="n">g</span> <span class="c1">#跳到文本末尾</span>
+<span class="n">ctrl</span><span class="o">+</span><span class="n">o</span>  <span class="c1"># 返回上一次修改的位置</span>
 <span class="n">shift</span><span class="o">+</span><span class="n">V</span> <span class="n">可视块</span>
 <span class="n">ctrl</span><span class="o">+</span><span class="n">v</span> <span class="n">垂直模式</span>
 <span class="n">x</span> <span class="ow">or</span> <span class="n">d</span> <span class="n">均是剪切操作</span>
@@ -235,6 +238,7 @@
 <li><p>cp /lib/systemd/system/vncserver&#64;.service /etc/systemd/system/vncserver&#64;:1.service</p></li>
 <li><p>vim /etc/systemd/system/vncserver&#64;:1.service</p></li>
 <li><p>systemctl daemon-reload</p></li>
+<li><p>设置vnc登录账号(vncpasswd)</p></li>
 <li><p>服务设置</p></li>
 </ol>
 <blockquote>
@@ -244,7 +248,7 @@
 <li><p>systemctl stop vncserver&#64;:1.service   #停止服务</p></li>
 </ul>
 </div></blockquote>
-<ol class="arabic simple" start="9">
+<ol class="arabic simple" start="10">
 <li><p>下载vnc软件并连接：IP:1</p></li>
 </ol>
 </div>
@@ -399,6 +403,8 @@ funcName $1 传参
 <span class="n">date</span> <span class="o">+%</span><span class="n">d</span> <span class="c1"># day of month (e.g., 01)</span>
 
 <span class="n">date</span> <span class="o">--</span><span class="n">date</span><span class="o">=</span><span class="s2">&quot;2019-09-01 1:1:1&quot;</span> <span class="c1"># 自定义时间字符串</span>
+<span class="n">date</span> <span class="o">+%</span><span class="n">F</span> <span class="o">-</span><span class="n">d</span> <span class="s2">&quot;+2hour&quot;</span> <span class="c1"># 未来俩小时</span>
+<span class="n">date</span> <span class="o">+%</span><span class="n">F</span> <span class="o">-</span><span class="n">d</span> <span class="s2">&quot;+2day&quot;</span> <span class="c1"># 未来两天</span>
 </pre></div>
 </div>
 </div>
@@ -416,6 +422,8 @@ funcName $1 传参
 <ol class="arabic simple">
 <li><p>crontab -e # 进入编辑排程,可增加、删除某个排程</p></li>
 </ol>
+<p>守护进程crond</p>
+<p>定时任务在任务末尾要加 &gt;/dev/null 2&gt;&amp;1,去除不必要的信息</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><a href="#id5"><span class="problematic" id="id6">*</span></a>(星号)      代表任何时刻都接受的意思！举例来说,范例一内那个日、月、周都是 * , 就代表着『不论何月、何 日的礼拜几的 12:00 都执行后续指令』的意思！</p></li>
@@ -436,6 +444,10 @@ funcName $1 传参
 <blockquote>
 <div><a class="reference internal image-reference" href="_images/crontab1.PNG"><img alt="alternate text" class="align-center" src="_images/crontab1.PNG" style="width: 500.0px; height: 250.0px;" /></a>
 </div></blockquote>
+</div>
+<div class="section" id="anacron">
+<h2>anacron<a class="headerlink" href="#anacron" title="Permalink to this headline">¶</a></h2>
+<p>定时任务,适合与非二十四小时的任务,以天为周期或每次开机执行</p>
 </div>
 <div class="section" id="samba">
 <h2>samba<a class="headerlink" href="#samba" title="Permalink to this headline">¶</a></h2>
@@ -463,6 +475,29 @@ funcName $1 传参
 <span class="n">service</span> <span class="n">vsftpd</span> <span class="n">start</span> <span class="c1"># 启动服务</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="id9">
+<h2>其他命令<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sed -n &#39;2,3p&#39; /etc/passwd # 选定第2、3行
+sed -i &#39;s/ss/ff/g&#39; file #用ff修改ss
+sed -r &#39;s/(.*)/\1/&#39; files # 正则匹配
+awk -F &quot;:&quot; &#39;{print $1}&#39; files # -F为分隔符,默认为空格,$NF为最后一列
+awk -F &quot;:&quot; &#39;{if(NR&lt;31 &amp;&amp; NR &gt;1) print }&#39; /etc/passwd #
+NR指代行数,&amp;&amp;、||
+awk -F &quot;[, ]&quot; &#39;{print $1 $2}&#39; files
+grep root -B 2 /etc/passwd # 查找root的前两行(B、A、C)
+grep -E &#39;python|go&#39; files # -E 可同时过滤多个值
+find / -type f -name &quot;*.txt&quot; # 查找文件-o、-a 或者、同时成立,!取反
+ntpstat # 查看时间同步状态
+</pre></div>
+</div>
+<p>重定向</p>
+<ol class="arabic simple">
+<li><p>标准输入:代码为0</p></li>
+<li><p>正常输出:代码为1</p></li>
+</ol>
+<p>3. 错误输出:代码为2
+1&gt;/dev/null 2&gt;&amp;1</p>
 </div>
 </div>
 

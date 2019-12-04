@@ -33,6 +33,7 @@ vim 基本操作
 
  25gg #跳行到25行 
  shift+g #跳到文本末尾
+ ctrl+o  # 返回上一次修改的位置
  shift+V 可视块
  ctrl+v 垂直模式
  x or d 均是剪切操作
@@ -70,13 +71,14 @@ vim 基本操作
 5.  cp /lib/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:1.service
 6.  vim /etc/systemd/system/vncserver@:1.service
 7.  systemctl daemon-reload
-8.  服务设置
+8.	设置vnc登录账号(vncpasswd)
+9.  服务设置
 
  - systemctl enable vncserver@:1.service  #开机启动
  - systemctl start vncserver@:1.service   #启动服务
  -  systemctl stop vncserver@:1.service   #停止服务
 
-9. 下载vnc软件并连接：IP:1
+10. 下载vnc软件并连接：IP:1
 
 
 安装python
@@ -234,6 +236,8 @@ linux 时间处理
  date +%d # day of month (e.g., 01)
 
  date --date="2019-09-01 1:1:1" # 自定义时间字符串
+ date +%F -d "+2hour" # 未来俩小时
+ date +%F -d "+2day" # 未来两天
 
 crontab
 ----------------------
@@ -250,6 +254,9 @@ at 的排程编辑
 
 1. crontab -e # 进入编辑排程,可增加、删除某个排程
 
+守护进程crond
+
+定时任务在任务末尾要加 >/dev/null 2>&1,去除不必要的信息
 
  - *(星号)      代表任何时刻都接受的意思！举例来说,范例一内那个日、月、周都是 * , 就代表着『不论何月、何 日的礼拜几的 12:00 都执行后续指令』的意思！   
 
@@ -272,6 +279,13 @@ at 的排程编辑
   :scale: 50 %
   :alt: alternate text
   :align: center
+
+
+anacron
+----------------
+
+定时任务,适合与非二十四小时的任务,以天为周期或每次开机执行
+
 
 
 samba
@@ -299,5 +313,31 @@ FTP
  /etc/vsftpd # 文件的保存位置
  /etc/vsftpd/ftpusers # 黑名单
  service vsftpd start # 启动服务
+
+
+其他命令
+--------------------
+
+::
+
+ sed -n '2,3p' /etc/passwd # 选定第2、3行
+ sed -i 's/ss/ff/g' file #用ff修改ss 
+ sed -r 's/(.*)/\1/' files # 正则匹配
+ awk -F ":" '{print $1}' files # -F为分隔符,默认为空格,$NF为最后一列
+ awk -F ":" '{if(NR<31 && NR >1) print }' /etc/passwd # 
+ NR指代行数,&&、||
+ awk -F "[, ]" '{print $1 $2}' files
+ grep root -B 2 /etc/passwd # 查找root的前两行(B、A、C)
+ grep -E 'python|go' files # -E 可同时过滤多个值
+ find / -type f -name "*.txt" # 查找文件-o、-a 或者、同时成立,!取反
+ ntpstat # 查看时间同步状态
+
+
+重定向
+
+1. 标准输入:代码为0
+2. 正常输出:代码为1
+3. 错误输出:代码为2 
+1>/dev/null 2>&1
 
 
