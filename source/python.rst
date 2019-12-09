@@ -21,7 +21,7 @@ Python
 通过命令行直接生成词云的命令行::
  
  wordcloud_cli --text file_path.txt --imagefile wordcloud.png
- # 可以通过wordcloud_cli 进行更详细的调节，需要对文件分词，自带的分词效果较差
+ # 可以通过wordcloud_cli 进行更详细的调节,需要对文件分词,自带的分词效果较差
  # --fontfile path 支持中文
  # --mask file
  # --background white
@@ -47,14 +47,15 @@ Python
 requests
 ------------------
 
-发送http请求::
+发送http请求
+::
 
  url = 'https://www.baidu.com'
  headers = {'user-agent':""}
  proxy = {"http":"89.17.37.218:52957"} # 使用代理
  response = requests.get(url,params={"wd":"中国"},proxies=proxy)
- # response.content 是原始页面的byte类型，没有解码
- # response.text 是requests 解码后的数据，解码方式是推测的，可能出错
+ # response.content 是原始页面的byte类型,没有解码
+ # response.text 是requests 解码后的数据,解码方式是推测的,可能出错
 
  response = request.post(url,data) # post 请求
 
@@ -95,15 +96,17 @@ html.etree.fromstring() # 传入字符串
 
 ctypes
 -------------------------
-python中使用ctypes模块可以在python中直接调用C/C++。首先要将C/C++编译成动态库（.dll或.so)，之后python中调用即可。
+python中使用ctypes模块可以在python中直接调用C/C++。首先要将C/C++编译成动态库（.dll或.so),之后python中调用即可。
 
-在linux的编译命令如下::
+在linux的编译命令如下
+::
 
  gcc -shared -fPIC -o code.so code.c
 
 普通方法
 
-c代码::
+c代码
+::
 
 	int add(int a, int b)
 	{
@@ -112,19 +115,21 @@ c代码::
 		return c;
 	}
 
-python代码::
+python代码
+::
 
 	import ctypes
 	Cfun = ctypes.DLL('code.so')  ##动态链接库所在目录
-	Num1 = ctypes.c_int(10)         ##创建第一个输入参数，将参数类型指定为c_int即C语言中的int类型
+	Num1 = ctypes.c_int(10)         ##创建第一个输入参数,将参数类型指定为c_int即C语言中的int类型
 	Num2 = ctypes.c_int(30)
-	Cfun.add.restype=ctypes.c_int   ##将C函数的返回值类型定位c_int即C语言中的int类型，如果不先声明类型在使用非int变量时，返回值会不对
+	Cfun.add.restype=ctypes.c_int   ##将C函数的返回值类型定位c_int即C语言中的int类型,如果不先声明类型在使用非int变量时,返回值会不对
 	Sum=Cfun.add(Num1,Num2)
 	print(Sum)
 
 使用指针
 
-c代码::
+c代码
+::
 
 	void add_point(float* a, float* b, float* c)
 	{
@@ -132,7 +137,8 @@ c代码::
 		*a = 129.7;
 	}
 
-python代码::
+python代码
+::
 
 	import ctypes
 	Cfun = ctypes.DLL('code.so')  ##动态链接库所在目录
@@ -144,7 +150,8 @@ python代码::
 
 接收返回的指针
 
-c代码::
+c代码
+::
 
 	int*  point(int* x)
 	{
@@ -153,7 +160,8 @@ c代码::
 		return y;
 	}
 
-python代码::
+python代码
+::
 
 	x = ctypes.c_int(2560)
 	Cfun.point.restype = ctypes.POINTER(ctypes.c_int)  ##声明函数返回值为int*
@@ -162,43 +170,47 @@ python代码::
 
 接收返回的指针
 
-c代码::
+c代码:
+:
 
 	void  array(int x[])
 	{
 	     *x = 100;
 	}
 
-python代码::
+python代码
+::
 
 	Array = ctypes.c_int * 4;  ##声明一维数组,数组长度为4
 	a = Array(0, 1, 2, 3)  ##初始化数组
 	Cfun.array(a)
 	print(a[0], a[1], a[2], a[3])
 
-声明二维数组::
+声明二维数组
+::
 
 	Array = (ctypes.c_int * 4)*5  ##声明二维数组
 	a=Array()
 
 scapy
 -------------------------
-模拟三次握手::
+模拟三次握手
+::
  
  windows查看端口 netstat
  
- send(),在第三层发送数据包，但没有接收功能
- sendp(),在第二层发送数据包，同样没有接收功能
+ send(),在第三层发送数据包,但没有接收功能
+ sendp(),在第二层发送数据包,同样没有接收功能
 
- sr(),在第三层发送数据包，有接收功能
- sr1(),在第三层发送数据包，有接收功能，但只接收第一个包
+ sr(),在第三层发送数据包,有接收功能
+ sr1(),在第三层发送数据包,有接收功能,但只接收第一个包
  srloop(),在第三层工作,循环发包
 
  srp()、srp1()、srploop()与sr,sr1,srloop类似,只是工作在第二层
- 开始模拟时需要设置防火墙规则，防止操作系统发送RST
+ 开始模拟时需要设置防火墙规则,防止操作系统发送RST
  iptables -A OUTPUT -p tcp --tcp-flags RST RST -d 192.168.233.1 -j DROP
  
- flags = 2 为SYN扫描，半开式扫描
+ flags = 2 为SYN扫描,半开式扫描
  recv=sr1(IP(dst="192.168.233.1")/TCP(dport=10020,sport=7777,flags="S"))
  ack = recv.ack
  seq = recv.seq
@@ -206,14 +218,15 @@ scapy
  发送ACK(flag = 16),完成三次握手！
  send(IP(dst='192.168.233.1')/TCP(dport=10020,sport=7777,flags=16,seq=ack,ack=seq+1))
 
- flag为24（ACK = 16，PUSH = 8) 发送数据
+ flag为24（ACK = 16,PUSH = 8) 发送数据
  recv1 = sr(IP(dst='192.168.233.1')/TCP(dport=10020,sport=7777,flags=24,seq=ack,ack=seq+1)/"hi", multi=1, timeout=10)
  如果多次发送数据需要每次对获取的seq+1,然后令ack等于seq+1
 
- flags=17, FIN（1） + ACK（16），进行连接终结
+ flags=17, FIN（1） + ACK（16）,进行连接终结
  recv1=srp1(IP(dst='192.168.233.1')/TCP(dport=10020,sport=7777,seq=ack,ack=seq+1,flags=17))
 
-arp投毒,抓包::
+arp投毒,抓包
+::
 
  from scapy.all import *
  import os
@@ -348,6 +361,66 @@ opencv 安装
  # 背景建模
  # 1. 帧差法
  # 2. 混合高斯模型(GMM)
+
+相机标定原理
+
+相机标定就是根据真实点与成像点之间建立关系求解相机内参、外参、畸变系数的过程；
+在标定的过程中需要对四个坐标系进行转换,分别是:真实世界的坐标系、相机坐标系、图像坐标系、像素坐标系；
+转变的顺序为是真实世界的坐标系中的点转为相机坐标系中的点转变为图片坐标系转变为像素坐标系中的点；
+四个坐标系的关系如下:
+
+ .. image:: 20161210141741307.png 
+  :height: 580px
+  :width: 820 px
+  :scale: 50 %
+  :alt: alternate text
+  :align: center
+
+1. 真实世界的坐标系转为相机坐标系
+
+- 真实世界的坐标系转换为相机坐标系需要先对三个轴进行旋转,使的真实世界的x、y、z 的三个坐标轴与相机坐标系的三个轴平行,
+最后将真实世界的坐标轴平移到与相机坐标系完全重合；
+
+2. 相机坐标系转为图片坐标系
+
+- 在该部分转换需要三角形相似的原理,转换示意图如下:
+
+ .. image:: 20161210142740999.png 
+  :height: 500px
+  :width: 830 px
+  :scale: 50 %
+  :alt: alternate text
+  :align: center
+
+- 其中f为相机焦距,P点为真实世界的点,但是x、y、z 的值已经转换到相机坐标系中的值了,这样就可以求得图像坐标系中的x、y
+
+3. 图片坐标系转换为像素坐标系
+
+- 转换示意图如下:
+
+ .. image:: 20161210143514044.png 
+  :height: 440px
+  :width: 750 px
+  :scale: 50 %
+  :alt: alternate text
+  :align: center
+
+- o点为像素原点,即照片的中心位置,现在要根据图像坐标系中的x、y值求得P点在图片的行列号是多少,
+u的最大值为图片的宽度（横向总共有多少像素点）,v的最大值为图片的高度（纵向总共有多少像素点）
+
+4. 整体的求解公式如下:
+
+ .. image:: 20161210144703071.png 
+  :height: 180px
+  :width: 890 px
+  :scale: 50 %
+  :alt: alternate text
+  :align: center
+
+- 其中dx、dy为一个像素格点代表真实世界的长度,fx、fy分别为f/dx、f/dy,u0、v0分别为u/2、v/2,R、T分别为旋转矩阵、平移矩阵
+
+具体的代码实现可参看 https://www.cnblogs.com/Undo-self-blog/p/8448500.html
+
 
 basemap
 ------------------
@@ -679,11 +752,11 @@ MySQL 语句
 -- 排序
 	-- order by 字段
 	
-	-- asc从小到大排列，即升序
+	-- asc从小到大排列,即升序
 	
-	-- desc从大到小排序，即降序
+	-- desc从大到小排序,即降序
 
-	-- 查询年龄在18到34岁之间的男性，按照年龄从小到到排序
+	-- 查询年龄在18到34岁之间的男性,按照年龄从小到到排序
 
 	::
 
@@ -692,7 +765,7 @@ MySQL 语句
 	 select * from students where (age between 18 and 34) and gender=1 order by age asc;
 
 
-	-- 查询年龄在18到34岁之间的女性，身高从高到矮排序
+	-- 查询年龄在18到34岁之间的女性,身高从高到矮排序
 
 	::
 
@@ -701,14 +774,14 @@ MySQL 语句
 
 	-- order by 多个字段
 	
-	-- 查询年龄在18到34岁之间的女性，身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序
+	-- 查询年龄在18到34岁之间的女性,身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序
 
 	::
 
 	 select * from students where (age between 18 and 34) and gender=2 order by height desc,id desc;
 
 
-	-- 查询年龄在18到34岁之间的女性，身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序,
+	-- 查询年龄在18到34岁之间的女性,身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序,
 	
 	-- 如果年龄也相同那么按照id从大到小排序
 
@@ -729,7 +802,7 @@ MySQL 语句
 	
 	-- count
 	
-	-- 查询男性有多少人，女性有多少人
+	-- 查询男性有多少人,女性有多少人
 
 	::
 
@@ -789,7 +862,7 @@ MySQL 语句
 
 	-- 四舍五入 round(123.23 , 1) 保留1位小数
 	
-	-- 计算所有人的平均年龄，保留2位小数
+	-- 计算所有人的平均年龄,保留2位小数
 
 	::
 
@@ -843,7 +916,7 @@ MySQL 语句
 
 	-- having
 	
-	-- 查询平均年龄超过30岁的性别，以及姓名 having avg(age) > 30
+	-- 查询平均年龄超过30岁的性别,以及姓名 having avg(age) > 30
 
 	::
 
@@ -879,31 +952,31 @@ MySQL 语句
 	 select * from students limit 5, 5;
 
 
-	-- 每页显示2个，第1个页面
+	-- 每页显示2个,第1个页面
 
 	::
 
 	 select * from students limit 0,2;
 
-	-- 每页显示2个，第2个页面
+	-- 每页显示2个,第2个页面
 
 	::
 
 	 select * from students limit 2,2;
 
-	-- 每页显示2个，第3个页面
+	-- 每页显示2个,第3个页面
 
 	::
 
 	 select * from students limit 4,2;
 
-	-- 每页显示2个，第4个页面
+	-- 每页显示2个,第4个页面
 
 	::
 
 	 select * from students limit 6,2; -- -----> limit (第N页-1)*每个的个数, 每页的个数;
 
-	-- 每页显示2个，显示第6页的信息, 按照年龄从小到大排序
+	-- 每页显示2个,显示第6页的信息, 按照年龄从小到大排序
 
 	::
 
@@ -941,13 +1014,13 @@ MySQL 语句
 
 	 select s.name, c.name from students as s inner join classes as c on s.cls_id=c.id;
 
-	-- 查询 有能够对应班级的学生以及班级信息，显示学生的所有信息，只显示班级名称
+	-- 查询 有能够对应班级的学生以及班级信息,显示学生的所有信息,只显示班级名称
 
 	::
 
 	 select s.*, c.name from students as s inner join classes as c on s.cls_id=c.id;
 
-	-- 在以上的查询中，将班级姓名显示在第1列
+	-- 在以上的查询中,将班级姓名显示在第1列
 
 	::
 
@@ -961,7 +1034,7 @@ MySQL 语句
 
 	 select c.name, s.* from students as s inner join classes as c on s.cls_id=c.id order by c.name;
 
-	-- 当时同一个班级的时候，按照学生的id进行从小到大排序
+	-- 当时同一个班级的时候,按照学生的id进行从小到大排序
 
 	::
 
@@ -982,7 +1055,7 @@ MySQL 语句
 	 select * from students as s left join classes as c on s.cls_id=c.id where c.id is null;
 
 	-- right join   on
-	-- 将数据表名字互换位置，用left join完成
+	-- 将数据表名字互换位置,用left join完成
 
 -- 自关联
 

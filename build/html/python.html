@@ -184,7 +184,7 @@
 <p>需要安装jieba、wordcloud
 通过命令行直接生成词云的命令行:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wordcloud_cli</span> <span class="o">--</span><span class="n">text</span> <span class="n">file_path</span><span class="o">.</span><span class="n">txt</span> <span class="o">--</span><span class="n">imagefile</span> <span class="n">wordcloud</span><span class="o">.</span><span class="n">png</span>
-<span class="c1"># 可以通过wordcloud_cli 进行更详细的调节，需要对文件分词，自带的分词效果较差</span>
+<span class="c1"># 可以通过wordcloud_cli 进行更详细的调节,需要对文件分词,自带的分词效果较差</span>
 <span class="c1"># --fontfile path 支持中文</span>
 <span class="c1"># --mask file</span>
 <span class="c1"># --background white</span>
@@ -210,13 +210,13 @@
 </div>
 <div class="section" id="requests">
 <h2>requests<a class="headerlink" href="#requests" title="Permalink to this headline">¶</a></h2>
-<p>发送http请求:</p>
+<p>发送http请求</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://www.baidu.com&#39;</span>
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;user-agent&#39;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">}</span>
 <span class="n">proxy</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;http&quot;</span><span class="p">:</span><span class="s2">&quot;89.17.37.218:52957&quot;</span><span class="p">}</span> <span class="c1"># 使用代理</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;wd&quot;</span><span class="p">:</span><span class="s2">&quot;中国&quot;</span><span class="p">},</span><span class="n">proxies</span><span class="o">=</span><span class="n">proxy</span><span class="p">)</span>
-<span class="c1"># response.content 是原始页面的byte类型，没有解码</span>
-<span class="c1"># response.text 是requests 解码后的数据，解码方式是推测的，可能出错</span>
+<span class="c1"># response.content 是原始页面的byte类型,没有解码</span>
+<span class="c1"># response.text 是requests 解码后的数据,解码方式是推测的,可能出错</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="p">)</span> <span class="c1"># post 请求</span>
 </pre></div>
@@ -258,13 +258,13 @@
 </div>
 <div class="section" id="ctypes">
 <h2>ctypes<a class="headerlink" href="#ctypes" title="Permalink to this headline">¶</a></h2>
-<p>python中使用ctypes模块可以在python中直接调用C/C++。首先要将C/C++编译成动态库（.dll或.so)，之后python中调用即可。</p>
-<p>在linux的编译命令如下:</p>
+<p>python中使用ctypes模块可以在python中直接调用C/C++。首先要将C/C++编译成动态库（.dll或.so),之后python中调用即可。</p>
+<p>在linux的编译命令如下</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">gcc</span> <span class="o">-</span><span class="n">shared</span> <span class="o">-</span><span class="n">fPIC</span> <span class="o">-</span><span class="n">o</span> <span class="n">code</span><span class="o">.</span><span class="n">so</span> <span class="n">code</span><span class="o">.</span><span class="n">c</span>
 </pre></div>
 </div>
 <p>普通方法</p>
-<p>c代码:</p>
+<p>c代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span> <span class="n">add</span><span class="p">(</span><span class="nb">int</span> <span class="n">a</span><span class="p">,</span> <span class="nb">int</span> <span class="n">b</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="nb">int</span> <span class="n">c</span><span class="p">;</span>
@@ -273,18 +273,18 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>python代码:</p>
+<p>python代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ctypes</span>
 <span class="n">Cfun</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">DLL</span><span class="p">(</span><span class="s1">&#39;code.so&#39;</span><span class="p">)</span>  <span class="c1">##动态链接库所在目录</span>
-<span class="n">Num1</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>         <span class="c1">##创建第一个输入参数，将参数类型指定为c_int即C语言中的int类型</span>
+<span class="n">Num1</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>         <span class="c1">##创建第一个输入参数,将参数类型指定为c_int即C语言中的int类型</span>
 <span class="n">Num2</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-<span class="n">Cfun</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">restype</span><span class="o">=</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span>   <span class="c1">##将C函数的返回值类型定位c_int即C语言中的int类型，如果不先声明类型在使用非int变量时，返回值会不对</span>
+<span class="n">Cfun</span><span class="o">.</span><span class="n">add</span><span class="o">.</span><span class="n">restype</span><span class="o">=</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span>   <span class="c1">##将C函数的返回值类型定位c_int即C语言中的int类型,如果不先声明类型在使用非int变量时,返回值会不对</span>
 <span class="n">Sum</span><span class="o">=</span><span class="n">Cfun</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Num1</span><span class="p">,</span><span class="n">Num2</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">Sum</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>使用指针</p>
-<p>c代码:</p>
+<p>c代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">add_point</span><span class="p">(</span><span class="nb">float</span><span class="o">*</span> <span class="n">a</span><span class="p">,</span> <span class="nb">float</span><span class="o">*</span> <span class="n">b</span><span class="p">,</span> <span class="nb">float</span><span class="o">*</span> <span class="n">c</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="o">*</span><span class="n">c</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span> <span class="o">+</span> <span class="o">*</span><span class="n">b</span><span class="p">;</span>
@@ -292,7 +292,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>python代码:</p>
+<p>python代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ctypes</span>
 <span class="n">Cfun</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">DLL</span><span class="p">(</span><span class="s1">&#39;code.so&#39;</span><span class="p">)</span>  <span class="c1">##动态链接库所在目录</span>
 <span class="n">x1</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_float</span><span class="p">(</span><span class="mf">1.9</span><span class="p">)</span>
@@ -303,7 +303,7 @@
 </pre></div>
 </div>
 <p>接收返回的指针</p>
-<p>c代码:</p>
+<p>c代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">int</span><span class="o">*</span>  <span class="n">point</span><span class="p">(</span><span class="nb">int</span><span class="o">*</span> <span class="n">x</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="nb">int</span><span class="o">*</span> <span class="n">y</span><span class="o">=</span><span class="n">NULL</span><span class="p">;</span>
@@ -312,7 +312,7 @@
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>python代码:</p>
+<p>python代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">(</span><span class="mi">2560</span><span class="p">)</span>
 <span class="n">Cfun</span><span class="o">.</span><span class="n">point</span><span class="o">.</span><span class="n">restype</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">POINTER</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span><span class="p">)</span>  <span class="c1">##声明函数返回值为int*</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">Cfun</span><span class="o">.</span><span class="n">point</span><span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">pointer</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -320,21 +320,24 @@
 </pre></div>
 </div>
 <p>接收返回的指针</p>
-<p>c代码:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span>  <span class="n">array</span><span class="p">(</span><span class="nb">int</span> <span class="n">x</span><span class="p">[])</span>
-<span class="p">{</span>
-     <span class="o">*</span><span class="n">x</span> <span class="o">=</span> <span class="mi">100</span><span class="p">;</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-<p>python代码:</p>
+<p>c代码:
+:</p>
+<blockquote>
+<div><p>void  array(int x[])
+{</p>
+<blockquote>
+<div><p><a href="#id2"><span class="problematic" id="id3">*</span></a>x = 100;</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>python代码</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span> <span class="o">*</span> <span class="mi">4</span><span class="p">;</span>  <span class="c1">##声明一维数组,数组长度为4</span>
 <span class="n">a</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1">##初始化数组</span>
 <span class="n">Cfun</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 </pre></div>
 </div>
-<p>声明二维数组:</p>
+<p>声明二维数组</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Array</span> <span class="o">=</span> <span class="p">(</span><span class="n">ctypes</span><span class="o">.</span><span class="n">c_int</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">5</span>  <span class="c1">##声明二维数组</span>
 <span class="n">a</span><span class="o">=</span><span class="n">Array</span><span class="p">()</span>
 </pre></div>
@@ -342,21 +345,21 @@
 </div>
 <div class="section" id="scapy">
 <h2>scapy<a class="headerlink" href="#scapy" title="Permalink to this headline">¶</a></h2>
-<p>模拟三次握手:</p>
+<p>模拟三次握手</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>windows查看端口 netstat
 
-send(),在第三层发送数据包，但没有接收功能
-sendp(),在第二层发送数据包，同样没有接收功能
+send(),在第三层发送数据包,但没有接收功能
+sendp(),在第二层发送数据包,同样没有接收功能
 
-sr(),在第三层发送数据包，有接收功能
-sr1(),在第三层发送数据包，有接收功能，但只接收第一个包
+sr(),在第三层发送数据包,有接收功能
+sr1(),在第三层发送数据包,有接收功能,但只接收第一个包
 srloop(),在第三层工作,循环发包
 
 srp()、srp1()、srploop()与sr,sr1,srloop类似,只是工作在第二层
-开始模拟时需要设置防火墙规则，防止操作系统发送RST
+开始模拟时需要设置防火墙规则,防止操作系统发送RST
 iptables -A OUTPUT -p tcp --tcp-flags RST RST -d 192.168.233.1 -j DROP
 
-flags = 2 为SYN扫描，半开式扫描
+flags = 2 为SYN扫描,半开式扫描
 recv=sr1(IP(dst=&quot;192.168.233.1&quot;)/TCP(dport=10020,sport=7777,flags=&quot;S&quot;))
 ack = recv.ack
 seq = recv.seq
@@ -364,15 +367,15 @@ seq = recv.seq
 发送ACK(flag = 16),完成三次握手！
 send(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,flags=16,seq=ack,ack=seq+1))
 
-flag为24（ACK = 16，PUSH = 8) 发送数据
+flag为24（ACK = 16,PUSH = 8) 发送数据
 recv1 = sr(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,flags=24,seq=ack,ack=seq+1)/&quot;hi&quot;, multi=1, timeout=10)
 如果多次发送数据需要每次对获取的seq+1,然后令ack等于seq+1
 
-flags=17, FIN（1） + ACK（16），进行连接终结
+flags=17, FIN（1） + ACK（16）,进行连接终结
 recv1=srp1(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,seq=ack,ack=seq+1,flags=17))
 </pre></div>
 </div>
-<p>arp投毒,抓包:</p>
+<p>arp投毒,抓包</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scapy.all</span> <span class="k">import</span> <span class="o">*</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -507,6 +510,56 @@ recv1=srp1(IP(dst=&#39;192.168.233.1&#39;)/TCP(dport=10020,sport=7777,seq=ack,ac
 <span class="c1"># 2. 混合高斯模型(GMM)</span>
 </pre></div>
 </div>
+<p>相机标定原理</p>
+<p>相机标定就是根据真实点与成像点之间建立关系求解相机内参、外参、畸变系数的过程；
+在标定的过程中需要对四个坐标系进行转换,分别是:真实世界的坐标系、相机坐标系、图像坐标系、像素坐标系；
+转变的顺序为是真实世界的坐标系中的点转为相机坐标系中的点转变为图片坐标系转变为像素坐标系中的点；
+四个坐标系的关系如下:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/20161210141741307.png"><img alt="alternate text" class="align-center" src="_images/20161210141741307.png" style="width: 410.0px; height: 290.0px;" /></a>
+</div></blockquote>
+<ol class="arabic simple">
+<li><p>真实世界的坐标系转为相机坐标系</p></li>
+</ol>
+<ul class="simple">
+<li><p>真实世界的坐标系转换为相机坐标系需要先对三个轴进行旋转,使的真实世界的x、y、z 的三个坐标轴与相机坐标系的三个轴平行,</p></li>
+</ul>
+<p>最后将真实世界的坐标轴平移到与相机坐标系完全重合；</p>
+<ol class="arabic simple" start="2">
+<li><p>相机坐标系转为图片坐标系</p></li>
+</ol>
+<ul class="simple">
+<li><p>在该部分转换需要三角形相似的原理,转换示意图如下:</p></li>
+</ul>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/20161210142740999.png"><img alt="alternate text" class="align-center" src="_images/20161210142740999.png" style="width: 415.0px; height: 250.0px;" /></a>
+</div></blockquote>
+<ul class="simple">
+<li><p>其中f为相机焦距,P点为真实世界的点,但是x、y、z 的值已经转换到相机坐标系中的值了,这样就可以求得图像坐标系中的x、y</p></li>
+</ul>
+<ol class="arabic simple" start="3">
+<li><p>图片坐标系转换为像素坐标系</p></li>
+</ol>
+<ul class="simple">
+<li><p>转换示意图如下:</p></li>
+</ul>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/20161210143514044.png"><img alt="alternate text" class="align-center" src="_images/20161210143514044.png" style="width: 375.0px; height: 220.0px;" /></a>
+</div></blockquote>
+<ul class="simple">
+<li><p>o点为像素原点,即照片的中心位置,现在要根据图像坐标系中的x、y值求得P点在图片的行列号是多少,</p></li>
+</ul>
+<p>u的最大值为图片的宽度（横向总共有多少像素点）,v的最大值为图片的高度度（纵向总共有多少像素点）</p>
+<ol class="arabic simple" start="4">
+<li><p>整体的求解公式如下:</p></li>
+</ol>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/20161210144703071.png"><img alt="alternate text" class="align-center" src="_images/20161210144703071.png" style="width: 445.0px; height: 90.0px;" /></a>
+</div></blockquote>
+<ul class="simple">
+<li><p>其中dx、dy为一个像素格点代表真实世界的长度,fx、fy分别为f/dx、f/dy,u0、v0分别为u/2、v/2,R、T分别为旋转矩阵、平移矩阵</p></li>
+</ul>
+<p>具体的代码实现可参看 <a class="reference external" href="https://www.cnblogs.com/Undo-self-blog/p/8448500.html">https://www.cnblogs.com/Undo-self-blog/p/8448500.html</a></p>
 </div>
 <div class="section" id="basemap">
 <h2>basemap<a class="headerlink" href="#basemap" title="Permalink to this headline">¶</a></h2>
@@ -799,24 +852,24 @@ select database();</p>
 </div></blockquote>
 <dl>
 <dt>– 排序</dt><dd><p>– order by 字段</p>
-<p>– asc从小到大排列，即升序</p>
-<p>– desc从大到小排序，即降序</p>
-<p>– 查询年龄在18到34岁之间的男性，按照年龄从小到到排序</p>
+<p>– asc从小到大排列,即升序</p>
+<p>– desc从大到小排序,即降序</p>
+<p>– 查询年龄在18到34岁之间的男性,按照年龄从小到到排序</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">order</span> <span class="n">by</span> <span class="n">age</span><span class="p">;</span>
 <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span> <span class="n">order</span> <span class="n">by</span> <span class="n">age</span> <span class="n">asc</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 查询年龄在18到34岁之间的女性，身高从高到矮排序</p>
+<p>– 查询年龄在18到34岁之间的女性,身高从高到矮排序</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span> <span class="n">order</span> <span class="n">by</span> <span class="n">height</span> <span class="n">desc</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>– order by 多个字段</p>
-<p>– 查询年龄在18到34岁之间的女性，身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序</p>
+<p>– 查询年龄在18到34岁之间的女性,身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span> <span class="n">order</span> <span class="n">by</span> <span class="n">height</span> <span class="n">desc</span><span class="p">,</span><span class="nb">id</span> <span class="n">desc</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 查询年龄在18到34岁之间的女性，身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序,</p>
+<p>– 查询年龄在18到34岁之间的女性,身高从高到矮排序, 如果身高相同的情况下按照年龄从小到大排序,</p>
 <p>– 如果年龄也相同那么按照id从大到小排序</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="p">(</span><span class="n">age</span> <span class="n">between</span> <span class="mi">18</span> <span class="ow">and</span> <span class="mi">34</span><span class="p">)</span> <span class="ow">and</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span> <span class="n">order</span> <span class="n">by</span> <span class="n">height</span> <span class="n">desc</span><span class="p">,</span><span class="n">age</span> <span class="n">asc</span><span class="p">,</span><span class="nb">id</span> <span class="n">desc</span><span class="p">;</span>
 </pre></div>
@@ -828,7 +881,7 @@ select database();</p>
 </dd>
 <dt>– 聚合函数</dt><dd><p>– 总数</p>
 <p>– count</p>
-<p>– 查询男性有多少人，女性有多少人</p>
+<p>– 查询男性有多少人,女性有多少人</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 <span class="n">select</span> <span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 <span class="n">select</span> <span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">as</span> <span class="n">男性人数</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
@@ -865,7 +918,7 @@ select database();</p>
 </pre></div>
 </div>
 <p>– 四舍五入 round(123.23 , 1) 保留1位小数</p>
-<p>– 计算所有人的平均年龄，保留2位小数</p>
+<p>– 计算所有人的平均年龄,保留2位小数</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">age</span><span class="p">)</span><span class="o">/</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
 <span class="n">select</span> <span class="nb">round</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">age</span><span class="p">)</span><span class="o">/</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span><span class="p">;</span>
 </pre></div>
@@ -911,7 +964,7 @@ select database();</p>
 <p class="attribution">—having</p>
 </div></blockquote>
 <blockquote>
-<div><p>– 查询平均年龄超过30岁的性别，以及姓名 having avg(age) &gt; 30</p>
+<div><p>– 查询平均年龄超过30岁的性别,以及姓名 having avg(age) &gt; 30</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">gender</span><span class="p">,</span> <span class="n">group_concat</span><span class="p">(</span><span class="n">name</span><span class="p">),</span><span class="n">avg</span><span class="p">(</span><span class="n">age</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">group</span> <span class="n">by</span> <span class="n">gender</span> <span class="n">having</span> <span class="n">avg</span><span class="p">(</span><span class="n">age</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">30</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -936,23 +989,23 @@ select database();</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 每页显示2个，第1个页面</p>
+<p>– 每页显示2个,第1个页面</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 每页显示2个，第2个页面</p>
+<p>– 每页显示2个,第2个页面</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 每页显示2个，第3个页面</p>
+<p>– 每页显示2个,第3个页面</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 每页显示2个，第4个页面</p>
+<p>– 每页显示2个,第4个页面</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span> <span class="o">--</span> <span class="o">-----&gt;</span> <span class="n">limit</span> <span class="p">(</span><span class="n">第N页</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">每个的个数</span><span class="p">,</span> <span class="n">每页的个数</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 每页显示2个，显示第6页的信息, 按照年龄从小到大排序</p>
+<p>– 每页显示2个,显示第6页的信息, 按照年龄从小到大排序</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">order</span> <span class="n">by</span> <span class="n">age</span> <span class="n">asc</span> <span class="n">limit</span> <span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
 
 <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">gender</span><span class="o">=</span><span class="mi">2</span> <span class="n">order</span> <span class="n">by</span> <span class="n">height</span> <span class="n">desc</span> <span class="n">limit</span> <span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">;</span>
@@ -977,11 +1030,11 @@ select database();</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">s</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 查询 有能够对应班级的学生以及班级信息，显示学生的所有信息，只显示班级名称</p>
+<p>– 查询 有能够对应班级的学生以及班级信息,显示学生的所有信息,只显示班级名称</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">s</span><span class="o">.*</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 在以上的查询中，将班级姓名显示在第1列</p>
+<p>– 在以上的查询中,将班级姓名显示在第1列</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -990,7 +1043,7 @@ select database();</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="n">order</span> <span class="n">by</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>– 当时同一个班级的时候，按照学生的id进行从小到大排序</p>
+<p>– 当时同一个班级的时候,按照学生的id进行从小到大排序</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">s</span><span class="o">.*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="k">as</span> <span class="n">s</span> <span class="n">inner</span> <span class="n">join</span> <span class="n">classes</span> <span class="k">as</span> <span class="n">c</span> <span class="n">on</span> <span class="n">s</span><span class="o">.</span><span class="n">cls_id</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">id</span> <span class="n">order</span> <span class="n">by</span> <span class="n">c</span><span class="o">.</span><span class="n">name</span><span class="p">,</span><span class="n">s</span><span class="o">.</span><span class="n">id</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -1005,7 +1058,7 @@ select database();</p>
 </pre></div>
 </div>
 <p>– right join   on
-– 将数据表名字互换位置，用left join完成</p>
+– 将数据表名字互换位置,用left join完成</p>
 </dd>
 </dl>
 <p>– 自关联</p>
