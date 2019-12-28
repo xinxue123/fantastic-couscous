@@ -75,11 +75,11 @@ grep
 
 tar
 --------------------------
-tar zxvf a.tar.gz
-tar zcvf a.tar.gz *
-tar jxvf b.tar.bz
-tar jcvf b.tar.bz *
-find / -type f |xargs tar ......
+`tar zxvf a.tar.gz`
+`tar zcvf a.tar.gz *`
+`tar jxvf b.tar.bz`
+`tar jcvf b.tar.bz *`
+`find / -type f |xargs tar ......`
 
 cut
 --------------------------

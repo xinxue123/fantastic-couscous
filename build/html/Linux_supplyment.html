@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python" href="python.html" />
+    <link rel="prev" title="Linux" href="Linux.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -79,14 +81,42 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">echo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#history">history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#ulimit">ulimit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#issue">issue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#chattr">chattr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#kernel">kernel 相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#wget">wget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#fstab">fstab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#etc-rc-local">/etc/rc.local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#etc-inittab">/etc/inittab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#grep">grep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#tar">tar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#cut">cut</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#inode">inode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id1">硬链接</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#regular">regular</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id2">查找文件命令</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#umask">umask</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#dns">DNS解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id3">修改主机名</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id4">抓包工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#lsof">lsof</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id5">无法上网问题排查</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id6">网站慢排查</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#nfs">nfs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#umount">umount</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#http">http协议</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
 <li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -232,11 +262,11 @@
 </div>
 <div class="section" id="tar">
 <h1>tar<a class="headerlink" href="#tar" title="Permalink to this headline">¶</a></h1>
-<p>tar zxvf a.tar.gz
-tar zcvf a.tar.gz *
-tar jxvf b.tar.bz
-tar jcvf b.tar.bz *
-find / -type f |xargs tar ……</p>
+<p><code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">zxvf</span> <span class="pre">a.tar.gz</span></code>
+<code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">zcvf</span> <span class="pre">a.tar.gz</span> <span class="pre">*</span></code>
+<code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">jxvf</span> <span class="pre">b.tar.bz</span></code>
+<code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">jcvf</span> <span class="pre">b.tar.bz</span> <span class="pre">*</span></code>
+<code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">/</span> <span class="pre">-type</span> <span class="pre">f</span> <span class="pre">|xargs</span> <span class="pre">tar</span> <span class="pre">......</span></code></p>
 </div>
 <div class="section" id="cut">
 <h1>cut<a class="headerlink" href="#cut" title="Permalink to this headline">¶</a></h1>
@@ -340,6 +370,15 @@ lsof -i :80</p>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="python.html" class="btn btn-neutral float-right" title="Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Linux.html" class="btn btn-neutral float-left" title="Linux" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

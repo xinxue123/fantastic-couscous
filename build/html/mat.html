@@ -34,7 +34,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Support" href="support.html" />
+    <link rel="prev" title="golang(够浪)" href="go.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -79,14 +81,47 @@
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html">echo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#history">history</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#ulimit">ulimit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#issue">issue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#chattr">chattr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#kernel">kernel 相关</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#wget">wget</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#fstab">fstab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#etc-rc-local">/etc/rc.local</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#etc-inittab">/etc/inittab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#grep">grep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#tar">tar</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#cut">cut</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#inode">inode</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#id1">硬链接</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#regular">regular</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#id2">查找文件命令</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#umask">umask</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#dns">DNS解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#id3">修改主机名</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#id4">抓包工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#lsof">lsof</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#id5">无法上网问题排查</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#id6">网站慢排查</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#nfs">nfs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#umount">umount</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_supplyment.html#http">http协议</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
 <li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">机器学习算法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">回归拟合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#torch">torch可视化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#em">EM算法</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -195,6 +230,84 @@
 </pre></div>
 </div>
 </div>
+<div class="section" id="torch">
+<h2>torch可视化<a class="headerlink" href="#torch" title="Permalink to this headline">¶</a></h2>
+<p>torch 可以采用visdom</p>
+<ol class="arabic simple">
+<li><p>安装及启动</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pip3</span> <span class="n">install</span> <span class="n">visdom</span>
+<span class="go">python -m visdom.server</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>使用</p></li>
+</ol>
+</div>
+<div class="section" id="em">
+<h2>EM算法<a class="headerlink" href="#em" title="Permalink to this headline">¶</a></h2>
+<p>EM 算法的手动实现</p>
+<ol class="arabic simple">
+<li><p>首先计算E步,假设分布的均值和方差已知,分布的概率pi已知,此时可以计算每个样本在不同分布上的概率,计算公式如下：</p></li>
+</ol>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/gumma.png"><img alt="alternate text" class="align-center" src="_images/gumma.png" style="width: 223.5px; height: 85.5px;" /></a>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>计算M步,根据计算后的概率重新调整分布的均值和方差，以及pi,计算公式如下：</p></li>
+</ol>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/M_step.png"><img alt="alternate text" class="align-center" src="_images/M_step.png" style="width: 251.5px; height: 195.0px;" /></a>
+</div></blockquote>
+<p>3. 具体实现代码如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">multivariate_normal</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="k">import</span> <span class="n">pairwise_distances_argmin</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">x1</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">([</span><span class="mi">160</span><span class="p">,</span> <span class="mi">55</span><span class="p">],[[</span><span class="mi">18</span><span class="p">,</span><span class="mi">12</span><span class="p">],[</span><span class="mi">12</span><span class="p">,</span><span class="mi">31</span><span class="p">]])</span>  <span class="c1"># 模拟一个高斯分布</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">([</span><span class="mi">173</span><span class="p">,</span><span class="mi">65</span><span class="p">],[[</span><span class="mi">22</span><span class="p">,</span><span class="mi">28</span><span class="p">],[</span><span class="mi">28</span><span class="p">,</span><span class="mi">105</span><span class="p">]])</span>
+    <span class="n">x1_data</span> <span class="o">=</span> <span class="n">x1</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+    <span class="n">x2_data</span> <span class="o">=</span> <span class="n">x2</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="mi">400</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">x1_data</span><span class="p">,</span> <span class="n">x2_data</span><span class="p">))</span>
+    <span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 初始化第一个分布的均值</span>
+    <span class="n">u2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># 初始化第二个分布的均值</span>
+    <span class="n">uu1</span> <span class="o">=</span> <span class="n">u1</span>
+    <span class="n">uu2</span> <span class="o">=</span> <span class="n">u2</span>
+    <span class="n">var1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># 方差</span>
+    <span class="n">var2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>  <span class="c1"># 方差</span>
+    <span class="n">pi</span> <span class="o">=</span> <span class="mf">0.5</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">500</span><span class="p">):</span>
+        <span class="n">n1</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">u1</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">var1</span><span class="p">)</span>  <span class="c1"># 构造第一个分布</span>
+        <span class="n">n2</span> <span class="o">=</span> <span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="o">=</span><span class="n">u2</span><span class="p">,</span> <span class="n">cov</span><span class="o">=</span><span class="n">var2</span><span class="p">)</span>  <span class="c1"># 构造第二个分布</span>
+        <span class="n">n1_p</span> <span class="o">=</span> <span class="n">n1</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">n2_p</span> <span class="o">=</span> <span class="n">n2</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">gumma_1</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">n1_p</span>
+        <span class="n">gumma_2</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">n2_p</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">n1_p</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">n2_p</span>
+        <span class="n">gumma_1</span> <span class="o">=</span> <span class="n">gumma_1</span> <span class="o">/</span> <span class="n">g</span>
+        <span class="n">gumma_2</span> <span class="o">=</span> <span class="n">gumma_2</span> <span class="o">/</span> <span class="n">g</span>
+
+        <span class="c1"># M step</span>
+        <span class="n">u1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">gumma_1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gumma_1</span><span class="p">)</span>
+        <span class="n">u2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">gumma_2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gumma_2</span><span class="p">)</span>
+        <span class="n">var1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">u1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">gumma_1</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">x</span><span class="o">-</span><span class="n">u1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gumma_1</span><span class="p">)</span>
+        <span class="n">var2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">u2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">gumma_2</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">x</span><span class="o">-</span><span class="n">u2</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gumma_2</span><span class="p">)</span>
+        <span class="n">pi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gumma_1</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">gumma_1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;第</span><span class="si">{}</span><span class="s2">次：u1:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">u1</span><span class="p">,</span> <span class="s2">&quot; u2:&quot;</span><span class="p">,</span> <span class="n">u2</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">u1</span><span class="p">,</span> <span class="n">u2</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">var1</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">var2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x1_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x1_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x2_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">x2_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
 </div>
 
 
@@ -202,6 +315,15 @@
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="support.html" class="btn btn-neutral float-right" title="Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="go.html" class="btn btn-neutral float-left" title="golang(够浪)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
