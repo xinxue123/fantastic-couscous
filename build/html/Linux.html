@@ -104,6 +104,7 @@
 <li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
 <li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
 <li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -479,8 +480,10 @@ funcName $1 传参
 <div class="section" id="id9">
 <h2>其他命令<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sed -n &#39;2,3p&#39; /etc/passwd # 选定第2、3行
-sed -i &#39;s/ss/ff/g&#39; file #用ff修改ss
+sed -i &#39;s/ss/ff/g&#39; file # 替换用ff修改ss
 sed -r &#39;s/(.*)/\1/&#39; files # 正则匹配
+sed -i &#39;1d&#39; files # 删除第一行
+sed -i &#39;/^a.*/d&#39; files # 删除匹配行
 awk -F &quot;:&quot; &#39;{print $1}&#39; files # -F为分隔符,默认为空格,$NF为最后一列
 awk -F &quot;:&quot; &#39;{if(NR&lt;31 &amp;&amp; NR &gt;1) print }&#39; /etc/passwd #
 NR指代行数,&amp;&amp;、||

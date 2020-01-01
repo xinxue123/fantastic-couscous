@@ -53,6 +53,26 @@ torch 可以采用visdom
 python -m visdom.server
 
 2. 使用
+::
+
+	import visdom
+	import numpy as np
+	import time
+	import torch
+
+  	# 1. plot line
+	vis = visdom.Visdom()
+	x = np.arange(20)
+	y = np.sin(x)
+	vis.line(y, x, win="sin", opts={"title":"y=sinx(x)"})
+
+	# 2. append point
+	vis = visdom.Visdom()
+	for i in range(100):
+	    x = np.array([i])
+	    y = np.sin(x)
+	    vis.line(y, x, win="animal", update="append")
+	    time.sleep(0.5)
 
 EM算法
 ----------------------------------
@@ -125,7 +145,107 @@ EM 算法的手动实现
 	    plt.scatter(x2_data[:, 0], x2_data[:, 1])
 	    plt.show()
 
+HMM
+-------------------------
+隐马尔可夫的相关计算;
+
+1. 前向算法公式
+
+其中a是转移概率矩阵（隐状态转移到隐状态）,b是发射矩阵（隐状态转移到观测值）,pi是初始矩阵,P(O|lambda)是给定的以上三个值后看到观测值的概率大小
+
+ .. image:: F_a.png 
+  :height: 556px
+  :width:  850px
+  :scale: 30 %
+  :alt: alternate text
+  :align: center
+
+2. 后向算法公式
+
+ .. image:: B_a.png 
+  :height: 562px
+  :width:  799px
+  :scale: 30 %
+  :alt: alternate text
+  :align: center
+
+3. 前向概率与后向概率的关系
+
+- 单个状态下的概率：
+
+ .. image:: F_B.png 
+  :height: 485px
+  :width:  883px
+  :scale: 30 %
+  :alt: alternate text
+  :align: center
+
+- 两个状态下的联合概率：
+
+ .. image:: M_F_B.png 
+  :height: 559px
+  :width:  1054px
+  :scale: 30 %
+  :alt: alternate text
+  :align: center
 
 
+实现脚本
+::
 
+	def calc_alpha(ob, a, b, pi):
+	    """
+	    前向算法： pi a b ob
+	    """
+	    alpha = np.zeros((pi.size, ob.size))
+	    alpha[:, 0] = pi
+	    alpha = (alpha.T * b[:, ob[0]]).T
+	    for i in range(1, len(ob)):
+	        for s in range(len(pi)):
+	            alpha[s, i] = np.sum(alpha[:, i - 1] * a[:, s]) * b[s, ob[i]]
+
+	    print(alpha)
+	    return alpha
+
+
+	def calc_beta(ob, a, b, pi):
+	    """
+	    后向算法: pi a b ob
+	    """
+	    beta = np.ones((pi.size, ob.size))
+	    for i in range(ob.size - 2, -1, -1):
+	        for s in range(pi.size):
+	            beta[s, i] = np.sum(a[s, :] * b[:, ob[i + 1]] * beta[:, i + 1])
+	    return beta
+	    # beta[:,0] = beta[:,0] * b[:, ob[0]] * pi
+	    # print(beta)
+	    # print(np.sum(beta, axis=0))
+
+
+	def bw(ob, a, b, pi):
+		# 迭代求解 a b pi
+	    alpha = calc_alpha(ob, a, b, pi)
+	    beta = calc_beta(ob, a, b, pi)
+	    pi = alpha[:, 0] * beta[:, 0]
+	    pi = pi / np.sum(pi)
+
+	    a_part = alpha[:, :-1] * beta[:, :-1]
+	    a_2 = np.sum(a_part, axis=1)
+	    a_1 = np.dot(alpha[:, :-1], (beta[:,1:] * b[:, ob[1:]]).T) * a
+	    a = (a_1.T / a_2).T
+
+	    b_1 = alpha * beta
+	    b0 = np.sum(b_1[:, ob==0], axis=1)
+	    b1 = np.sum(b_1[:, ob==1], axis=1)
+	    b = np.c_[b0, b1]
+	    b = (b.T / np.sum(b_1, axis=1)).T
+
+	    return a, b, pi
+	if __name__ == '__main__':
+		# 简单测试数据
+		pi = np.array([0.2, 0.4, 0.4])
+		a = np.array([[0.5, 0.2, 0.3], [0.3, 0.5, 0.2], [0.2, 0.3, 0.5]])
+		b = np.array([[0.5, 0.5], [0.4, 0.6], [0.7, 0.3]])
+		oo = np.array([0, 1, 0])
+		a_1, b_1, pi_1 = bw(oo, a, b, pi)
 

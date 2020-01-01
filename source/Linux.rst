@@ -321,8 +321,10 @@ FTP
 ::
 
  sed -n '2,3p' /etc/passwd # 选定第2、3行
- sed -i 's/ss/ff/g' file #用ff修改ss 
+ sed -i 's/ss/ff/g' file # 替换用ff修改ss 
  sed -r 's/(.*)/\1/' files # 正则匹配
+ sed -i '1d' files # 删除第一行
+ sed -i '/^a.*/d' files # 删除匹配行
  awk -F ":" '{print $1}' files # -F为分隔符,默认为空格,$NF为最后一列
  awk -F ":" '{if(NR<31 && NR >1) print }' /etc/passwd # 
  NR指代行数,&&、||

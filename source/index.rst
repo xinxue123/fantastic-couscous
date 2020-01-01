@@ -13,7 +13,6 @@ Welcome to tiny's documentation!
    sphinx_note
    scala 
    Linux
-   Linux_supplyment
    python
    spark
    code
