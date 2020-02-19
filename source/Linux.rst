@@ -333,6 +333,10 @@ FTP
  grep -E 'python|go' files # -E 可同时过滤多个值
  find / -type f -name "*.txt" # 查找文件-o、-a 或者、同时成立,!取反
  ntpstat # 查看时间同步状态
+ expr 1 + 1 # 数据运算
+ a=10;b=10;total=$((a*b)) # 计算乘积
+ var=1;let "var+=1";echo $var $ 自增
+ x=1;echo $[$x+1]
 
 
 重定向

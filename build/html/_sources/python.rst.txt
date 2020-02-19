@@ -171,7 +171,7 @@ python代码
 接收返回的指针
 
 c代码:
-:
+::
 
 	void  array(int x[])
 	{
@@ -207,23 +207,29 @@ scapy
  srloop(),在第三层工作,循环发包
 
  srp()、srp1()、srploop()与sr,sr1,srloop类似,只是工作在第二层
- 开始模拟时需要设置防火墙规则,防止操作系统发送RST
- iptables -A OUTPUT -p tcp --tcp-flags RST RST -d 192.168.233.1 -j DROP
+ 开始模拟时需要设置防火墙规则,防止操作系统发送RST(flags=4)
+ --tcp-flags RST RST:第一个RST是想要检查的指标,第二个RST是要设定的指标
+ -d 192.168.1.101:指定目标IP
+ -j DROP:拒绝发送某个种类型数据包
+ -p tcp:选定某个协议
+ -A OUTPUT:新添防火墙规则
+ iptables -A OUTPUT -p tcp --tcp-flags RST RST -d 192.168.1.101 -j DROP
  
  flags = 2 为SYN扫描,半开式扫描
- recv=sr1(IP(dst="192.168.233.1")/TCP(dport=10020,sport=7777,flags="S"))
- ack = recv.ack
- seq = recv.seq
+ recv=sr1(IP(dst="192.168.1.101")/TCP(dport=8081,sport=7777,flags="S"))
  
- 发送ACK(flag = 16),完成三次握手！
- send(IP(dst='192.168.233.1')/TCP(dport=10020,sport=7777,flags=16,seq=ack,ack=seq+1))
+ 发送ACK(flags = 16),完成三次握手！
+ send(IP(dst='192.168.1.101')/TCP(dport=8081,sport=7777,flags=16,seq=recv.ack,ack=recv.seq+1))
 
- flag为24（ACK = 16,PUSH = 8) 发送数据
- recv1 = sr(IP(dst='192.168.233.1')/TCP(dport=10020,sport=7777,flags=24,seq=ack,ack=seq+1)/"hi", multi=1, timeout=10)
- 如果多次发送数据需要每次对获取的seq+1,然后令ack等于seq+1
+ flags为24（ACK = 16,PUSH = 8) 发送数据
+ recv1 = sr(IP(dst='192.168.1.101')/TCP(dport=8081,sport=7777,flags=24,seq=recv.ack,ack=recv.seq)/
+ "hi", multi=1, timeout=10)
+ # seq记录自己发送的字节数，ack记录服务器发送的字节数，每次数据包返回时服务器会自动计算字节数，只需要将服务
+ 器发过 来的ack数值赋值给seq就可以，ack需要自己计算，如果多次发送数据需要每次对获取 的seq+i(服务器发送的字
+ 节数),然后令ack 等于相加后的数值；
 
  flags=17, FIN（1） + ACK（16）,进行连接终结
- recv1=srp1(IP(dst='192.168.233.1')/TCP(dport=10020,sport=7777,seq=ack,ack=seq+1,flags=17))
+ recv1=srp1(IP(dst='192.168.1.101')/TCP(dport=8081,sport=7777,seq=ack,ack=seq+1,flags=17))
 
 arp投毒,抓包
 ::
@@ -447,7 +453,9 @@ modis download script
 
 1. 安装python(https://www.python.org/downloads/)
 
-2. 找到python的安装目录,在cmd下使用cd命令到进入该目录(Scripts),使用dir命令查看当前目录文件。如果存在pip.exe说明当前位置正确,然后安装所需模块(GDAL文件需要全路径),安装命令如下
+2. 找到python的安装目录,在cmd下使用cd命令到进入该目录(Scripts),使用dir命令查看当前目录文件。
+
+如果存在pip.exe说明当前位置正确,然后安装所需模块(GDAL文件需要全路径),安装命令如下
 
 ::
 
@@ -457,6 +465,7 @@ modis download script
 3. 运行下载脚本(down_modis.py为下载脚本,需要给出脚本的本地全路径,本示例仅有文件名)
 
 ::
+
   cd ..
   python down_modis.py
 
