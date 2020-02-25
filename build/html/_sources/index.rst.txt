@@ -15,6 +15,7 @@ Welcome to tiny's documentation!
    Linux
    python
    spark
+   redis
    code
    go
    mat
