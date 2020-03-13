@@ -36,7 +36,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="golang(够浪)" href="go.html" />
-    <link rel="prev" title="Spark" href="spark.html" /> 
+    <link rel="prev" title="redis" href="redis.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -87,15 +87,18 @@
 <li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">加密&amp;解密</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#id2">对称加密</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id3">哈希函数</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id4">非对称加密</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#hmac">消息认证码(Hmac)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id5">数字签名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#https">https通信流程</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -273,6 +276,40 @@
 </ul>
 </div></blockquote>
 </div>
+<div class="section" id="https">
+<h2>https通信流程<a class="headerlink" href="#https" title="Permalink to this headline">¶</a></h2>
+<p>准备工作：服务器端需要CA证书、生成非对称密钥对</p>
+<ol class="arabic">
+<li><p>客户端连接服务器(通过域名)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>域名绑定IP地址</p></li>
+<li><p>服务器解析域名成IP地址</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>服务器收到客户端请求</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>服务器将CA证书发送到客户端的浏览器</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>客户端拿到服务器的证书</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>验证证书的签发机构</p></li>
+<li><p>服务器的公钥</p></li>
+<li><p>验证域名</p></li>
+<li><p>验证证书的有效期</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>客户端产生随机数并用服务器的公钥加密(作为对称加密的密钥)</p></li>
+<li><p>服务器接收文件并使用私钥解密</p></li>
+<li><p>客户端通过对称加密对数据加密</p></li>
+</ol>
+</div>
 </div>
 
 
@@ -286,7 +323,7 @@
         <a href="go.html" class="btn btn-neutral float-right" title="golang(够浪)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="spark.html" class="btn btn-neutral float-left" title="Spark" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="redis.html" class="btn btn-neutral float-left" title="redis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
