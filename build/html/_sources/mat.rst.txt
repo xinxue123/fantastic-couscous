@@ -249,3 +249,72 @@ HMM
 		oo = np.array([0, 1, 0])
 		a_1, b_1, pi_1 = bw(oo, a, b, pi)
 
+最大熵思想实现分类
+-----------------------------------
+最大熵求解即求最大不确定性,本脚本采用torch训练模型，并使用模型进行预测。
+::
+
+	from sklearn.datasets import load_iris
+	from sklearn.model_selection import train_test_split
+	import pandas as pd
+	import numpy as np
+	import torch
+	from torch.optim import Adam
+
+	# 计算概率
+	def cal_p(x_train, y_train, w, p_mean, p_std):
+	    for l in range(p_std.shape[0]):
+	        # print(type(x_train), type(y_train), type(w), type(p_std), type(p_mean))
+	        res_std = p_std[l]
+	        res_mean = p_mean[l]
+	        res = torch.exp(-1/2 * w * ((x_train-res_mean)**2) / (res_std ** 2)) / np.sqrt(2*np.pi) / res_std
+	    p = res[np.arange(len(res)),y_train.numpy()] / torch.cumsum(res, 1)[:,-1]
+	    return p
+
+	def predict(x_train, y_train, w, p_mean, p_std):
+    	pp = torch.zeros((x_train.shape[0], p_std.shape[0]))
+	    for l in range(len(p_std)):
+	        # print(type(x_train), type(y_train), type(w), type(p_std), type(p_mean))
+	        res_std = p_std[l]
+	        res_mean = p_mean[l]
+	        # tmp = torch.exp(-0.5 * w * ((x_train-res_mean)**2) / (res_std ** 2)) / np.sqrt(2*np.pi) / res_std
+	        res = torch.sum(torch.exp(-0.5 * w * ((x_train-res_mean)**2) / (res_std ** 2)) / np.sqrt(2*np.pi) / res_std, 1)
+	        pp[:,l] = res
+
+	    # 概率归一化
+	    for l in range(len(p_std)):
+	        pp[:, l] = pp[:, l] / torch.sum(pp, 1)
+	    return pp
+
+	np.set_printoptions(precision=5,suppress=True)
+	data = load_iris() # 加载鸢尾花数据集
+	x = data.get("data")
+	y = data.get("target")
+	x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, shuffle=True)
+	train_stats = pd.DataFrame(data=np.c_[x_train, y_train], columns=["1","2","3","4","class"])
+	res_mean = train_stats.groupby("class").mean().reset_index() # 统计样本数据均值
+	res_std = train_stats.groupby("class").std().reset_index() # 统计样本数据标准差
+	res_std = torch.from_numpy(res_std.values[:,1:])
+	res_mean = torch.from_numpy(res_mean.values[:,1:])
+	w = torch.zeros(res_std.shape[1], dtype=torch.double, requires_grad=True)
+	x_train = torch.from_numpy(x_train)
+	y_train = torch.from_numpy(y_train)
+	optimizer = Adam({w1:"weight"}, lr=0.1)
+
+	# 训练模型
+	for i in range(1000):
+	    result = cal_p(x_train, y_train, w, p_mean=res_mean, p_std=res_std)
+        result = torch.log(result)
+	    loss = -torch.sum(result) # 最大似然
+
+	    optimizer.zero_grad()
+	    loss.backward()
+	    optimizer.step()
+	    print(w1)
+
+	# 利用模型预测数据
+	pp = predict(x_test, y_test, w, p_mean=res_mean, p_std=res_std)
+	index = torch.argmax(pp, 1) # 选取概率最大的类别
+	print(index)
+	print(y_test)
+	print(index - y_test)
