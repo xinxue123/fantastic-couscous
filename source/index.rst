@@ -19,6 +19,7 @@ Welcome to tiny's documentation!
    code
    go
    mat
+   image_process
    support
    
 
