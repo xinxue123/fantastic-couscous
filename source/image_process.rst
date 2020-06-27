@@ -56,7 +56,93 @@
 4. 图像配准
 -----------------------------------
 
-学习中
+a. 寻找关键点
+
+b. 关键点匹配
+
+c. 计算转换矩阵
+
+e. 图片匀色
+
+d. 对透视变换的图像应用转换矩阵
+
+e. 拼接图像
+
+下面是利用opencv、numpy实现上述操作
+
+::
+
+	import cv2
+	import os
+	import glob
+	from osgeo import gdal
+	import numpy as np
+	src_fold = r"F:\ENVI\Data\03mosaic"
+	files = glob.glob(os.path.join(src_fold, "*.img"))
+	destination_fold = r"F:\ENVI\Data\result"
+	out_name = "mosaic04.tif"
+	img1_dst = gdal.Open(files[0])
+	b1 = img1_dst.ReadAsArray()
+	geo1 = img1_dst.GetGeoTransform()
+	img2_dst = gdal.Open(files[1])
+	geo2 = img2_dst.GetGeoTransform()
+	b2 = img2_dst.ReadAsArray()
+	b1 = cv2.cvtColor(b1[:3].transpose(1,2,0), cv2.COLOR_RGB2GRAY)
+	b2 = cv2.cvtColor(b2[:3].transpose(1,2,0), cv2.COLOR_RGB2GRAY)
+	xl1,yu1,xr1,yb1 = geo1[0],geo1[3],geo1[0] + geo1[1] * img1_dst.RasterXSize, geo1[3] + geo1[5] * img1_dst.RasterYSize
+	xl2,yu2,xr2,yb2 = geo2[0],geo2[3],geo2[0] + geo2[1] * img2_dst.RasterXSize, geo2[3] + geo2[5] * img2_dst.RasterYSize
+	xl,yu,xr,yb = max(xl1,xl2), min(yu1,yu2), min(xr1, xr2), max(yb1,yb2)
+	ras01_y_train = np.zeros_like(b1)
+	ras01_y_train[int((yu1 - yu)/-geo1[5]):int((yu1 - yb)/-geo1[5]), int((xl - xl1)/geo1[1]):int((xr - xl1)/geo1[1])] = 1
+	ras02_x_train = np.zeros_like(b2)
+	ras02_x_train[int((yu2 - yu)/-geo1[5]):int((yu2 - yb)/-geo1[5]),int((xl - xl2)/geo1[1]):int((xr - xl2)/geo1[1])] = 1
+	
+	# 1. 查找关键点
+	# gg = cv2.xfeatures2d.SIFT_create()
+	# gg = cv2.ORB_create()
+	gg = cv2.xfeatures2d.SURF_create()
+	kp, desc = gg.detectAndCompute(b1, ras01_y_train)
+	kp2, desc2 = gg.detectAndCompute(b2, ras02_x_train)
+
+	# 2. 关键点匹配
+	bf = cv2.BFMatcher()
+	matched = bf.match(desc, desc2)
+	matched = sorted(matched, key=lambda x:x.distance)
+	out_img = cv2.drawMatches(b1, kp, b2, kp2, matched[:10],None)
+	
+	# 3. 计算转换矩阵
+	dst_points = []
+	src_points = []
+	for i in matched[:10]:
+	    dst_points.append(kp[i.queryIdx].pt)
+	    src_points.append(kp2[i.trainIdx].pt)
+	h = cv2.findHomography(np.array(src_points), np.array(dst_points))
+
+	# 4. 匀色 wallis
+	mg_b1 = np.mean(b1)
+	vg_b1 = np.std(b1)
+	mg_b2 = np.mean(b2)
+	vg_b2 = np.std(b2)
+	mf = np.mean(np.array([mg_b1, mg_b2]))
+	vf = np.mean(np.array([vg_b1, vg_b2]))
+	r1_b1 = vf / vg_b1
+	r0_b1 = mf - r1_b1 * mg_b1
+	r1_b2 = vf / vg_b2
+	r0_b2 = mf - r1_b2 * mg_b2
+	print(r1_b2, r1_b1, r0_b2, r0_b1)
+	b1 = b1 * r1_b1 + r0_b1
+	b2 = b2 * r1_b2 + r0_b2
+
+	# 5. 转换
+	destination = cv2.warpPerspective(b2, h[0], (b1.shape[1]+b2.shape[1]+int((yu1 - yu)/-geo1[5])-int((yu1 - yb)/-geo1[5]),
+	                                             b1.shape[0]+b2.shape[0]+int((xl - xl1)/geo1[1])-int((xr - xl1)/geo1[1])))
+	
+	# 6. 拼接
+	destination[:b1.shape[0],:b1.shape[1]] = b1
+	write_raster(os.path.join(destination_fold, out_name), img1_dst.GetGeoTransform(), img1_dst.GetProjection(), destination)
+	out_img = cv2.resize(destination, None, fx=0.5, fy=0.5)
+	cv2.imshow("out",out_img)
+	cv2.waitKey()
 
 5. 图像融合
 -----------------------------------
