@@ -107,6 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
 <li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_process.html">遥感影像处理</a></li>
 <li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
 </ul>
 
@@ -184,7 +185,7 @@
 <blockquote>
 <div><ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">key</span> <span class="pre">value</span></code> # 仅键值</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">key</span> <span class="pre">value</span> <span class="pre">seconds</span></code> # 键值+过期时间</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">key</span> <span class="pre">value</span> <span class="pre">seconds</span></code> # 键值+过期时间，需要指定EX或PX</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">mset</span> <span class="pre">key1</span> <span class="pre">value1</span> <span class="pre">key2</span> <span class="pre">value2</span></code> # 设置多个</p></li>
 </ul>
 </div></blockquote>
@@ -318,10 +319,13 @@
 <div class="line">redis 服务启动 <code class="docutils literal notranslate"><span class="pre">redis-server</span> <span class="pre">conf</span></code></div>
 </div>
 <div class="line-block">
+<div class="line">redis 关闭服务 `` redis-cli -h 192.168.0.134 shutdown``</div>
+</div>
+<div class="line-block">
 <div class="line">redis 客户端启动 <code class="docutils literal notranslate"><span class="pre">redis-cli</span> <span class="pre">-h</span> <span class="pre">192.168.0.134</span></code></div>
 </div>
 <div class="line-block">
-<div class="line">redis的配置文件位于/etc/redis/下</div>
+<div class="line">redis的配置文件如果用yum安装位于/etc/redis/下，源码安装是在安装目录下的redis.conf文件</div>
 </div>
 <div class="line-block">
 <div class="line">配置从服务器(位于同一机器)</div>
@@ -333,7 +337,8 @@
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">bind</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.134</span> <span class="c1"># 服务器ip地址</span>
 <span class="n">slaveof</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.134</span> <span class="mi">6379</span> <span class="c1"># 设置主服务器IP和PORT</span>
-<span class="n">port</span> <span class="mi">6378</span>
+<span class="n">port</span> <span class="mi">6378</span> <span class="c1">#如果非同一台电脑也可以将port设置为6379</span>
+<span class="n">daemonize</span> <span class="n">yes</span> <span class="c1">#设置以守护进程启动</span>
 </pre></div>
 </div>
 <ul class="simple">
@@ -353,6 +358,14 @@
 <p>需要注意的是创建类时需要将主节点的IP、PORT以字典的形式传入</p>
 <div class="line-block">
 <div class="line">命令参考 <a class="reference external" href="http://doc.redisfans.com/">http://doc.redisfans.com/</a></div>
+</div>
+<p>5.ray与redis的使用</p>
+<p><code class="docutils literal notranslate"><span class="pre">ray</span> <span class="pre">start</span> <span class="pre">--head</span> <span class="pre">--redis-port=6379</span></code> # 启动master</p>
+<p><code class="docutils literal notranslate"><span class="pre">ray</span> <span class="pre">start</span> <span class="pre">--address=&quot;192.168.0.134:6379</span></code> # 启动从节点</p>
+<p><code class="docutils literal notranslate"><span class="pre">ray</span> <span class="pre">stop</span></code> # 停止节点</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ray</span>
+<span class="n">ray</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">address</span><span class="o">=</span><span class="s2">&quot;192.168.0.134:6379&quot;</span><span class="p">)</span> <span class="c1"># 初始化ray,指定IP地址</span>
+</pre></div>
 </div>
 </div>
 </div>

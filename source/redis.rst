@@ -10,7 +10,7 @@ string(字符串)
   - 设置键值
 
 	* ``set key value`` # 仅键值
-	* ``set key value seconds`` # 键值+过期时间
+	* ``set key value seconds`` # 键值+过期时间，需要指定EX或PX
 	* ``mset key1 value1 key2 value2`` # 设置多个
 
   - 追加值
@@ -94,9 +94,11 @@ zset(有序集合,按权重排序)
 
 | redis 服务启动 ``redis-server conf``
 
+| redis 关闭服务 `` redis-cli -h 192.168.0.134 shutdown``
+
 | redis 客户端启动 ``redis-cli -h 192.168.0.134``
 
-| redis的配置文件位于/etc/redis/下
+| redis的配置文件如果用yum安装位于/etc/redis/下，源码安装是在安装目录下的redis.conf文件
 
 
 | 配置从服务器(位于同一机器)
@@ -108,7 +110,8 @@ zset(有序集合,按权重排序)
 
  	bind 192.168.0.134 # 服务器ip地址
  	slaveof 192.168.0.134 6379 # 设置主服务器IP和PORT
- 	port 6378
+ 	port 6378 #如果非同一台电脑也可以将port设置为6379
+ 	daemonize yes #设置以守护进程启动
 
  * 启动redis服务
 
@@ -129,4 +132,15 @@ zset(有序集合,按权重排序)
 
 | 命令参考 http://doc.redisfans.com/
 
+5.ray与redis的使用
 
+``ray start --head --redis-port=6379`` # 启动master
+
+``ray start --address="192.168.0.134:6379`` # 启动从节点
+
+``ray stop`` # 停止节点
+
+::
+
+	import ray
+	ray.init(address="192.168.0.134:6379") # 初始化ray,指定IP地址
