@@ -318,3 +318,220 @@ HMM
 	print(index)
 	print(y_test)
 	print(index - y_test)
+
+基于Faster R-CNN的遥感影像飞机检测
+----------------------------------------
+本代码采用ResNet50作为backbone,并使用预训练参数，具体代码如下。
+::
+	import glob
+	import os
+	import numpy as np
+	from osgeo import gdal_array
+	from torch.utils.data import Dataset
+	import visdom
+	import cv2
+	from torchvision.models.detection import FasterRCNN
+	import torch
+	from torchvision.models.detection.backbone_utils import resnet_fpn_backbone
+	from torchvision.models.utils import load_state_dict_from_url
+	from torch import optim
+	viz = visdom.Visdom()
+	class Data(Dataset):
+	    def __init__(self, path):
+	        super(Data, self).__init__()
+	        self.figs = glob.glob(os.path.join(path, "*.png"))
+	    def __getitem__(self, item):
+	        p = self.figs[item]
+	        fig = gdal_array.LoadFile(p)[:3]
+	        target = self.get_label(p)
+	        return fig, target
+	    def __len__(self):
+        return len(self.figs)
+    def get_label(self, p):
+        # print(p)
+        target = {}
+        label = np.loadtxt(p.replace(".png",".txt"))
+        label = label.reshape(-1, 13)
+        label = np.array(label, dtype=np.int64)
+        label = label[:, -4:]
+        label[:, 2:] = label[:, 2:] + label[:, :2]
+        # label = np.array(label, dtype=int)
+        l = torch.from_numpy(label)
+        target["boxes"] = l
+        target["labels"] = torch.ones(label.shape[0], dtype=torch.int64)
+        return target
+	def get_batch(data, batch=5):
+	    idx = np.random.randint(0, len(data), batch)
+	    images = []
+	    targets = []
+	    for i in idx:
+	        x, y = data[i]
+	        # x = x[np.newaxis, :]
+	        images.append(torch.from_numpy(x).float()/255)
+	        targets.append(y)
+	    return images, targets
+	def draw_rectangle(img, rectangles):
+	    img = img.detach().numpy().copy()
+	    img = np.array(img*255, dtype=np.uint8).copy()
+	    rectangles = rectangles.detach().numpy()
+	    rectangles = np.array(rectangles, dtype=np.int32)
+	    img = img.transpose(1, 2, 0)
+	    for i in range(rectangles.shape[0]):
+	        img[:,:,0] = cv2.rectangle(img[:,:, 0], (int(rectangles[i][0]), int(rectangles[i][1])), (int(rectangles[i][2]), int(rectangles[i][3])), 255,thickness=2 )
+	    img = img.transpose(2, 0, 1)
+	    return img/255
+	def load_model():
+	    backbone = resnet_fpn_backbone('resnet50', True)
+	    state_dict = load_state_dict_from_url("https://download.pytorch.org/models/fasterrcnn_resnet50_fpn_coco-258fb6c6.pth",progress=True)
+	    keys = []
+	    for k, v in state_dict.items():
+	        if k.startswith("backbone"):
+	            pass
+	        else:
+	            keys.append(k)
+	    for k in keys:
+	        state_dict.pop(k)
+	    model = FasterRCNN(backbone, 2)
+	    model.load_state_dict(state_dict, strict=False)
+	    for name,p in model.named_parameters():
+	        if name.startswith("backbone"):
+	            p.requires_grad_(False)
+	    para = [p for p in model.parameters() if p.requires_grad]
+	    # model.transform = None
+	    return model, para
+	data = Data(r"G:\目标检测\中科院大学高清航拍目标数据集合\PLANE")
+	model, para = load_model()
+	optimizer = optim.Adam(para, lr=1e-3)
+	# model = torch.load("detect_model")
+	for i in range(1000000):
+	    model = model.train()
+	    x, y = get_batch(data, 1)
+	    loss = model(x, y)
+	    t_loss = torch.tensor(0.0)
+	    for k, v in loss.items():
+	        t_loss += v
+	    optimizer.zero_grad()
+	    t_loss.backward()
+	    optimizer.step()
+	    print(t_loss)
+	    if i%100==0:
+	        torch.save(model, "detect_model")
+	    model = model.eval()
+	    pred = model(x)
+	    img = torch.squeeze(x[0])
+	    img = draw_rectangle(img, pred[0]["boxes"][pred[0]["scores"]>0.8])
+	    viz.image(img, "image")
+
+效果图如下:
+
+ .. image:: d1.png 
+  :height: 595px
+  :width:  1147px
+  :scale: 40 %
+  :alt: alternate text
+  :align: center
+
+
+ .. image:: d2.png 
+  :height: 595px
+  :width:  1147px
+  :scale: 40 %
+  :alt: alternate text
+  :align: center
+
+
+基于DeepLabv03的遥感影像道路提取
+----------------------------------------
+本代码采用ResNet50作为backbone,并使用预训练参数，具体代码如下。
+::
+	model = deeplabv3_resnet50(pretrained=True)
+	aux_classifier = nn.Sequential(
+	    nn.Conv2d(1024, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1), bias=False),
+	    nn.BatchNorm2d(256, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True),
+	    nn.ReLU(),
+	    nn.Dropout(p=0.1, inplace=False),
+	    nn.Conv2d(256, 2, kernel_size=(1, 1), stride=(1, 1))
+	)
+	print(model)
+	# for i in model.parameters():
+	#     i.requires_grad_(False)
+	model.aux_classifier = aux_classifier
+
+
+	class Data(Dataset):
+	    def __init__(self, block=1024):
+	        super(Data, self).__init__()
+	        self.block = block
+	        img_path = r"E:\图像分割\road\images"
+	        self.label_path = r"E:\图像分割\road\gt"
+	        self.files = glob.glob(os.path.join(img_path, "*.tiff"))
+
+	    def __getitem__(self, item):
+	        path = self.files[item]
+	        train_x = np.array(gdal_array.LoadFile(path), np.float32)
+	        path = os.path.join(self.label_path, os.path.basename(path))
+	        path = path.replace(".tiff", ".tif")
+	        mask = np.all(train_x == 255, axis=0)
+	        train_y = gdal_array.LoadFile(path)
+	        train_y[mask] = 0
+	        train_y[train_y == 255] = 1
+
+	        size = train_x.shape
+	        y_end = size[1] - self.block - 1
+	        x_end = size[2] - self.block - 1
+	        y_rand = np.random.randint(y_end)
+	        x_rand = np.random.randint(x_end)
+	        train_x = train_x[:, y_rand:y_rand + self.block, x_rand:x_rand + self.block]
+	        train_y = train_y[y_rand:y_rand + self.block, x_rand:x_rand + self.block]
+	        return train_x, train_y
+
+	    def __len__(self):
+	        return len(self.files)
+
+
+	model = torch.load("seg_model")
+	criterion = nn.CrossEntropyLoss()
+	para = []
+	for i in model.parameters():
+	    if i.requires_grad:
+	        para.append(i)
+	optimizer = optim.Adam(para, betas=(0.5, 0.99))
+
+	viz = visdom.Visdom()
+
+	if __name__ == '__main__':
+	    data = Data()
+	    data_iter = DataLoader(data, 2)
+	    for i in range(100000):
+	        for x, y in data_iter:
+	            y = y.long()
+	            pre = model(x)["aux"]
+	            loss = criterion(pre, y)
+	            print(loss)
+	            optimizer.zero_grad()
+	            loss.backward()
+	            optimizer.step()
+	            viz.image(x[0], win="img1")
+	            viz.image(torch.argmax(pre, 1)[0].float(), win="img2")
+	            viz.image(y[0].float(), win="img3")
+	            print("save model")
+	            # torch.save(model, "seg_model")
+	    print("finish!")
+
+
+效果图如下:
+
+ .. image:: seg01.png 
+  :height: 425px
+  :width:  1294px
+  :scale: 40 %
+  :alt: alternate text
+  :align: center
+
+
+ .. image:: seg02.png 
+  :height: 425px
+  :width:  1294px
+  :scale: 40 %
+  :alt: alternate text
+  :align: center
