@@ -31,3 +31,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: build/html
+          publish_branch: gh-pages  # 指定发布到 gh-pages 分支
+          keep_files: true  # 保留已有文件
+          force_orphan: true  # 强制创建 gh-pages 分支（如果不存在）
