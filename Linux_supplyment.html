@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>echo &mdash; tiny 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tiny
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_process.html">遥感影像处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">echo</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Linux_supplyment.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="echo">
+<h1>echo<a class="headerlink" href="#echo" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">-n</span> <span class="pre">&quot;helo\nhhh&quot;</span></code> # 可以接转义字符\t tab \n换行 \b回退</p>
+</section>
+<section id="history">
+<h1>history<a class="headerlink" href="#history" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">TMOUT=5</span></code> # 终端超时</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">HISTSIZE=5</span></code> # 历史记录保存时间</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">HISTFILESIZE</span></code>　＃ ~/.bash_history 历史记录</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">history</span> <span class="pre">-c</span></code> # 清空历史记录</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">history</span> <span class="pre">-d</span> <span class="pre">num</span></code> # 删除某一条记录</p></li>
+</ul>
+</section>
+<section id="ulimit">
+<h1>ulimit<a class="headerlink" href="#ulimit" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/security/limit.conf</span></code> # 配置文件</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ulimit</span> <span class="pre">-a</span></code> # 显示文件描述符</p></li>
+</ul>
+</section>
+<section id="issue">
+<h1>issue<a class="headerlink" href="#issue" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/issue</span></code> # linux 版本信息(可清空)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/motd</span></code> # 修改linux版本信息</p></li>
+</ul>
+</section>
+<section id="chattr">
+<h1>chattr<a class="headerlink" href="#chattr" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">chattr</span> <span class="pre">+i</span> <span class="pre">/etc/passwd</span></code> # 锁定文件,不可修改文件</p>
+</section>
+<section id="kernel">
+<h1>kernel 相关<a class="headerlink" href="#kernel" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/etc/sysctl.conf</span></code> # 内核修改 <code class="docutils literal notranslate"><span class="pre">sysctl</span> <span class="pre">-p</span></code> 生效</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/proc/sys/net</span></code> # 内核的可配置参数</p></li>
+</ul>
+</section>
+<section id="wget">
+<h1>wget<a class="headerlink" href="#wget" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wget</span> <span class="pre">http://url</span></code>
+<code class="docutils literal notranslate"><span class="pre">--spider</span></code> 不下载，仅检查
+<code class="docutils literal notranslate"><span class="pre">-T</span> <span class="pre">--timeout=10</span></code> 设置超时时间
+<code class="docutils literal notranslate"><span class="pre">--tries=2</span></code> 重试次数
+<code class="docutils literal notranslate"><span class="pre">-q</span> <span class="pre">--quiet</span></code> 安静下载,无输出结果</p></li>
+</ul>
+<p>alias 起别名</p>
+<p>less 按屏或按行查看文件与more类似</p>
+<p>DNS配置文件 /etc/resolv.conf(优先级低于网卡配置/network-scripts/下的文件)</p>
+</section>
+<section id="fstab">
+<h1>fstab<a class="headerlink" href="#fstab" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">dd</span> <span class="pre">if=/dev/zero</span> <span class="pre">of=/dev/sdd1</span> <span class="pre">bs=4096</span> <span class="pre">count=10</span></code> 虚拟盘</p>
+<p>设备      挂载点   文件类型  挂载参数  备份 检查项
+/dev/sda1 /data  xfs  defaults  0 0</p>
+<p><code class="docutils literal notranslate"><span class="pre">mount</span> <span class="pre">/dev/sda1</span> <span class="pre">/mnt/</span></code> # 挂载盘命令</p>
+<p>fsck 磁盘检查,不要检查好磁盘,磁盘必须卸载</p>
+</section>
+<section id="etc-rc-local">
+<h1>/etc/rc.local<a class="headerlink" href="#etc-rc-local" title="Link to this heading">¶</a></h1>
+<p>服务器档案文件,可以把开机启动项放到rc.local文件中,linux启动流程最后一项</p>
+</section>
+<section id="etc-inittab">
+<h1>/etc/inittab<a class="headerlink" href="#etc-inittab" title="Link to this heading">¶</a></h1>
+<p>运行级别</p>
+<p>/var/log/message 系统日志
+/var/log/secure  ssh日志</p>
+</section>
+<section id="grep">
+<h1>grep<a class="headerlink" href="#grep" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">-n</span> <span class="pre">&quot;.&quot;</span> <span class="pre">files</span></code> # 显示行号</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">-n</span> <span class="pre">files</span></code> # 显示行号</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">less</span> <span class="pre">-N</span> <span class="pre">files</span></code> # 显示行号</p></li>
+</ul>
+</section>
+<section id="tar">
+<h1>tar<a class="headerlink" href="#tar" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">zxvf</span> <span class="pre">a.tar.gz</span></code>
+<code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">zcvf</span> <span class="pre">a.tar.gz</span> <span class="pre">*</span></code>
+<code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">jxvf</span> <span class="pre">b.tar.bz</span></code>
+<code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">jcvf</span> <span class="pre">b.tar.bz</span> <span class="pre">*</span></code>
+<code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">/</span> <span class="pre">-type</span> <span class="pre">f</span> <span class="pre">|xargs</span> <span class="pre">tar</span> <span class="pre">......</span></code></p>
+</section>
+<section id="cut">
+<h1>cut<a class="headerlink" href="#cut" title="Link to this heading">¶</a></h1>
+<p><code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">1</span> <span class="pre">2</span> <span class="pre">h</span> <span class="pre">j</span> <span class="pre">&gt;&gt;</span> <span class="pre">t5</span></code>
+<code class="docutils literal notranslate"><span class="pre">cut</span> <span class="pre">-d</span> <span class="pre">'</span> <span class="pre">'</span> <span class="pre">-f3</span> <span class="pre">t5</span></code> #-d 分隔符 -f 取第几个</p>
+</section>
+<section id="inode">
+<h1>inode<a class="headerlink" href="#inode" title="Link to this heading">¶</a></h1>
+<p>索引节点:文件或目录的唯一标识,linux读取文件时首先要读取索引节点;
+inode记录了文件属性,但不包含文件名;内容存放在block中;
+查看inode占用情况:<code class="docutils literal notranslate"><span class="pre">df</span> <span class="pre">-i</span></code>,小文件增多时很容易将inode用尽;</p>
+</section>
+<section id="id1">
+<h1>硬链接<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>通过ln命令创建,多个具有相同inode节点号的多个文件互为硬链接文件;
+删除所有硬链接文件和源文件后,文件会被删除;</p>
+</section>
+<section id="regular">
+<h1>regular<a class="headerlink" href="#regular" title="Link to this heading">¶</a></h1>
+<p>export LC_ALL=C</p>
+<p>tr 字符替换, tr asdf 4567 将asdf替换为4567</p>
+</section>
+<section id="id2">
+<h1>查找文件命令<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>find</p></li>
+<li><p>which 从全局环境变量里查</p></li>
+<li><p>whereis -b</p></li>
+<li><p>locate 从数据库里查</p></li>
+</ul>
+<p>ctrl + a # 切换到命令行首
+ctrl + e # 切换到命令末尾
+ctrl + u # 剪切光标之前的
+ctrl + k # 剪切光标之后的</p>
+</section>
+<section id="umask">
+<h1>umask<a class="headerlink" href="#umask" title="Link to this heading">¶</a></h1>
+<p>创建文件的默认最大权限时666,然后文件权限经过umask后会减权限</p>
+</section>
+<section id="dns">
+<h1>DNS解析<a class="headerlink" href="#dns" title="Link to this heading">¶</a></h1>
+<p>根服务器,全球有十三台
+解析命令dig、nslookup、host、ping</p>
+</section>
+<section id="id3">
+<h1>修改主机名<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>修改/etc/hosts</p></li>
+<li><p>hostnamectl name</p></li>
+</ul>
+</section>
+<section id="id4">
+<h1>抓包工具<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h1>
+<p>tcpdump
+nmap</p>
+</section>
+<section id="lsof">
+<h1>lsof<a class="headerlink" href="#lsof" title="Link to this heading">¶</a></h1>
+<p>查看文件被删除,进程仍然占用
+lsof | grep del
+lsof -i :80</p>
+</section>
+<section id="id5">
+<h1>无法上网问题排查<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>检查链路</p></li>
+<li><p>ping www.baidu.com</p></li>
+<li><p>ping 外网ip</p></li>
+<li><p>ping 网关</p></li>
+<li><p>检查DNS</p></li>
+</ul>
+</section>
+<section id="id6">
+<h1>网站慢排查<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>本地局域网速度</p></li>
+<li><p>用户带宽</p></li>
+<li><p>本地带宽</p></li>
+<li><p>服务器CPU利用率过高</p></li>
+</ul>
+</section>
+<section id="nfs">
+<h1>nfs<a class="headerlink" href="#nfs" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p>性能优化</p></li>
+<li><p>安全优化</p></li>
+<li><p>内核优化: socket连接,读写缓冲适量调大
+问题: mount.nfs access denied by server</p></li>
+</ul>
+</section>
+<section id="umount">
+<h1>umount<a class="headerlink" href="#umount" title="Link to this heading">¶</a></h1>
+<p>umount -lf /mnt # 卸载磁盘</p>
+</section>
+<section id="http">
+<h1>http协议<a class="headerlink" href="#http" title="Link to this heading">¶</a></h1>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Lihao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

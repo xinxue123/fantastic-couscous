@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>加密&amp;解密 &mdash; tiny 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="golang(够浪)" href="go.html" />
+    <link rel="prev" title="redis" href="redis.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tiny
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">加密&amp;解密</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">对称加密</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">哈希函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">非对称加密</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hmac">消息认证码(Hmac)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">数字签名</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#https">https通信流程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_process.html">遥感影像处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">加密&amp;解密</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/code.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>加密&amp;解密<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<section id="id2">
+<h2>对称加密<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>使用同一秘钥加解密,秘钥只有通信双方有(DES,3DES,AES)</p>
+<ul class="simple">
+<li><p>按位异或:相同为0,不同为1</p></li>
+<li><p>ECB 电子密码本模式:对字节分组不够时,需要对明文进行填充,容易被破解</p></li>
+<li><p>CBC 密码块链:对字节分组不够时,需要对明文进行填充,需要初始化向量</p></li>
+<li><p>CFB 密文反馈:需要初始化向量,不需要对明文填充(初始化向量(iv)加密后,明文1组与加密后的密文按位异或,然后将加密后的明文1组与明文2组按位异或,依次往后,不需要对明文填充)</p></li>
+<li><p>OFB 输出反馈:需要初始化向量,不需要对明文进行填充(不断对初始化向量进行加密,用于加密明文分组异或)</p></li>
+<li><p>CTR 计数模式:不需要初始化向量(但是需要初始化种子),不需要对明文进行填充,效率最高(将明文分组对应的计数器加密后与明文异或)</p></li>
+</ul>
+<div class="line-block">
+<div class="line">DES</div>
+</div>
+<ol class="arabic simple">
+<li><p>DES的密钥长度是64比特,每隔7bit会设置一个用于错误检查的比特,因此实质上其密钥长度是56bit</p></li>
+</ol>
+<ul class="simple">
+<li><p>分组长度:8字节</p></li>
+<li><p>秘钥长度:8字节</p></li>
+</ul>
+<div class="line-block">
+<div class="line">AES</div>
+</div>
+<ul class="simple">
+<li><p>分组长度:16字节</p></li>
+<li><p>秘钥长度:16字节(go语言中存在的),24,32</p></li>
+</ul>
+<p>对称加密流程</p>
+<ol class="arabic simple">
+<li><p>创建一个底层使用des,3des,aes接口</p></li>
+<li><p>准备加密条件:初始化向量、对明文填充</p></li>
+<li><p>创建分组模式CTR</p></li>
+<li><p>加密,得到密文</p></li>
+</ol>
+</section>
+<section id="id3">
+<h2>哈希函数<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><p>md5/md4 散列值：16字节</p></li>
+<li><p>sha1 散列值:20字节</p></li>
+<li><p>sha224 散列值:28字节</p></li>
+<li><p>sha256 32</p></li>
+<li><p>sha384 48</p></li>
+<li><p>sha512 64</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="id4">
+<h2>非对称加密<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p>使用不同秘钥对数据进行加解密</p>
+<div class="line-block">
+<div class="line">公钥:可以分发给任何人</div>
+<div class="line">私钥:只有自己拥有,数据对谁重要私钥就在谁手里</div>
+</div>
+<ul class="simple">
+<li><p>RSA加密</p></li>
+<li><p>单向散列(哈希算法):无法还原原始数据</p></li>
+<li><p>ECC椭圆曲线加密</p></li>
+</ul>
+</section>
+<section id="hmac">
+<h2>消息认证码(Hmac)<a class="headerlink" href="#hmac" title="Link to this heading">¶</a></h2>
+<p>目的:保证数据的完整性及一致性</p>
+<p>存在问题</p>
+<ul class="simple">
+<li><p>秘钥分发困难,使用非对称加密解决秘钥分发</p></li>
+<li><p>不能进行第三方证明</p></li>
+<li><p>不能防止否认</p></li>
+</ul>
+</section>
+<section id="id5">
+<h2>数字签名<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<p>解决了消息认证码的弊端,但是无法判断公钥的归属</p>
+<ol class="arabic simple">
+<li><p>签名</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>原始数据进行哈希运算 —&gt; 散列值</p></li>
+<li><p>使用非对称私钥对散列值加密 —&gt; 加密</p></li>
+<li><p>将数据和签名发送</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li><p>验证</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>接收数据</p></li>
+<li><p>数字签名用公钥解密</p></li>
+<li><p>对原始数据进行哈希运算得到散列值,进行比较</p></li>
+</ul>
+</div></blockquote>
+<p>签名的方式:RSA,椭圆曲线签名</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>生成密钥对</p></li>
+<li><p>分发公钥</p></li>
+<li><p>签名的人
+- 读私钥
+- pem解码
+- x509解码 -&gt; 私钥结构体
+- 对原始数据进行哈希
+- 私钥加密哈希散列值</p></li>
+<li><p>验证签名</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="https">
+<h2>https通信流程<a class="headerlink" href="#https" title="Link to this heading">¶</a></h2>
+<p>准备工作：服务器端需要CA证书、生成非对称密钥对</p>
+<ol class="arabic">
+<li><p>客户端连接服务器(通过域名)</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>域名绑定IP地址</p></li>
+<li><p>服务器解析域名成IP地址</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>服务器收到客户端请求</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>服务器将CA证书发送到客户端的浏览器</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>客户端拿到服务器的证书</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>验证证书的签发机构</p></li>
+<li><p>服务器的公钥</p></li>
+<li><p>验证域名</p></li>
+<li><p>验证证书的有效期</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>客户端产生随机数并用服务器的公钥加密(作为对称加密的密钥)</p></li>
+<li><p>服务器接收文件并使用私钥解密</p></li>
+<li><p>客户端通过对称加密对数据加密</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="redis.html" class="btn btn-neutral float-left" title="redis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="go.html" class="btn btn-neutral float-right" title="golang(够浪)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Lihao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

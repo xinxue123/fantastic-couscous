@@ -1,0 +1,468 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linux &mdash; tiny 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Python" href="python.html" />
+    <link rel="prev" title="Scala Note" href="scala.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tiny
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Linux</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">linux分区</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">网络配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vim">vim 基本操作(简单)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">安装图形界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#python">安装python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#thrift">安装thrift</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#shell">shell相关知识</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">linux 时间处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#crontab">crontab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#anacron">anacron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#samba">samba</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ftp">FTP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">其他命令</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_process.html">遥感影像处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Linux</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Linux.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="linux">
+<h1>Linux<a class="headerlink" href="#linux" title="Link to this heading">¶</a></h1>
+<div class="line-block">
+<div class="line">安装软件时使用：./ 或 bash</div>
+<div class="line">获得root权限</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">su</span> <span class="n">root</span>
+</pre></div>
+</div>
+<section id="id1">
+<h2>linux分区<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line">两种分区方式 MBR,GPT,引导包括BIOS、EFI</div>
+<div class="line">GRUB 主流的引导程序</div>
+<div class="line">MBR只能创建四个主分区,一个扩展分区占用一个主分区位置;扩展分区不可用,只能在其中建立逻辑分区;主分区可以直接使用;</div>
+</div>
+</section>
+<section id="id2">
+<h2>网络配置<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line">ifconfig -a</div>
+<div class="line">ifup eth0 # 打开接口</div>
+<div class="line">ifdown etho # 关闭接口</div>
+<div class="line">使用setup配置网络接口</div>
+</div>
+<p>配置好的位置位于 /etc/sysconfig</p>
+</section>
+<section id="vim">
+<h2>vim 基本操作(简单)<a class="headerlink" href="#vim" title="Link to this heading">¶</a></h2>
+<p>在文本编辑器内部:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">25</span><span class="n">gg</span> <span class="c1">#跳行到25行</span>
+<span class="n">shift</span><span class="o">+</span><span class="n">g</span> <span class="c1">#跳到文本末尾</span>
+<span class="n">ctrl</span><span class="o">+</span><span class="n">o</span>  <span class="c1"># 返回上一次修改的位置</span>
+<span class="n">shift</span><span class="o">+</span><span class="n">V</span> <span class="n">可视块</span>
+<span class="n">ctrl</span><span class="o">+</span><span class="n">v</span> <span class="n">垂直模式</span>
+<span class="n">x</span> <span class="ow">or</span> <span class="n">d</span> <span class="n">均是剪切操作</span>
+<span class="n">y</span> <span class="n">复制</span>
+<span class="n">p</span> <span class="n">粘贴</span>
+<span class="n">dd</span> <span class="n">删除命令</span>
+<span class="n">r</span> <span class="n">替换</span>
+<span class="n">R</span> <span class="n">可一直替换</span>
+<span class="o">&gt;</span> <span class="ow">or</span>  <span class="o">&lt;</span>    <span class="n">可视模式下缩进</span>
+<span class="o">&gt;&gt;</span> <span class="ow">or</span> <span class="o">&lt;&lt;</span>   <span class="n">正常模式下缩进</span>
+<span class="o">.</span>          <span class="n">重复以前的操作s</span>
+<span class="o">/</span><span class="nb">str</span>       <span class="n">查找命令</span>
+<span class="n">n</span>          <span class="n">向下查找</span>
+<span class="n">N</span>          <span class="n">向上查找</span>
+
+<span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="n">要替换文本</span><span class="o">/</span><span class="n">替换为</span><span class="o">/</span><span class="n">g</span>   <span class="n">全局查找替换</span>
+<span class="p">:</span><span class="n">s</span><span class="o">/</span><span class="n">要替换文本</span><span class="o">/</span><span class="n">替换为</span><span class="o">/</span><span class="n">g</span>    <span class="n">可视区查找替换</span>
+<span class="p">:</span><span class="o">%</span><span class="n">s</span><span class="o">/</span><span class="n">要替换文本</span><span class="o">/</span><span class="n">替换为</span><span class="o">/</span><span class="n">gc</span>  <span class="n">确认查找替换</span>
+</pre></div>
+</div>
+<p>在文本编辑器外部:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">+</span><span class="mi">114</span> <span class="n">file_name</span> <span class="c1"># 定位到114行</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>安装图形界面<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>安装步骤</p>
+<ol class="arabic simple">
+<li><p>yum groupinstall “GNOME Desktop” “Graphical Administration Tools”</p></li>
+<li><p>ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target</p></li>
+<li><p>startx</p></li>
+<li><p>yum install tigervnc-server -y</p></li>
+<li><p>cp /lib/systemd/system/vncserver&#64;.service /etc/systemd/system/vncserver&#64;:1.service</p></li>
+<li><p>vim /etc/systemd/system/vncserver&#64;:1.service</p></li>
+<li><p>systemctl daemon-reload</p></li>
+<li><p>设置vnc登录账号(vncpasswd)</p></li>
+<li><p>服务设置</p></li>
+</ol>
+<blockquote>
+<div><ul class="simple">
+<li><p>systemctl enable vncserver&#64;:1.service  #开机启动</p></li>
+<li><p>systemctl start vncserver&#64;:1.service   #启动服务</p></li>
+<li><p>systemctl stop vncserver&#64;:1.service   #停止服务</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="10">
+<li><p>下载vnc软件并连接：IP:1</p></li>
+</ol>
+</section>
+<section id="python">
+<h2>安装python<a class="headerlink" href="#python" title="Link to this heading">¶</a></h2>
+<ol class="arabic simple">
+<li><p>wget “<a class="reference external" href="https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz">https://www.python.org/ftp/python/3.7.1/Python-3.7.1.tgz</a>”</p></li>
+<li><p>tar -zxvf Python-3.7.1.tgz</p></li>
+<li><p>yum install libffi-devel zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make -y</p></li>
+<li><p>./configure –prefix=/usr/local/python3</p></li>
+<li><p>make &amp;&amp; make install</p></li>
+<li><p>ln -s /usr/local/python3/bin/python3 /usr/bin/python3</p></li>
+<li><p>ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3</p></li>
+<li><p>pip3 install –upgrade pip</p></li>
+<li><p>pip3 install ipython</p></li>
+<li><p>sudo apt-get purge –auto-remove python3.4 # 卸载</p></li>
+</ol>
+<p>修复误删除python:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ctrl</span><span class="o">+</span><span class="n">alt</span><span class="o">+</span><span class="n">F1进入console</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">minimal</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">standard</span> <span class="n">ubuntu</span><span class="o">-</span><span class="n">desktop</span>
+<span class="n">sudo</span> <span class="n">reboot</span>
+</pre></div>
+</div>
+<p>修改pip源:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">~/.</span><span class="n">pip</span><span class="o">/</span><span class="n">pip</span><span class="o">.</span><span class="n">conf</span>
+<span class="o">%</span><span class="n">HOMEPATH</span><span class="o">%</span>\<span class="n">pip</span>\<span class="n">pip</span><span class="o">.</span><span class="n">ini</span>
+
+<span class="p">[</span><span class="k">global</span><span class="p">]</span>
+<span class="n">index</span><span class="o">-</span><span class="n">url</span> <span class="o">=</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">douban</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">simple</span>
+<span class="p">[</span><span class="n">install</span><span class="p">]</span>
+<span class="n">trusted</span><span class="o">-</span><span class="n">host</span><span class="o">=</span><span class="n">pypi</span><span class="o">.</span><span class="n">douban</span><span class="o">.</span><span class="n">com</span>  <span class="c1"># 如果不添加这两行,将会出现错误提示</span>
+
+<span class="n">阿里云</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pypi</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span>
+<span class="n">中国科技大学</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">mirrors</span><span class="o">.</span><span class="n">ustc</span><span class="o">.</span><span class="n">edu</span><span class="o">.</span><span class="n">cn</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span>
+<span class="n">豆瓣</span><span class="p">(</span><span class="n">douban</span><span class="p">)</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">douban</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span>
+<span class="n">清华大学</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">tuna</span><span class="o">.</span><span class="n">tsinghua</span><span class="o">.</span><span class="n">edu</span><span class="o">.</span><span class="n">cn</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span>
+<span class="n">中国科学技术大学</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">pypi</span><span class="o">.</span><span class="n">mirrors</span><span class="o">.</span><span class="n">ustc</span><span class="o">.</span><span class="n">edu</span><span class="o">.</span><span class="n">cn</span><span class="o">/</span><span class="n">simple</span><span class="o">/</span>
+</pre></div>
+</div>
+</section>
+<section id="thrift">
+<h2>安装thrift<a class="headerlink" href="#thrift" title="Link to this heading">¶</a></h2>
+<p>1. 安装依赖</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">automake</span> <span class="n">libtool</span> <span class="n">flex</span> <span class="n">bison</span> <span class="n">pkgconfig</span> <span class="n">gcc</span><span class="o">-</span><span class="n">c</span><span class="o">++</span> <span class="n">boost</span><span class="o">-</span><span class="n">devel</span> <span class="n">libevent</span><span class="o">-</span><span class="n">devel</span> <span class="n">zlib</span><span class="o">-</span><span class="n">devel</span> <span class="n">python</span><span class="o">-</span><span class="n">devel</span> <span class="n">ruby</span><span class="o">-</span><span class="n">devel</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span>
+</pre></div>
+</div>
+<p>2. 安装thrift</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="s2">&quot;http://mirror.bit.edu.cn/apache/thrift/0.10.0/thrift-0.10.0.tar.gz&quot;</span>
+</pre></div>
+</div>
+<p>3. 验证是否可行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">thrift</span> <span class="o">-</span><span class="n">version</span>
+</pre></div>
+</div>
+<p>4. 启动hbase的thrift服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">hbase</span><span class="o">-</span><span class="n">daemon</span><span class="o">.</span><span class="n">sh</span> <span class="n">start</span> <span class="n">thrift</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">boost 下载安装</div>
+</div>
+<ol class="loweralpha simple">
+<li><p>wget <a class="reference external" href="http://iweb.dl.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.tar.gz">http://iweb.dl.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.tar.gz</a></p></li>
+<li><p>./bootstrap.sh –prefix=/usr</p></li>
+<li><p>./b2 install</p></li>
+</ol>
+<div class="line-block">
+<div class="line">在 make 这一步会发生一个错误 g++: error: /usr/lib64/libboost_unit_test_framework.a: No such file or directory。错误原因是：./configure 的时候是默认编译32位的,不会在 /usr/lib64/ 下产生文件。修改方法：先查找文件 find / -name libboost_unit_test_framework.a,比如在 /usr/local/lib/libboost_unit_test_framework.a,然后建立软连接</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libboost_unit_test_framework</span><span class="o">.</span><span class="n">a</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib64</span><span class="o">/</span><span class="n">libboost_unit_test_framework</span><span class="o">.</span><span class="n">a</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">最后重新执行 make</div>
+</div>
+</section>
+<section id="shell">
+<h2>shell相关知识<a class="headerlink" href="#shell" title="Link to this heading">¶</a></h2>
+<p>变量定义:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">temp</span><span class="o">=</span><span class="mi">666</span> <span class="c1"># 定义不同变量</span>
+<span class="n">env</span> <span class="n">查看系统变量</span>
+<span class="nb">set</span> <span class="n">GOROOT</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">go</span><span class="o">/</span><span class="n">src</span> <span class="c1"># 设置系统变量</span>
+<span class="n">export</span> <span class="n">GOROOT</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">go</span><span class="o">/</span><span class="n">src</span> <span class="c1"># 设置系统变量</span>
+<span class="o">~/.</span><span class="n">bashrc</span>
+</pre></div>
+</div>
+<p>变量类型:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 位置变量
+# 执行脚本 ./test.sh a b c
+# a,b,c为传递的参数
+$0 执行的脚本名字
+$1
+$2
+$3
+
+# 特殊变量
+$# 传递参数的个数
+$@ 所有参数
+$? 脚本完成状态,0:success other:failed
+$$ 进程id
+
+# 取值操作
+v=$变量名
+var=$(pwd)
+var=`pwd`
+</pre></div>
+</div>
+<p>条件判断和循环:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if [条件判断];then
+逻辑处理
+fi
+
+ var1=1 # 不能有空格
+var2=2
+if [ $var1 -gt $var2] # 注意空格
+then
+echo &quot;$var1 大于 $var2 &quot;
+elif [ $var1 -lt $var2 ]
+then
+echo &quot;$var1 小于 $var2 &quot;
+else
+echo &quot;$var1 等于 $var2 &quot;
+
+#-eq 等于,如:if [ &quot;$a&quot; -eq &quot;$b&quot; ]
+#-ne 不等于,如:if [ &quot;$a&quot; -ne &quot;$b&quot; ]
+#-gt 大于,如:if [ &quot;$a&quot; -gt &quot;$b&quot; ]
+#-ge 大于等于,如:if [ &quot;$a&quot; -ge &quot;$b&quot; ]
+#-lt 小于,如:if [ &quot;$a&quot; -lt &quot;$b&quot; ]
+#-le 小于等于,如:if [ &quot;$a&quot; -le &quot;$b&quot; ]
+#&lt;   小于(需要双括号),如:((&quot;$a&quot; &lt; &quot;$b&quot;))
+#&lt;=  小于等于(需要双括号),如:((&quot;$a&quot; &lt;= &quot;$b&quot;))
+#&gt;   大于(需要双括号),如:((&quot;$a&quot; &gt; &quot;$b&quot;))
+#&gt;=  大于等于(需要双括号),如:((&quot;$a&quot; &gt;= &quot;$b&quot;))
+
+list=`ls`
+for var in $list;do
+ echo &quot;$var&quot;
+done
+
+funcName(){
+函数体(逻辑循环判断)
+}
+funcName $1 传参
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>linux 时间处理<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">date</span> <span class="o">+%</span><span class="n">F</span> <span class="c1"># full date; same as %Y-%m-%d</span>
+<span class="n">date</span> <span class="o">+%</span><span class="n">j</span> <span class="c1"># day of year (001..366)</span>
+<span class="n">date</span> <span class="o">+%</span><span class="n">m</span> <span class="c1"># month (01..12)</span>
+<span class="n">date</span> <span class="o">+%</span><span class="n">d</span> <span class="c1"># day of month (e.g., 01)</span>
+
+<span class="n">date</span> <span class="o">--</span><span class="n">date</span><span class="o">=</span><span class="s2">&quot;2019-09-01 1:1:1&quot;</span> <span class="c1"># 自定义时间字符串</span>
+<span class="n">date</span> <span class="o">+%</span><span class="n">F</span> <span class="o">-</span><span class="n">d</span> <span class="s2">&quot;+2hour&quot;</span> <span class="c1"># 未来俩小时</span>
+<span class="n">date</span> <span class="o">+%</span><span class="n">F</span> <span class="o">-</span><span class="n">d</span> <span class="s2">&quot;+2day&quot;</span> <span class="c1"># 未来两天</span>
+</pre></div>
+</div>
+</section>
+<section id="crontab">
+<h2>crontab<a class="headerlink" href="#crontab" title="Link to this heading">¶</a></h2>
+<p>at 的排程编辑</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># at 是仅执行一次的工作</span>
+<span class="n">at</span> <span class="n">now</span> <span class="o">+</span> <span class="mi">5</span> <span class="n">minutes</span>
+<span class="n">at</span><span class="o">&gt;</span><span class="n">echo</span> <span class="s2">&quot;hello&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">test</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">ctrl</span><span class="o">+</span><span class="n">d</span> <span class="c1"># 按下ctrl+d结束编辑</span>
+<span class="n">atq</span> <span class="c1"># 查询排程与 at -l 功能相同</span>
+<span class="n">atrm</span> <span class="c1"># 删除创建的排程与 at -d 功能相同</span>
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li><p>crontab -e # 进入编辑排程,可增加、删除某个排程</p></li>
+</ol>
+<p>守护进程crond</p>
+<p>定时任务在任务末尾要加 &gt;/dev/null 2&gt;&amp;1,去除不必要的信息</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a href="#id5"><span class="problematic" id="id6">*</span></a>(星号)      代表任何时刻都接受的意思！举例来说,范例一内那个日、月、周都是 * , 就代表着『不论何月、何 日的礼拜几的 12:00 都执行后续指令』的意思！</p></li>
+<li><p>,(逗号)      代表分隔时段的意思。举例来说,如果要下达的工作是 3:00 与 6:00 时,就会是:0 3,6 * * * command 时间参数还是有五栏,不过第二栏是 3,6, 代表 3 与 6 都适用</p></li>
+<li><p>-(减号)      代表一段时间范围内,举例来说, 8 点到 12 点之间的每小时的 20 分都进行一项工作, 20 8-12 * * * command 仔细看到第二栏变成 8-12  代表 8,9,10,11,12 都适用的意思！</p></li>
+<li><p>/n(斜线)     n 代表数字,亦即是『每隔 n 单位间隔』的意思,例如每五分钟进行一次,则：<a href="#id7"><span class="problematic" id="id8">*</span></a>/5 * * * * command 很简单吧！用 * 与 /5 来搭配</p></li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line">0   12  *   *   *  mail -s “at 12:00” dmtsai &lt; /home/dmtsai/.bashrc</div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>系统的配置文件： /etc/crontab, /etc/cron.d/*</p></li>
+</ol>
+<div class="line-block">
+<div class="line">在/etc/crontab 可是一个『文本』,你可以 root 的身份编辑这个文件,例子如下图</div>
+</div>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/crontab1.PNG"><img alt="alternate text" class="align-center" src="_images/crontab1.PNG" style="width: 500.0px; height: 250.0px;" />
+</a>
+</div></blockquote>
+</section>
+<section id="anacron">
+<h2>anacron<a class="headerlink" href="#anacron" title="Link to this heading">¶</a></h2>
+<p>定时任务,适合与非二十四小时的任务,以天为周期或每次开机执行</p>
+</section>
+<section id="samba">
+<h2>samba<a class="headerlink" href="#samba" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line">windows访问samba共享输入正确的密码时提示密码不正确,问题原因是网络安全：LAN管理器身份验证级别问题</div>
+</div>
+<ol class="arabic simple">
+<li><p>本地安全策略,本地策略-安全选项,需要修改成默认的值的修改方式:查找注册表浏览到 HKEY_LOCAL_MACHINESYSTEMCurrentControlSetControlLSA,直接删除 LMCompatibilityLevel 键。确定删除后。</p></li>
+<li><p>运行secpol.msc命令。打开本地安全策略。</p></li>
+</ol>
+<p>3. 查看 网络安全:LAN管理器身份验证级别,安全设置已经变为默认“没有定义”
+修改后发现输入账户密码就可以直接访问了</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">samba</span> <span class="c1"># 安装samba</span>
+<span class="n">service</span> <span class="n">smb</span> <span class="n">start</span> <span class="c1"># 启动服务</span>
+<span class="n">testparm</span> <span class="c1"># 测试共享配置是否正确</span>
+<span class="n">smbpasswd</span> <span class="o">-</span><span class="n">a</span> <span class="n">root</span> <span class="c1"># 增加用户</span>
+</pre></div>
+</div>
+</section>
+<section id="ftp">
+<h2>FTP<a class="headerlink" href="#ftp" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">vsftpd</span> <span class="c1"># 安装vsftpd</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">vsftpd</span> <span class="c1"># 文件的保存位置</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">vsftpd</span><span class="o">/</span><span class="n">ftpusers</span> <span class="c1"># 黑名单</span>
+<span class="n">service</span> <span class="n">vsftpd</span> <span class="n">start</span> <span class="c1"># 启动服务</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h2>其他命令<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sed -n &#39;2,3p&#39; /etc/passwd # 选定第2、3行
+sed -i &#39;s/ss/ff/g&#39; file # 替换用ff修改ss
+sed -r &#39;s/(.*)/\1/&#39; files # 正则匹配
+sed -i &#39;1d&#39; files # 删除第一行
+sed -i &#39;/^a.*/d&#39; files # 删除匹配行
+awk -F &quot;:&quot; &#39;{print $1}&#39; files # -F为分隔符,默认为空格,$NF为最后一列
+awk -F &quot;:&quot; &#39;{if(NR&lt;31 &amp;&amp; NR &gt;1) print }&#39; /etc/passwd #
+NR指代行数,&amp;&amp;、||
+awk -F &quot;[, ]&quot; &#39;{print $1 $2}&#39; files
+grep root -B 2 /etc/passwd # 查找root的前两行(B、A、C)
+grep -E &#39;python|go&#39; files # -E 可同时过滤多个值
+find / -type f -name &quot;*.txt&quot; # 查找文件-o、-a 或者、同时成立,!取反
+ntpstat # 查看时间同步状态
+expr 1 + 1 # 数据运算
+a=10;b=10;total=$((a*b)) # 计算乘积
+var=1;let &quot;var+=1&quot;;echo $var $ 自增
+x=1;echo $[$x+1]
+</pre></div>
+</div>
+<p>重定向</p>
+<ol class="arabic simple">
+<li><p>标准输入:代码为0</p></li>
+<li><p>正常输出:代码为1</p></li>
+</ol>
+<p>3. 错误输出:代码为2
+1&gt;/dev/null 2&gt;&amp;1</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="scala.html" class="btn btn-neutral float-left" title="Scala Note" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python.html" class="btn btn-neutral float-right" title="Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Lihao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

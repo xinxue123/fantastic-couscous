@@ -1,0 +1,443 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>golang(够浪) &mdash; tiny 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="机器学习算法" href="mat.html" />
+    <link rel="prev" title="加密&amp;解密" href="code.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tiny
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">golang(够浪)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install">install</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">管道</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">函数定义</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_process.html">遥感影像处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">golang(够浪)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/go.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="golang">
+<h1>golang(够浪)<a class="headerlink" href="#golang" title="Link to this heading">¶</a></h1>
+<section id="install">
+<h2>install<a class="headerlink" href="#install" title="Link to this heading">¶</a></h2>
+<p>官方下载msi文件安装即可，配置环境变量:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>GOROOT go的安装path
+
+在src目录下创建src/hello/hello.go,并写入以下文件
+// 测试安装
+package main
+
+import &quot;fmt&quot;
+
+func main() {
+       fmt.Printf(&quot;hello, world\n&quot;)
+}
+
+// 编译运行
+cd src/hello
+go build hello.go
+// 编译完成后生成hello.exe，直接运行即可
+// 你可以go install 安装,go clean -i清除
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2>操作<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>格式输入输出:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">d</span> <span class="nb">int</span>
+<span class="o">%</span><span class="n">f</span> <span class="nb">float</span>
+<span class="o">%</span><span class="n">t</span> <span class="nb">bool</span>
+<span class="o">%</span><span class="n">c</span> <span class="n">byte</span>
+<span class="o">%</span><span class="n">s</span> <span class="n">string</span>
+<span class="o">%</span><span class="n">x</span> <span class="n">十六进制显示</span>
+<span class="o">%</span><span class="n">T</span> <span class="n">打印对应变量的类型</span>
+<span class="o">%</span><span class="n">p</span> <span class="n">打印地址</span>
+
+<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s2">&quot;%T&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span> <span class="n">打印变量类型</span>
+
+<span class="n">a</span> <span class="o">:=</span> <span class="mi">10</span> <span class="o">//</span> <span class="o">:=</span><span class="n">推断为int</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%2d</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+
+<span class="n">a</span><span class="o">:=</span> <span class="mf">10.1</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%.3f</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="o">//</span><span class="n">保留三位有效数字</span>
+
+<span class="n">var</span> <span class="n">a</span> <span class="nb">int</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Scanf</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">a</span><span class="p">)</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>go的随机数生成:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rand</span><span class="o">.</span><span class="n">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">//</span> <span class="n">生成小于100的整型数据</span>
+</pre></div>
+</div>
+<p>常规的数据操纵:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="o">:=</span><span class="p">[]</span><span class="nb">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">}</span> <span class="o">//</span> <span class="n">一维数组</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="n">一维数组添加数据</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">v</span><span class="o">:=</span> <span class="nb">range</span> <span class="n">b</span><span class="p">{</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+       <span class="p">}</span> <span class="o">//</span> <span class="n">遍历数组</span>
+<span class="o">//</span> <span class="n">切片位于堆区</span><span class="p">,</span><span class="n">不指定长度</span><span class="p">;</span><span class="n">数组需指定长度</span>
+<span class="n">c</span><span class="o">:=</span><span class="p">[][]</span><span class="nb">int</span><span class="p">{{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">},{</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">}}</span> <span class="o">//</span> <span class="n">二维数组</span>
+<span class="o">//</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">切片的使用大小</span> <span class="n">cap</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="n">容量大小</span>
+<span class="n">s</span><span class="o">:=</span><span class="n">make</span><span class="p">([]</span><span class="nb">int</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="nb">int</span> <span class="n">为定义的数据类型</span><span class="p">,</span><span class="mi">5</span><span class="n">为大小</span>
+<span class="n">w</span><span class="o">:=</span><span class="nb">map</span><span class="p">[</span><span class="n">string</span><span class="p">]</span><span class="nb">int</span><span class="p">{</span><span class="s2">&quot;s1&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span> <span class="o">//</span> <span class="n">定义map</span><span class="p">,</span><span class="n">map自动扩容</span>
+<span class="n">w</span><span class="p">[</span><span class="s2">&quot;s2&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">//</span> <span class="nb">map</span> <span class="n">中添加数据</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="s2">&quot;s2&quot;</span><span class="p">])</span> <span class="o">//</span> <span class="n">取出s2的值</span><span class="p">,</span><span class="n">如果没有键值返回0</span>
+<span class="n">delete</span><span class="p">(</span><span class="n">w</span><span class="p">,</span><span class="s2">&quot;s1&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">删除数据</span>
+
+ <span class="o">//</span> <span class="n">遍历map</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="nb">range</span> <span class="n">m</span><span class="p">{</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">println</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="o">//</span> <span class="n">创建指针</span>
+<span class="n">var</span> <span class="n">p</span> <span class="o">*</span><span class="nb">int</span> <span class="o">//</span> <span class="nb">int</span> <span class="n">型指针空指针nil</span>
+<span class="n">p</span><span class="o">:=</span><span class="n">new</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="o">*</span><span class="n">p</span><span class="o">=</span><span class="mi">3</span> <span class="o">//</span> <span class="n">为指针赋值</span>
+
+ <span class="o">//</span> <span class="n">数组指针</span>
+<span class="n">a</span><span class="o">:=</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="nb">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s2">&quot;%T</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">var</span> <span class="n">p</span> <span class="o">*</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="nb">int</span> <span class="o">//</span>
+<span class="n">p</span><span class="o">=&amp;</span><span class="n">a</span>
+<span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>逻辑与(&amp;&amp;)高于逻辑或(||)</p>
+<p>定义结构体:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">Student</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="nb">id</span> <span class="nb">int</span> <span class="o">//</span> <span class="n">字段名</span> <span class="n">类型</span>
+       <span class="n">name</span> <span class="n">string</span>
+       <span class="n">age</span> <span class="nb">int</span>
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">结构体赋值</span>
+       <span class="n">s</span><span class="o">:=</span><span class="n">Student</span><span class="p">{</span><span class="nb">id</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span>
+               <span class="n">name</span><span class="p">:</span><span class="s2">&quot;ff&quot;</span><span class="p">,</span>
+               <span class="n">age</span><span class="p">:</span><span class="mi">4</span><span class="p">}</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+
+<span class="o">//</span> <span class="n">结构体作为map的value</span>
+<span class="n">m</span><span class="o">:=</span><span class="n">make</span><span class="p">(</span><span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span><span class="n">Student</span><span class="p">)</span>
+<span class="n">m</span><span class="p">[</span><span class="mi">103</span><span class="p">]</span><span class="o">=</span><span class="n">Student</span><span class="p">{</span><span class="nb">id</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;S&quot;</span><span class="p">}</span>
+
+
+<span class="o">//</span> <span class="n">结构体切片作为map的值</span>
+<span class="n">m</span><span class="o">:=</span><span class="n">make</span><span class="p">(</span><span class="nb">map</span><span class="p">[</span><span class="nb">int</span><span class="p">][]</span><span class="n">Student</span><span class="p">)</span>  <span class="o">//</span> <span class="n">结构体传参</span><span class="p">,</span><span class="n">值传递</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">为结构体添加方法</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">person</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="n">name</span> <span class="n">string</span>
+       <span class="n">age</span> <span class="nb">int</span>
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">继承自person</span>
+<span class="nb">type</span> <span class="n">Student1</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="n">person</span>
+       <span class="nb">id</span> <span class="nb">int</span>
+       <span class="n">score</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">方法接收者</span><span class="p">)</span><span class="n">方法名</span><span class="p">(</span><span class="n">参数列表</span><span class="p">)</span><span class="n">返回值类型</span>
+<span class="o">//</span> <span class="n">操作两个对象并返回值</span>
+<span class="n">func</span> <span class="p">(</span><span class="n">a</span> <span class="n">Student1</span><span class="p">)</span><span class="n">add</span><span class="p">(</span><span class="n">b</span> <span class="n">Student1</span><span class="p">)</span>  <span class="nb">int</span><span class="p">{</span>
+       <span class="n">t</span><span class="o">:=</span><span class="n">a</span><span class="o">.</span><span class="n">age</span> <span class="o">+</span> <span class="n">b</span><span class="o">.</span><span class="n">age</span>
+       <span class="k">return</span> <span class="n">t</span>
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">打印学生信息的方法</span>
+<span class="n">func</span> <span class="p">(</span><span class="n">a</span> <span class="n">Student1</span><span class="p">)</span><span class="n">printInfo</span><span class="p">()</span>  <span class="p">{</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">age</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">接口定义</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">type</span> <span class="n">接口名</span> <span class="n">interface</span><span class="p">{</span><span class="n">方法列表</span><span class="p">}</span>
+<span class="o">//</span> <span class="n">方法名</span><span class="p">(</span><span class="n">参数列表</span><span class="p">)(</span><span class="n">返回值列表</span><span class="p">)</span>
+<span class="nb">type</span> <span class="n">Hum</span> <span class="n">interface</span> <span class="p">{</span>
+       <span class="n">sayHello</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">接口继承</span>
+<span class="nb">type</span> <span class="n">Hum1</span> <span class="n">interface</span> <span class="p">{</span>
+       <span class="n">Hum</span>
+       <span class="n">Sing</span><span class="p">(</span><span class="n">song</span> <span class="n">string</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">面向对象实例</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">package</span> <span class="n">main</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="s2">&quot;fmt&quot;</span>
+
+<span class="nb">type</span> <span class="n">AddOperation</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="n">num1</span> <span class="nb">int</span>
+       <span class="n">num2</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">a</span> <span class="o">*</span><span class="n">AddOperation</span><span class="p">)</span><span class="n">opera</span><span class="p">()</span>  <span class="nb">int</span><span class="p">{</span>
+       <span class="k">return</span> <span class="n">a</span><span class="o">.</span><span class="n">num1</span> <span class="o">+</span> <span class="n">a</span><span class="o">.</span><span class="n">num2</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">SubOperation</span> <span class="n">struct</span> <span class="p">{</span>
+       <span class="n">num1</span> <span class="nb">int</span>
+       <span class="n">num2</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">s</span> <span class="o">*</span><span class="n">SubOperation</span><span class="p">)</span><span class="n">opera</span><span class="p">()</span>  <span class="nb">int</span><span class="p">{</span>
+       <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">num1</span> <span class="o">-</span> <span class="n">s</span><span class="o">.</span><span class="n">num2</span>
+<span class="p">}</span>
+<span class="nb">type</span> <span class="n">Calculate</span> <span class="n">interface</span> <span class="p">{</span>
+       <span class="n">opera</span><span class="p">()</span> <span class="nb">int</span>
+<span class="p">}</span>
+
+<span class="nb">type</span> <span class="n">Factory</span> <span class="n">struct</span> <span class="p">{</span>
+
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="p">(</span><span class="n">f</span> <span class="o">*</span><span class="n">Factory</span><span class="p">)</span><span class="n">reckon</span><span class="p">(</span><span class="n">num1</span> <span class="nb">int</span><span class="p">,</span><span class="n">num2</span> <span class="nb">int</span><span class="p">,</span><span class="n">op</span> <span class="n">string</span><span class="p">)</span>  <span class="p">(</span><span class="n">value</span> <span class="nb">int</span><span class="p">){</span>
+       <span class="n">var</span> <span class="n">interFace</span> <span class="n">Calculate</span>
+       <span class="n">switch</span> <span class="n">op</span> <span class="p">{</span>
+       <span class="k">case</span> <span class="s2">&quot;+&quot;</span><span class="p">:</span>
+               <span class="n">a</span><span class="o">:=</span><span class="n">AddOperation</span><span class="p">{</span><span class="n">num1</span><span class="p">,</span><span class="n">num2</span><span class="p">}</span>
+               <span class="n">interFace</span><span class="o">=&amp;</span><span class="n">a</span>
+       <span class="k">case</span> <span class="s2">&quot;-&quot;</span><span class="p">:</span>
+               <span class="n">a</span><span class="o">:=</span><span class="n">SubOperation</span><span class="p">{</span><span class="n">num1</span><span class="p">,</span><span class="n">num2</span><span class="p">}</span>
+               <span class="n">interFace</span><span class="o">=&amp;</span><span class="n">a</span>
+       <span class="p">}</span>
+       <span class="o">//</span><span class="n">value</span> <span class="o">=</span> <span class="n">interFace</span><span class="o">.</span><span class="n">opera</span><span class="p">()</span>
+       <span class="n">value</span> <span class="o">=</span> <span class="n">Fs</span><span class="p">(</span><span class="n">interFace</span><span class="p">)</span> <span class="o">//</span> <span class="n">多态实现</span>
+       <span class="k">return</span>
+
+<span class="p">}</span>
+<span class="o">//</span> <span class="n">多态</span>
+<span class="n">func</span> <span class="n">Fs</span><span class="p">(</span><span class="n">o</span> <span class="n">Calculate</span><span class="p">)</span>  <span class="nb">int</span><span class="p">{</span>
+       <span class="k">return</span> <span class="n">o</span><span class="o">.</span><span class="n">opera</span><span class="p">()</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+       <span class="n">var</span> <span class="n">s</span> <span class="n">Factory</span>
+       <span class="n">d</span><span class="o">:=</span><span class="n">s</span><span class="o">.</span><span class="n">reckon</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">&quot;rsult is &quot;</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+<span class="p">}</span>
+
+
+<span class="o">//</span> <span class="n">类型断言</span>
+       <span class="n">arr</span><span class="o">:=</span><span class="n">make</span><span class="p">([]</span><span class="n">interface</span><span class="p">{},</span><span class="mi">3</span><span class="p">)</span>
+       <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+       <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+       <span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;hello&quot;</span>
+       <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">v</span> <span class="o">:=</span><span class="nb">range</span> <span class="n">arr</span><span class="p">{</span>
+               <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+               <span class="n">d</span><span class="p">,</span><span class="n">ok</span><span class="o">:=</span><span class="n">v</span><span class="o">.</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span> <span class="o">//</span> <span class="n">进行类型断言</span>
+               <span class="k">if</span> <span class="n">ok</span><span class="p">{</span>
+                       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="s2">&quot;is int&quot;</span><span class="p">)</span>
+               <span class="p">}</span><span class="k">else</span> <span class="p">{</span>
+                       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="s2">&quot;is not a int&quot;</span><span class="p">)</span>
+               <span class="p">}</span>
+       <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>管道<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>channel:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">定义channel</span>
+<span class="o">//</span> <span class="n">无缓冲channel</span>
+<span class="n">channel</span> <span class="o">:=</span> <span class="n">make</span><span class="p">(</span><span class="n">chan</span> <span class="n">string</span><span class="p">)</span> <span class="o">//</span> <span class="n">string</span> <span class="n">为类型chinnel传输类型</span>
+<span class="o">//</span> <span class="n">有缓冲channel</span>
+<span class="n">channel1</span> <span class="o">:=</span> <span class="n">make</span><span class="p">(</span><span class="n">chan</span> <span class="n">string</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">//</span> <span class="n">缓冲区有五个数据</span>
+<span class="n">go</span> <span class="n">func</span><span class="p">()</span> <span class="p">{</span><span class="n">channel</span> <span class="o">&lt;-</span> <span class="s2">&quot;hello&quot;</span><span class="p">}()</span>
+<span class="nb">str</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">channel</span>
+<span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">无缓冲通道</span><span class="p">,</span><span class="n">通道容量为0</span><span class="p">,</span><span class="n">应用于两个go程</span><span class="p">,</span><span class="n">同步</span>
+<span class="o">//</span> <span class="n">有缓冲通道</span><span class="p">,</span><span class="n">通道容量非0</span><span class="p">,</span><span class="n">应用于两个go程</span><span class="p">,</span><span class="n">异步</span>
+<span class="o">//</span> <span class="n">无缓冲通道关闭后</span><span class="p">,</span><span class="n">读端无法读到数据</span>
+<span class="o">//</span> <span class="n">有缓冲通道关闭后</span><span class="p">,</span><span class="n">读端可以读到缓存数据</span>
+<span class="o">//</span> <span class="n">单向写channel</span> <span class="n">var</span> <span class="n">sendch</span> <span class="n">chan</span> <span class="o">&lt;-</span> <span class="nb">int</span> <span class="n">make</span><span class="p">(</span><span class="n">chan</span> <span class="o">&lt;-</span> <span class="nb">int</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">单向读channel</span> <span class="n">var</span> <span class="n">sendch</span> <span class="o">&lt;-</span> <span class="n">chan</span> <span class="nb">int</span> <span class="n">make</span><span class="p">(</span><span class="o">&lt;-</span><span class="n">chan</span> <span class="nb">int</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>函数定义<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>函数的定义及参数传递:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="n">test1</span><span class="p">(</span><span class="n">a</span> <span class="o">...</span><span class="n">int</span><span class="p">)</span>  <span class="p">{</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="n">func</span> <span class="n">RandValue</span><span class="p">(</span><span class="n">args</span> <span class="o">...</span><span class="n">int</span><span class="p">)</span>  <span class="p">{</span>
+       <span class="n">fmt</span><span class="o">.</span><span class="n">Println</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+       <span class="n">test1</span><span class="p">(</span><span class="n">args</span><span class="p">[:]</span><span class="o">...</span><span class="p">)</span> <span class="o">//</span> <span class="n">传递不定参数</span>
+
+<span class="n">func</span> <span class="n">main</span><span class="p">(){</span>
+       <span class="n">RandValue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="o">//</span> <span class="n">传递不定参数</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>生成ras并写文件:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">func</span> <span class="n">GenerateRsaKey</span><span class="p">(</span><span class="n">keySize</span> <span class="nb">int</span><span class="p">)</span> <span class="p">{</span>
+       <span class="o">//</span> <span class="mf">1.</span> <span class="n">使用rsa中的GenerateKey方法生成私钥</span>
+       <span class="n">privateKey</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">GenerateKey</span><span class="p">(</span><span class="n">rand</span><span class="o">.</span><span class="n">Reader</span><span class="p">,</span> <span class="n">keySize</span><span class="p">)</span>
+       <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+               <span class="n">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+       <span class="p">}</span>
+       <span class="o">//</span> <span class="mf">2.</span> <span class="n">通过x509标准将得到的ras私钥序列化为ASN</span><span class="mf">.1</span> <span class="n">的</span> <span class="n">DER编码字符串</span>
+       <span class="n">derText</span> <span class="o">:=</span> <span class="n">x509</span><span class="o">.</span><span class="n">MarshalPKCS1PrivateKey</span><span class="p">(</span><span class="n">privateKey</span><span class="p">)</span>
+       <span class="o">//</span> <span class="mf">3.</span> <span class="n">要组织一个pem</span><span class="o">.</span><span class="n">Block</span><span class="p">(</span><span class="n">base64编码</span><span class="p">)</span>
+       <span class="n">block</span> <span class="o">:=</span> <span class="n">pem</span><span class="o">.</span><span class="n">Block</span><span class="p">{</span>
+               <span class="n">Type</span> <span class="p">:</span> <span class="s2">&quot;rsa private key&quot;</span><span class="p">,</span> <span class="o">//</span> <span class="n">这个地方写个字符串就行</span>
+               <span class="n">Bytes</span> <span class="p">:</span> <span class="n">derText</span><span class="p">,</span>
+       <span class="p">}</span>
+       <span class="o">//</span> <span class="mf">4.</span> <span class="n">pem编码</span>
+       <span class="n">file</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s2">&quot;private.pem&quot;</span><span class="p">)</span>
+       <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+               <span class="n">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+       <span class="p">}</span>
+       <span class="n">pem</span><span class="o">.</span><span class="n">Encode</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+       <span class="n">file</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+
+       <span class="o">//</span> <span class="o">============</span> <span class="n">公钥</span> <span class="o">==========</span>
+       <span class="o">//</span> <span class="mf">1.</span> <span class="n">从私钥中取出公钥</span>
+
+       <span class="n">publicKey</span> <span class="o">:=</span> <span class="n">privateKey</span><span class="o">.</span><span class="n">PublicKey</span>
+       <span class="o">//</span> <span class="mf">2.</span> <span class="n">使用x509标准序列化</span>
+       <span class="n">derstream</span><span class="p">,</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">x509</span><span class="o">.</span><span class="n">MarshalPKIXPublicKey</span><span class="p">(</span><span class="o">&amp;</span><span class="n">publicKey</span><span class="p">)</span>
+       <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+               <span class="n">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+       <span class="p">}</span>
+       <span class="o">//</span> <span class="mf">3.</span> <span class="n">将得到的数据放到pem</span><span class="o">.</span><span class="n">Block中</span>
+       <span class="n">block</span> <span class="o">=</span> <span class="n">pem</span><span class="o">.</span><span class="n">Block</span><span class="p">{</span>
+               <span class="n">Type</span> <span class="p">:</span> <span class="s2">&quot;rsa public key&quot;</span><span class="p">,</span>
+               <span class="n">Bytes</span> <span class="p">:</span> <span class="n">derstream</span><span class="p">,</span>
+       <span class="p">}</span>
+       <span class="o">//</span> <span class="mf">4.</span> <span class="n">pem编码</span>
+       <span class="n">file</span><span class="p">,</span> <span class="n">err</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="s2">&quot;public.pem&quot;</span><span class="p">)</span>
+       <span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="n">nil</span> <span class="p">{</span>
+               <span class="n">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+       <span class="p">}</span>
+       <span class="n">pem</span><span class="o">.</span><span class="n">Encode</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+       <span class="n">file</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">错误处理::</div>
+</div>
+<ol class="arabic simple">
+<li><p>defer func() // 延时调用</p></li>
+<li><p>defer func() {recover()}() // recover 拦截panic错误,错误发生前使用
+- 捕获错误 err:=recover()</p></li>
+<li><p>errors.New() // 返回错误信息</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="code.html" class="btn btn-neutral float-left" title="加密&amp;解密" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="mat.html" class="btn btn-neutral float-right" title="机器学习算法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Lihao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

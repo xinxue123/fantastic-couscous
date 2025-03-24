@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sphinx Note &mdash; tiny 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Scala Note" href="scala.html" />
+    <link rel="prev" title="Welcome to tiny’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tiny
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sphinx Note</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#install"><em>install</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#create-project"><em>create project</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#some-operations"><em>some operations</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_process.html">遥感影像处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Sphinx Note</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sphinx_note.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sphinx-note">
+<h1>Sphinx Note<a class="headerlink" href="#sphinx-note" title="Link to this heading">¶</a></h1>
+<p>通过sphinx创建web note</p>
+<section id="install">
+<h2><em>install</em><a class="headerlink" href="#install" title="Link to this heading">¶</a></h2>
+<p>前置条件：安装python,建议使用Anaconda安装：</p>
+<p>在window下的安装sphinx的命令:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sphinx</span>
+</pre></div>
+</div>
+</section>
+<section id="create-project">
+<h2><em>create project</em><a class="headerlink" href="#create-project" title="Link to this heading">¶</a></h2>
+<p>安装完成后可以使用如下命令创建工程:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sphinx</span><span class="o">-</span><span class="n">quickstart</span>
+</pre></div>
+</div>
+<p>创建完工程之后会有如下的文件结构:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">project</span> <span class="n">name</span>
+<span class="o">|--</span>
+<span class="o">|--</span><span class="n">source</span>
+   <span class="o">|--</span><span class="n">_static</span>
+   <span class="o">|--</span><span class="n">_templates</span>
+   <span class="o">|--</span><span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+   <span class="o">|--</span><span class="n">conf</span><span class="o">.</span><span class="n">py</span>
+<span class="o">|--</span><span class="n">make</span><span class="o">.</span><span class="n">bat</span>
+<span class="o">|</span><span class="n">Makefile</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">index.rst</span></code>: 索引页，所有的文档都需要添加到index.rst</p>
+<p><code class="docutils literal notranslate"><span class="pre">conf.py</span></code>: 工程的配置文件，可以更改工程名，更改sphinx主题等</p>
+<p><code class="docutils literal notranslate"><span class="pre">_templates</span></code>: 存放模板的文件夹</p>
+<p><code class="docutils literal notranslate"><span class="pre">_static</span></code>: 存放静态文件的文件夹，例如图片之类</p>
+<p>创建完工程之后就可以通过sphinx生成html文件，命令如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">html</span>
+</pre></div>
+</div>
+<p>如果多次使用make html 页面没有发生变化可使用如下命令清除原先内容:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">clean</span>
+</pre></div>
+</div>
+<p>生成html之后通过如下命令启动服务:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">http</span><span class="o">.</span><span class="n">server</span>
+</pre></div>
+</div>
+<p>默认的网页地址是http://localhost:8000</p>
+<p>若要添加自己的文档可在source文件夹下生产rst文件如support.rst,并添加内容如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">note</span>
+<span class="o">====</span>
+
+<span class="n">simple</span> <span class="n">note</span><span class="p">,</span>
+<span class="n">you</span> <span class="n">can</span> <span class="n">write</span> <span class="n">content</span> <span class="n">here</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>保存文件之后你的文件夹结构如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">project</span> <span class="n">name</span>
+<span class="o">|--</span><span class="n">built</span>
+<span class="o">|--</span><span class="n">source</span>
+   <span class="o">|--</span><span class="n">_static</span>
+   <span class="o">|--</span><span class="n">_templates</span>
+   <span class="o">|--</span><span class="n">index</span><span class="o">.</span><span class="n">rst</span>
+   <span class="o">|--</span><span class="n">conf</span><span class="o">.</span><span class="n">py</span>
+   <span class="o">|--</span><span class="n">support</span><span class="o">.</span><span class="n">rst</span>
+<span class="o">|--</span><span class="n">make</span><span class="o">.</span><span class="n">bat</span>
+<span class="o">|</span><span class="n">Makefile</span>
+</pre></div>
+</div>
+<p>然后将你的support.rst文件添加到index.rst中,添加后的内容如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">toctree</span><span class="p">::</span>
+  <span class="p">:</span><span class="n">maxdepth</span><span class="p">:</span> <span class="mi">2</span>
+  <span class="p">:</span><span class="n">caption</span><span class="p">:</span> <span class="n">Contents</span><span class="p">:</span>
+
+  <span class="n">support</span><span class="o">.</span><span class="n">rst</span>
+</pre></div>
+</div>
+<p>最后重新make html 后就可以查看到自己的文档</p>
+</section>
+<section id="some-operations">
+<h2><em>some operations</em><a class="headerlink" href="#some-operations" title="Link to this heading">¶</a></h2>
+<p>添加图片:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">..</span> <span class="n">image</span><span class="p">::</span> <span class="n">test</span><span class="o">.</span><span class="n">jpg</span>  <span class="c1"># 图片的位置</span>
+   <span class="p">:</span><span class="n">height</span><span class="p">:</span> <span class="mi">100</span><span class="n">px</span>
+   <span class="p">:</span><span class="n">width</span><span class="p">:</span> <span class="mi">200</span> <span class="n">px</span>
+   <span class="p">:</span><span class="n">scale</span><span class="p">:</span> <span class="mi">50</span> <span class="o">%</span>
+   <span class="p">:</span><span class="n">alt</span><span class="p">:</span> <span class="n">alternate</span> <span class="n">text</span>
+   <span class="p">:</span><span class="n">align</span><span class="p">:</span> <span class="n">center</span>
+</pre></div>
+</div>
+<p>上传到github:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">add</span> <span class="o">.</span> <span class="o">//</span> <span class="n">添加所有</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;sphinx start&quot;</span> <span class="o">//</span> <span class="n">上传到本地</span>
+<span class="o">//</span> <span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">https</span><span class="p">:</span><span class="o">......</span><span class="p">(</span><span class="n">your</span> <span class="n">repository</span><span class="p">)</span>
+<span class="n">git</span> <span class="n">push</span> <span class="n">origin</span> <span class="n">master</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to tiny’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="scala.html" class="btn btn-neutral float-right" title="Scala Note" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Lihao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

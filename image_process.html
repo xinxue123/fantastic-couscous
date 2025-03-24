@@ -1,0 +1,478 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>遥感影像处理 &mdash; tiny 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Support" href="support.html" />
+    <link rel="prev" title="机器学习算法" href="mat.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tiny
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">遥感影像处理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">1. 辐射定标</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">2. 大气校正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">3. 几何校正</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">4. 图像配准</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">5. 图像融合</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">6. 图像镶嵌</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">遥感影像处理</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/image_process.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>遥感影像处理<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<section id="id2">
+<h2>1. 辐射定标<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line">辐射定标就是将图像的数字量化值（DN）转化为辐射亮度值或者反射率或者表面温度等物理量的处理过程。将未定标的DN图像转成辐射亮度值图像，通常只用一个线性转换公式及偏移和增益就可以完成，偏移和增益参数一般在元数据文件中可获取。</div>
+<div class="line-block">
+<div class="line">L = Gain * Pixel value + Offset</div>
+</div>
+<div class="line">发射率包含大气表观反射率、地表反射率，其中地表反射率可以通过大气校正得到，大气表观反射率通过辐射亮度定标参数，太阳辐照度，太阳高度角和成像时间等几个参数计算得到。</div>
+<div class="line">当一个物体的辐射亮度与某一黑体的辐射亮度相等时，该黑体的物理温度就被称之为该物体的“亮度温度”，通过普朗克方程，将热红外辐射亮度（定标后的热红外数据）图像转成亮温图像。</div>
+</div>
+</section>
+<section id="id3">
+<h2>2. 大气校正<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>大气校正主要由两部分组成，分别是大气参数的估算和地表反射率的反演。造成大气效应的主要吸收体包括水汽、臭氧、氧气和气溶胶，臭氧、氧气等其他气体引起的吸收比较容易纠正，因为这些要素的浓度在时间和空间上都比较稳定，困难的是气溶胶和水汽参量的估算，因此去除气溶胶与水汽的影响成为大气校正的主要内容。</p>
+<div class="line-block">
+<div class="line">a. 消除气溶胶的大气校正</div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li><p>基于光谱特征的方法有长波近红外暗目标法、短波近红外暗目标法。</p></li>
+<li><p>基于时间序列影像的方法包括线性回归法。</p></li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line">b. 消除水汽的大气校正</div>
+</div>
+<p>常用的大气校正模型有MODTRAN模型、6S模型。</p>
+</section>
+<section id="id4">
+<h2>3. 几何校正<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line">影像几何纠正模型分为两类：物理模型、经验模型。</div>
+</div>
+<div class="line-block">
+<div class="line">经验模型包括一般多项式模型、直接线性变换模型、仿射变换模型、有理函数模型。</div>
+</div>
+<p>下面介绍基于GDAL进行几何校正的实现</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">osgeo</span><span class="w"> </span><span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">osr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="n">src_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\02transform\bldr_tm.img&quot;</span> <span class="c1"># 待校正影像</span>
+<span class="n">destination_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\result&quot;</span>
+<span class="n">out_name</span> <span class="o">=</span> <span class="s2">&quot;transform01.tif&quot;</span> <span class="c1"># 输出影像名</span>
+<span class="n">dst</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">src_fold</span><span class="p">)</span>
+<span class="c1">## 地面控制点</span>
+<span class="n">gcps</span> <span class="o">=</span> <span class="p">[</span><span class="n">gdal</span><span class="o">.</span><span class="n">GCP</span><span class="p">(</span><span class="mf">470876.749</span><span class="p">,</span> <span class="mf">4438937.779</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">61.887</span><span class="p">,</span> <span class="mf">113.014</span><span class="p">),</span>
+        <span class="n">gdal</span><span class="o">.</span><span class="n">GCP</span><span class="p">(</span><span class="mf">469085.001</span><span class="p">,</span><span class="mf">4433872.524</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">29.418</span><span class="p">,</span><span class="mf">299.515</span><span class="p">),</span>
+        <span class="n">gdal</span><span class="o">.</span><span class="n">GCP</span><span class="p">(</span><span class="mf">477597.708</span><span class="p">,</span><span class="mf">4433648.605</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">328.101</span><span class="p">,</span><span class="mf">254.338</span><span class="p">),</span>
+        <span class="n">gdal</span><span class="o">.</span><span class="n">GCP</span><span class="p">(</span><span class="mf">477579.376</span><span class="p">,</span> <span class="mf">4440075.697</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">287.793</span><span class="p">,</span><span class="mf">33.022</span><span class="p">),</span>
+        <span class="p">]</span>
+<span class="n">src_arr</span> <span class="o">=</span> <span class="n">dst</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">dst_srs</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\02transform\bldr_sp.img&quot;</span><span class="p">)</span>
+<span class="n">dst_srs</span> <span class="o">=</span> <span class="n">dst_srs</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">()</span>
+<span class="n">dst</span><span class="o">.</span><span class="n">SetGCPs</span><span class="p">(</span><span class="n">gcps</span><span class="p">,</span> <span class="n">dst_srs</span><span class="p">)</span>
+<span class="n">gdal</span><span class="o">.</span><span class="n">Warp</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination_fold</span><span class="p">,</span> <span class="n">out_name</span><span class="p">),</span> <span class="n">dst</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;Gtiff&quot;</span><span class="p">,</span> <span class="n">tps</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># 若使用RPC校正可在gdal.Warp(rpc=True,transformerOptions=*)这样设置</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2>4. 图像配准<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h2>
+<ol class="loweralpha simple">
+<li><p>寻找关键点</p></li>
+<li><p>关键点匹配</p></li>
+<li><p>计算转换矩阵</p></li>
+</ol>
+<ol class="loweralpha simple" start="5">
+<li><p>图片匀色</p></li>
+</ol>
+<ol class="loweralpha simple" start="4">
+<li><p>对透视变换的图像应用转换矩阵</p></li>
+<li><p>拼接图像</p></li>
+</ol>
+<p>下面是利用opencv、numpy实现上述操作</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">osgeo</span><span class="w"> </span><span class="kn">import</span> <span class="n">gdal</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">src_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\03mosaic&quot;</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="s2">&quot;*.img&quot;</span><span class="p">))</span>
+<span class="n">destination_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\result&quot;</span>
+<span class="n">out_name</span> <span class="o">=</span> <span class="s2">&quot;mosaic04.tif&quot;</span>
+<span class="n">img1_dst</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">img1_dst</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">geo1</span> <span class="o">=</span> <span class="n">img1_dst</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
+<span class="n">img2_dst</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">geo2</span> <span class="o">=</span> <span class="n">img2_dst</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">img2_dst</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">b1</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">b2</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_RGB2GRAY</span><span class="p">)</span>
+<span class="n">xl1</span><span class="p">,</span><span class="n">yu1</span><span class="p">,</span><span class="n">xr1</span><span class="p">,</span><span class="n">yb1</span> <span class="o">=</span> <span class="n">geo1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">geo1</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">geo1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">img1_dst</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,</span> <span class="n">geo1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="n">img1_dst</span><span class="o">.</span><span class="n">RasterYSize</span>
+<span class="n">xl2</span><span class="p">,</span><span class="n">yu2</span><span class="p">,</span><span class="n">xr2</span><span class="p">,</span><span class="n">yb2</span> <span class="o">=</span> <span class="n">geo2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">geo2</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">geo2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">geo2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">img2_dst</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,</span> <span class="n">geo2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">geo2</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="n">img2_dst</span><span class="o">.</span><span class="n">RasterYSize</span>
+<span class="n">xl</span><span class="p">,</span><span class="n">yu</span><span class="p">,</span><span class="n">xr</span><span class="p">,</span><span class="n">yb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xl1</span><span class="p">,</span><span class="n">xl2</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">yu1</span><span class="p">,</span><span class="n">yu2</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">xr1</span><span class="p">,</span> <span class="n">xr2</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">yb1</span><span class="p">,</span><span class="n">yb2</span><span class="p">)</span>
+<span class="n">ras01_y_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+<span class="n">ras01_y_train</span><span class="p">[</span><span class="nb">int</span><span class="p">((</span><span class="n">yu1</span> <span class="o">-</span> <span class="n">yu</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]):</span><span class="nb">int</span><span class="p">((</span><span class="n">yu1</span> <span class="o">-</span> <span class="n">yb</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span> <span class="nb">int</span><span class="p">((</span><span class="n">xl</span> <span class="o">-</span> <span class="n">xl1</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span><span class="nb">int</span><span class="p">((</span><span class="n">xr</span> <span class="o">-</span> <span class="n">xl1</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">ras02_x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+<span class="n">ras02_x_train</span><span class="p">[</span><span class="nb">int</span><span class="p">((</span><span class="n">yu2</span> <span class="o">-</span> <span class="n">yu</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]):</span><span class="nb">int</span><span class="p">((</span><span class="n">yu2</span> <span class="o">-</span> <span class="n">yb</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span><span class="nb">int</span><span class="p">((</span><span class="n">xl</span> <span class="o">-</span> <span class="n">xl2</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span><span class="nb">int</span><span class="p">((</span><span class="n">xr</span> <span class="o">-</span> <span class="n">xl2</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="c1"># 1. 查找关键点</span>
+<span class="c1"># gg = cv2.xfeatures2d.SIFT_create()</span>
+<span class="c1"># gg = cv2.ORB_create()</span>
+<span class="n">gg</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">xfeatures2d</span><span class="o">.</span><span class="n">SURF_create</span><span class="p">()</span>
+<span class="n">kp</span><span class="p">,</span> <span class="n">desc</span> <span class="o">=</span> <span class="n">gg</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">ras01_y_train</span><span class="p">)</span>
+<span class="n">kp2</span><span class="p">,</span> <span class="n">desc2</span> <span class="o">=</span> <span class="n">gg</span><span class="o">.</span><span class="n">detectAndCompute</span><span class="p">(</span><span class="n">b2</span><span class="p">,</span> <span class="n">ras02_x_train</span><span class="p">)</span>
+
+<span class="c1"># 2. 关键点匹配</span>
+<span class="n">bf</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">BFMatcher</span><span class="p">()</span>
+<span class="n">matched</span> <span class="o">=</span> <span class="n">bf</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">desc</span><span class="p">,</span> <span class="n">desc2</span><span class="p">)</span>
+<span class="n">matched</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matched</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="o">.</span><span class="n">distance</span><span class="p">)</span>
+<span class="n">out_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">drawMatches</span><span class="p">(</span><span class="n">b1</span><span class="p">,</span> <span class="n">kp</span><span class="p">,</span> <span class="n">b2</span><span class="p">,</span> <span class="n">kp2</span><span class="p">,</span> <span class="n">matched</span><span class="p">[:</span><span class="mi">10</span><span class="p">],</span><span class="kc">None</span><span class="p">)</span>
+
+<span class="c1"># 3. 计算转换矩阵</span>
+<span class="n">dst_points</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">src_points</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">matched</span><span class="p">[:</span><span class="mi">10</span><span class="p">]:</span>
+    <span class="n">dst_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kp</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">queryIdx</span><span class="p">]</span><span class="o">.</span><span class="n">pt</span><span class="p">)</span>
+    <span class="n">src_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">kp2</span><span class="p">[</span><span class="n">i</span><span class="o">.</span><span class="n">trainIdx</span><span class="p">]</span><span class="o">.</span><span class="n">pt</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">findHomography</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">src_points</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">dst_points</span><span class="p">))</span>
+
+<span class="c1"># 4. 匀色 wallis</span>
+<span class="n">mg_b1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+<span class="n">vg_b1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">b1</span><span class="p">)</span>
+<span class="n">mg_b2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+<span class="n">vg_b2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">b2</span><span class="p">)</span>
+<span class="n">mf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">mg_b1</span><span class="p">,</span> <span class="n">mg_b2</span><span class="p">]))</span>
+<span class="n">vf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">vg_b1</span><span class="p">,</span> <span class="n">vg_b2</span><span class="p">]))</span>
+<span class="n">r1_b1</span> <span class="o">=</span> <span class="n">vf</span> <span class="o">/</span> <span class="n">vg_b1</span>
+<span class="n">r0_b1</span> <span class="o">=</span> <span class="n">mf</span> <span class="o">-</span> <span class="n">r1_b1</span> <span class="o">*</span> <span class="n">mg_b1</span>
+<span class="n">r1_b2</span> <span class="o">=</span> <span class="n">vf</span> <span class="o">/</span> <span class="n">vg_b2</span>
+<span class="n">r0_b2</span> <span class="o">=</span> <span class="n">mf</span> <span class="o">-</span> <span class="n">r1_b2</span> <span class="o">*</span> <span class="n">mg_b2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">r1_b2</span><span class="p">,</span> <span class="n">r1_b1</span><span class="p">,</span> <span class="n">r0_b2</span><span class="p">,</span> <span class="n">r0_b1</span><span class="p">)</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">b1</span> <span class="o">*</span> <span class="n">r1_b1</span> <span class="o">+</span> <span class="n">r0_b1</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">b2</span> <span class="o">*</span> <span class="n">r1_b2</span> <span class="o">+</span> <span class="n">r0_b2</span>
+
+<span class="c1"># 5. 转换</span>
+<span class="n">destination</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">warpPerspective</span><span class="p">(</span><span class="n">b2</span><span class="p">,</span> <span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="p">(</span><span class="n">b1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="nb">int</span><span class="p">((</span><span class="n">yu1</span> <span class="o">-</span> <span class="n">yu</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">])</span><span class="o">-</span><span class="nb">int</span><span class="p">((</span><span class="n">yu1</span> <span class="o">-</span> <span class="n">yb</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span>
+                                             <span class="n">b1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">b2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="nb">int</span><span class="p">((</span><span class="n">xl</span> <span class="o">-</span> <span class="n">xl1</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="nb">int</span><span class="p">((</span><span class="n">xr</span> <span class="o">-</span> <span class="n">xl1</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+
+<span class="c1"># 6. 拼接</span>
+<span class="n">destination</span><span class="p">[:</span><span class="n">b1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],:</span><span class="n">b1</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">b1</span>
+<span class="n">write_raster</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination_fold</span><span class="p">,</span> <span class="n">out_name</span><span class="p">),</span> <span class="n">img1_dst</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">(),</span> <span class="n">img1_dst</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">(),</span> <span class="n">destination</span><span class="p">)</span>
+<span class="n">out_img</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">destination</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">fx</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">fy</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;out&quot;</span><span class="p">,</span><span class="n">out_img</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2>5. 图像融合<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h2>
+<div class="line-block">
+<div class="line">图像融合分为三个层次像素级融合、特征级融合、决策级融合。特征级融合包括基于变量替换技术融合方法、基于调制融合方法、基于多尺度分析融合方法。</div>
+<div class="line">下面介绍基于GDAL进行特征级图像融合的实现</div>
+</div>
+<p>基于变量替换技术融合方法01</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 基于变量替换技术融合方法 PCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">osgeo</span><span class="w"> </span><span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">osr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">src_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\04merge&quot;</span>
+<span class="n">sp_name</span> <span class="o">=</span> <span class="s2">&quot;qb_boulder_msi.img&quot;</span>
+<span class="n">pan_name</span> <span class="o">=</span> <span class="s2">&quot;qb_boulder_pan.img&quot;</span>
+<span class="n">out_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\result\merge01.tif&quot;</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_raster</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">im_proj</span><span class="p">,</span> <span class="n">im_geotrans</span><span class="p">,</span> <span class="n">im_data</span><span class="p">):</span>
+    <span class="c1"># gdal.GDT_Byte,</span>
+    <span class="c1"># gdal .GDT_UInt16, gdal.GDT_Int16, gdal.GDT_UInt32, gdal.GDT_Int32,</span>
+    <span class="c1"># gdal.GDT_Float32, gdal.GDT_Float64</span>
+    <span class="k">if</span> <span class="s1">&#39;int8&#39;</span> <span class="ow">in</span> <span class="n">im_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">datatype</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GDT_Byte</span>
+    <span class="k">elif</span> <span class="s1">&#39;int16&#39;</span> <span class="ow">in</span> <span class="n">im_data</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">datatype</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GDT_UInt16</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">datatype</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GDT_Float32</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">im_data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">im_bands</span><span class="p">,</span> <span class="n">im_height</span><span class="p">,</span> <span class="n">im_width</span> <span class="o">=</span> <span class="n">im_data</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">im_bands</span><span class="p">,</span> <span class="p">(</span><span class="n">im_height</span><span class="p">,</span> <span class="n">im_width</span><span class="p">)</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">im_data</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="n">driver</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">GetDriverByName</span><span class="p">(</span><span class="s2">&quot;Gtiff&quot;</span><span class="p">)</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">driver</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">im_width</span><span class="p">,</span> <span class="n">im_height</span><span class="p">,</span> <span class="n">im_bands</span><span class="p">,</span> <span class="n">datatype</span><span class="p">)</span>
+
+    <span class="n">dataset</span><span class="o">.</span><span class="n">SetGeoTransform</span><span class="p">(</span><span class="n">im_geotrans</span><span class="p">)</span>
+    <span class="n">dataset</span><span class="o">.</span><span class="n">SetProjection</span><span class="p">(</span><span class="n">im_proj</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">im_bands</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">dataset</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">WriteArray</span><span class="p">(</span><span class="n">im_data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">im_bands</span><span class="p">):</span>
+            <span class="n">dataset</span><span class="o">.</span><span class="n">GetRasterBand</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">WriteArray</span><span class="p">(</span><span class="n">im_data</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">del</span> <span class="n">dataset</span>
+<span class="n">dst01</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="n">sp_name</span><span class="p">))</span>
+<span class="n">dst02</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="n">pan_name</span><span class="p">))</span>
+<span class="n">sp_ras</span> <span class="o">=</span> <span class="n">dst01</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">sp_ras_upper</span> <span class="o">=</span> <span class="n">sp_ras</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">sp_ras_upper_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fy</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">sp_ras_upper_s</span> <span class="o">=</span> <span class="n">sp_ras_upper_s</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sp_ras_upper_s</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sp_ras</span> <span class="o">=</span> <span class="n">sp_ras</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sp_ras</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pan_ras</span> <span class="o">=</span> <span class="n">dst02</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">pan_ras</span> <span class="o">=</span> <span class="n">pan_ras</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">sp_cov</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">sp_ras</span><span class="p">)</span>
+<span class="n">sp_eig_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">sp_cov</span><span class="p">)</span>
+<span class="n">sp_val</span> <span class="o">=</span> <span class="n">sp_eig_val</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">sp_eig</span> <span class="o">=</span> <span class="n">sp_eig_val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">sp_order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">sp_val</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">sp_eig_order</span> <span class="o">=</span> <span class="n">sp_eig</span><span class="p">[</span><span class="n">sp_order</span><span class="p">]</span>
+<span class="n">pcs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sp_eig_order</span><span class="p">,</span> <span class="n">sp_ras_upper_s</span><span class="p">)</span>
+<span class="n">eig_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">sp_eig_order</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;***&quot;</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">eig_inv</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">pan_ras</span> <span class="o">-</span> <span class="n">pcs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">基于变量替换技术融合方法02-IHS</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">osgeo</span><span class="w"> </span><span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">osr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">src_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\04merge&quot;</span>
+<span class="n">sp_name</span> <span class="o">=</span> <span class="s2">&quot;qb_boulder_msi.img&quot;</span>
+<span class="n">pan_name</span> <span class="o">=</span> <span class="s2">&quot;qb_boulder_pan.img&quot;</span>
+<span class="n">out_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\result\merge03.tif&quot;</span>
+<span class="n">dst01</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="n">sp_name</span><span class="p">))</span>
+<span class="n">dst02</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="n">pan_name</span><span class="p">))</span>
+<span class="n">sp_ras</span> <span class="o">=</span> <span class="n">dst01</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;orign_1&quot;</span><span class="p">,</span> <span class="n">sp_ras</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">sp_ras_upper</span> <span class="o">=</span> <span class="n">sp_ras</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">sp_ras_upper_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fy</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">sp_ras_upper_s</span> <span class="o">=</span> <span class="n">sp_ras_upper_s</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sp_ras_upper_s</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">sp_ras</span> <span class="o">=</span> <span class="n">sp_ras</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sp_ras</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pan_ras</span> <span class="o">=</span> <span class="n">dst02</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">pan_ras</span> <span class="o">=</span> <span class="n">pan_ras</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">],[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">/</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="mi">0</span><span class="p">]])</span>
+
+<span class="n">sp_ras_upper_s</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">vec</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sp_ras_upper_s</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">pan_ras</span> <span class="o">=</span> <span class="n">pan_ras</span> <span class="o">-</span> <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">pan_ras</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sp_ras_upper_s</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">write_raster</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">dst02</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">(),</span> <span class="n">dst02</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">(),</span> <span class="n">sp_ras_upper_s</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4096</span><span class="p">,</span> <span class="mi">4096</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">基于调制融合方法block-regression</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">osgeo</span><span class="w"> </span><span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">osr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="n">src_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\04merge&quot;</span>
+<span class="n">sp_name</span> <span class="o">=</span> <span class="s2">&quot;qb_boulder_msi.img&quot;</span>
+<span class="n">pan_name</span> <span class="o">=</span> <span class="s2">&quot;qb_boulder_pan.img&quot;</span>
+<span class="n">out_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\result\merge02.tif&quot;</span>
+<span class="n">dst01</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="n">sp_name</span><span class="p">))</span>
+<span class="n">dst02</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="n">pan_name</span><span class="p">))</span>
+<span class="n">sp_ras</span> <span class="o">=</span> <span class="n">dst01</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">sp_ras_upper</span> <span class="o">=</span> <span class="n">sp_ras</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">sp_ras_upper_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">,</span> <span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">dsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">fx</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">fy</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">sp_ras</span> <span class="o">=</span> <span class="n">sp_ras</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">sp_ras</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pan_ras</span> <span class="o">=</span> <span class="n">dst02</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">pan_ras_copy</span> <span class="o">=</span> <span class="n">pan_ras</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">block</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pan_ras</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">block</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pan_ras</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">block</span><span class="p">)):</span>
+        <span class="n">x_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">([</span><span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">band</span><span class="p">][</span><span class="n">j</span><span class="o">*</span><span class="n">block</span><span class="o">+</span><span class="n">ii</span><span class="p">][</span><span class="n">i</span><span class="o">*</span><span class="n">block</span><span class="o">+</span><span class="n">jj</span><span class="p">]]</span>
+                                <span class="k">for</span> <span class="n">band</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sp_ras_upper_s</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                                <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+                                <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="p">)</span>
+                                <span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">sp_ras_upper_s</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">y_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">([</span><span class="n">pan_ras</span><span class="p">[</span><span class="n">j</span><span class="o">*</span><span class="n">block</span><span class="o">+</span><span class="n">ii</span><span class="p">][</span><span class="n">i</span><span class="o">*</span><span class="n">block</span><span class="o">+</span><span class="n">jj</span><span class="p">]]</span> <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="p">)</span> <span class="k">for</span> <span class="n">jj</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">block</span><span class="p">)))</span>
+        <span class="c1"># print(x_train)</span>
+        <span class="c1"># print(y_train)</span>
+        <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        <span class="n">y_predict</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+        <span class="c1"># print(pan_ras_copy[i*block:i*block + block,j*block:j*block+block].shape)</span>
+        <span class="c1"># print(i*block,i*block + block,j*block,j*block+block)</span>
+        <span class="n">pan_ras_copy</span><span class="p">[</span><span class="n">i</span><span class="o">*</span><span class="n">block</span><span class="p">:</span><span class="n">i</span><span class="o">*</span><span class="n">block</span> <span class="o">+</span> <span class="n">block</span><span class="p">,</span><span class="n">j</span><span class="o">*</span><span class="n">block</span><span class="p">:</span><span class="n">j</span><span class="o">*</span><span class="n">block</span><span class="o">+</span><span class="n">block</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_train</span> <span class="o">/</span> <span class="n">y_train</span><span class="o">-</span><span class="n">lr</span><span class="o">.</span><span class="n">intercept_</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">block</span><span class="p">,</span> <span class="n">block</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pan_ras_copy</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">sp_ras_upper</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">sp_ras_upper_s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">pan_ras_copy</span>
+
+<span class="n">write_raster</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">dst02</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">(),</span> <span class="n">dst02</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">(),</span><span class="n">sp_ras_upper_s</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2>6. 图像镶嵌<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<p>在遥感影像获取过程中，受内部和外部环境因素干扰，多幅遥感影像的色调、亮度、反差等存在不同程度的差异。因此，为了建立无缝的正射影像镶嵌图、需要在单幅影像上和多幅影像之间进行匀光、匀色处理以达到色彩平衡。</p>
+<div class="line-block">
+<div class="line">下面是线性变换和直接拼接两种方法的python实现</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 直接拼接</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">osgeo</span><span class="w"> </span><span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">osr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="n">src_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\03mosaic&quot;</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="s2">&quot;*.img&quot;</span><span class="p">))</span>
+<span class="n">destination_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\result&quot;</span>
+<span class="n">out_name</span> <span class="o">=</span> <span class="s2">&quot;mosaic.tif&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">files</span><span class="p">)</span>
+<span class="n">gdal</span><span class="o">.</span><span class="n">Warp</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination_fold</span><span class="p">,</span> <span class="n">out_name</span><span class="p">),</span> <span class="n">files</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;Gtiff&quot;</span><span class="p">)</span>
+
+<span class="c1"># 使用线性变换拼接</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">osgeo</span><span class="w"> </span><span class="kn">import</span> <span class="n">gdal</span><span class="p">,</span> <span class="n">osr</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">cv2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.linear_model</span><span class="w"> </span><span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="n">src_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\03mosaic&quot;</span>
+<span class="n">files</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">src_fold</span><span class="p">,</span> <span class="s2">&quot;*.img&quot;</span><span class="p">))</span>
+<span class="n">destination_fold</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;F:\ENVI\Data\result&quot;</span>
+<span class="n">out_name</span> <span class="o">=</span> <span class="s2">&quot;mosaic2.tif&quot;</span>
+<span class="n">dst01</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">dst02</span> <span class="o">=</span> <span class="n">gdal</span><span class="o">.</span><span class="n">Open</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ras01</span> <span class="o">=</span> <span class="n">dst01</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">geo1</span> <span class="o">=</span> <span class="n">dst01</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
+<span class="n">xl1</span><span class="p">,</span><span class="n">yu1</span><span class="p">,</span><span class="n">xr1</span><span class="p">,</span><span class="n">yb1</span> <span class="o">=</span> <span class="n">geo1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">geo1</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">geo1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dst01</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,</span> <span class="n">geo1</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="n">dst01</span><span class="o">.</span><span class="n">RasterYSize</span>
+
+<span class="n">ras02</span> <span class="o">=</span> <span class="n">dst02</span><span class="o">.</span><span class="n">ReadAsArray</span><span class="p">()</span>
+<span class="n">geo2</span> <span class="o">=</span> <span class="n">dst02</span><span class="o">.</span><span class="n">GetGeoTransform</span><span class="p">()</span>
+<span class="n">xl2</span><span class="p">,</span><span class="n">yu2</span><span class="p">,</span><span class="n">xr2</span><span class="p">,</span><span class="n">yb2</span> <span class="o">=</span> <span class="n">geo2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">geo2</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span><span class="n">geo2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">geo2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dst02</span><span class="o">.</span><span class="n">RasterXSize</span><span class="p">,</span> <span class="n">geo2</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">geo2</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="n">dst02</span><span class="o">.</span><span class="n">RasterYSize</span>
+<span class="n">xl</span><span class="p">,</span><span class="n">yu</span><span class="p">,</span><span class="n">xr</span><span class="p">,</span><span class="n">yb</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">xl1</span><span class="p">,</span><span class="n">xl2</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">yu1</span><span class="p">,</span><span class="n">yu2</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="n">xr1</span><span class="p">,</span> <span class="n">xr2</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">yb1</span><span class="p">,</span><span class="n">yb2</span><span class="p">)</span>
+<span class="n">ras01_y_train</span> <span class="o">=</span> <span class="n">ras01</span><span class="p">[:,</span> <span class="nb">int</span><span class="p">((</span><span class="n">yu1</span> <span class="o">-</span> <span class="n">yu</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]):</span><span class="nb">int</span><span class="p">((</span><span class="n">yu1</span> <span class="o">-</span> <span class="n">yb</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span> <span class="nb">int</span><span class="p">((</span><span class="n">xl</span> <span class="o">-</span> <span class="n">xl1</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span><span class="nb">int</span><span class="p">((</span><span class="n">xr</span> <span class="o">-</span> <span class="n">xl1</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="n">lr</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">ras02_x_train</span> <span class="o">=</span> <span class="n">ras02</span><span class="p">[:,</span> <span class="nb">int</span><span class="p">((</span><span class="n">yu2</span> <span class="o">-</span> <span class="n">yu</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]):</span><span class="nb">int</span><span class="p">((</span><span class="n">yu2</span> <span class="o">-</span> <span class="n">yb</span><span class="p">)</span><span class="o">/-</span><span class="n">geo1</span><span class="p">[</span><span class="mi">5</span><span class="p">]),</span><span class="nb">int</span><span class="p">((</span><span class="n">xl</span> <span class="o">-</span> <span class="n">xl2</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span><span class="nb">int</span><span class="p">((</span><span class="n">xr</span> <span class="o">-</span> <span class="n">xl2</span><span class="p">)</span><span class="o">/</span><span class="n">geo1</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ras02_x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ras02_x_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">ras01_y_train</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">ras02</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">ras02</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">*</span><span class="n">ras02</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">dst02_</span> <span class="o">=</span> <span class="n">write_raster</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">dst02</span><span class="o">.</span><span class="n">GetProjection</span><span class="p">(),</span> <span class="n">geo2</span><span class="p">,</span> <span class="n">ras02</span><span class="p">)</span>
+<span class="n">gdal</span><span class="o">.</span><span class="n">Warp</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">destination_fold</span><span class="p">,</span> <span class="n">out_name</span><span class="p">),</span> <span class="p">[</span><span class="n">dst01</span><span class="p">,</span> <span class="n">dst02_</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;Gtiff&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="mat.html" class="btn btn-neutral float-left" title="机器学习算法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="support.html" class="btn btn-neutral float-right" title="Support" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Lihao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

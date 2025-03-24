@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scala Note &mdash; tiny 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Linux" href="Linux.html" />
+    <link rel="prev" title="Sphinx Note" href="sphinx_note.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tiny
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Scala Note</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scala"><em>scala 读取图片生成二进制流</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#breeze"><em>breeze 的简单操作</em></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1"><em>scala关于时间的函数</em></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spark.html">Spark</a></li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_process.html">遥感影像处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Scala Note</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/scala.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="scala-note">
+<h1>Scala Note<a class="headerlink" href="#scala-note" title="Link to this heading">¶</a></h1>
+<section id="scala">
+<h2><em>scala 读取图片生成二进制流</em><a class="headerlink" href="#scala" title="Link to this heading">¶</a></h2>
+<p>代码如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import java.io.FileInputStream
+val path = &quot;path&quot;
+val f = new FileInputStream(path)
+val i = f.available()
+val data = new Array[Byte](i)
+f.read(data)
+//生成字符串
+val strings = new String(org.apache.commons.codec.binary.Base64.encodeBase64(data))
+//生成字节数组，用base64编码
+val bytes = org.apache.commons.codec.binary.Base64.encodeBase64(data)
+</pre></div>
+</div>
+</section>
+<section id="breeze">
+<h2><em>breeze 的简单操作</em><a class="headerlink" href="#breeze" title="Link to this heading">¶</a></h2>
+<p>breeze的创建函数:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">breeze.linalg._</span>
+<span class="n">val</span> <span class="n">s1</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="mi">20</span><span class="p">){</span><span class="n">i</span><span class="o">=&gt;</span><span class="n">i</span><span class="o">*</span><span class="mi">2</span><span class="p">}</span>
+<span class="n">val</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">DenseMatrix</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">){(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=&gt;</span> <span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">}</span>
+<span class="o">//</span> <span class="n">创建随机数</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">DenseMatrix</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="o">//</span> <span class="n">创建0</span><span class="p">,</span><span class="mi">1</span><span class="n">向量</span>
+<span class="n">val</span> <span class="n">s4</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="p">[</span><span class="n">Double</span><span class="p">](</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">s5</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">ones</span><span class="p">[</span><span class="n">Int</span><span class="p">](</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>breeze切片:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">println</span><span class="p">(</span><span class="n">s1</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="o">//</span> <span class="n">第一个数据</span>
+<span class="n">println</span><span class="p">(</span><span class="n">s1</span><span class="p">(</span><span class="mi">0</span> <span class="n">until</span>  <span class="mi">4</span> <span class="n">by</span> <span class="mi">1</span><span class="p">))</span> <span class="o">//</span> <span class="n">第一个到第四个数据</span>
+<span class="n">println</span><span class="p">(</span><span class="n">s1</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="o">//</span> <span class="n">最后一个数据</span>
+<span class="n">println</span><span class="p">(</span><span class="n">s2</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span> <span class="o">//</span>
+<span class="n">println</span><span class="p">(</span><span class="n">s2</span><span class="p">(::,</span><span class="mi">3</span><span class="p">))</span> <span class="o">//</span> <span class="n">所有行的第四列数据</span>
+<span class="n">println</span><span class="p">(</span><span class="n">s2</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,::))</span> <span class="o">//</span><span class="n">最后一行的所有列数据</span>
+<span class="o">//</span> <span class="n">example</span>
+<span class="n">val</span> <span class="n">rand_seq</span> <span class="o">=</span> <span class="n">IndexedSeq</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">target</span> <span class="o">=</span> <span class="n">breeze</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">DenseVector</span><span class="o">.</span><span class="n">zeros</span><span class="p">[</span><span class="n">Double</span><span class="p">](</span><span class="mi">10</span><span class="p">)</span> <span class="o">//</span> <span class="n">构造一个double型的向量</span>
+<span class="n">val</span> <span class="n">values</span> <span class="o">=</span> <span class="n">breeze</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">DenseVector</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span><span class="mf">2.4</span><span class="p">,</span><span class="mf">2.5</span><span class="p">)</span>
+<span class="n">target</span><span class="p">(</span><span class="n">rand_seq</span><span class="p">)</span> <span class="o">:=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>breeze计算:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">常规计算</span>
+<span class="n">val</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span>
+<span class="n">val</span> <span class="n">s4</span> <span class="o">=</span> <span class="n">s1</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="n">println</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">s1</span><span class="p">))</span>
+
+<span class="o">//</span> <span class="n">矩阵之间的运算</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">breeze.linalg.operators.OpEq</span> <span class="o">//</span> <span class="n">判断是否相等</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">breeze.linalg.operators.OpGT</span> <span class="o">//</span> <span class="n">判断前者是否大于后者</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">breeze.linalg.operators.OpLT</span> <span class="o">//</span> <span class="n">判断前者是否小于后者</span>
+<span class="n">val</span> <span class="n">s2</span> <span class="o">=</span> <span class="n">DenseMatrix</span><span class="o">.</span><span class="n">tabulate</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">){(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span><span class="o">=&gt;</span> <span class="n">i</span><span class="o">+</span><span class="n">j</span><span class="p">}</span>
+<span class="n">val</span> <span class="n">s3</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">30</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">s4</span> <span class="o">=</span> <span class="n">DenseMatrix</span><span class="p">(</span><span class="n">s3</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">14</span>
+<span class="n">println</span><span class="p">(</span><span class="n">OpLT</span><span class="p">(</span><span class="n">s4</span><span class="p">,</span><span class="n">s2</span><span class="p">))</span>
+
+<span class="o">//</span> <span class="n">四舍五入等操作</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">breeze.numerics._</span>
+<span class="n">val</span> <span class="n">s5</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="p">(</span><span class="mf">1.24</span><span class="p">,</span><span class="mf">2.35</span><span class="p">,</span><span class="mf">1.8</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">s5</span><span class="p">))</span>
+<span class="n">println</span><span class="p">(</span><span class="n">ceil</span><span class="p">(</span><span class="n">s5</span><span class="p">))</span>
+<span class="n">println</span><span class="p">(</span><span class="n">floor</span><span class="p">(</span><span class="n">s5</span><span class="p">))</span>
+
+<span class="o">//</span><span class="n">常规统计值</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">breeze.linalg._</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">breeze.stats._</span>
+<span class="n">val</span> <span class="n">s5</span> <span class="o">=</span> <span class="n">DenseVector</span><span class="p">(</span><span class="mf">1.24</span><span class="p">,</span><span class="mf">2.35</span><span class="p">,</span><span class="mf">1.8</span><span class="p">,</span><span class="mf">3.5</span><span class="p">,</span><span class="mf">4.6</span><span class="p">,</span><span class="mf">4.3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">s5</span><span class="p">))</span>
+
+<span class="n">mean</span><span class="p">(</span><span class="n">s5</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="n">mean</span><span class="p">(</span><span class="n">s5</span><span class="p">))</span>
+<span class="n">println</span><span class="p">(</span><span class="n">stddev</span><span class="p">(</span><span class="n">s5</span><span class="p">))</span>
+<span class="n">println</span><span class="p">(</span><span class="n">median</span><span class="p">(</span><span class="n">s5</span><span class="p">))</span>
+<span class="n">hist</span><span class="p">(</span><span class="n">s5</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><em>scala关于时间的函数</em><a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>关于操作scala时间的函数如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>import java.text.SimpleDateFormat
+import java.util.Calendar
+
+val cal = Calendar.getInstance()
+cal.clear()
+// calendar 的日历月份默认是从第0月开始的，12月即第0月
+cal.set(2019,1,1)
+val day_of__year = cal.get(Calendar.DAY_OF_YEAR) // 获取一年中的第几天
+
+// 获取当前时间并获取当前是该年的第几天
+val t = DateTime.now().toString() // 获取当前时间并转为字符串 2019-08-06T17:12:27.370+08:00
+val patten = &quot;(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)&quot;.r // 构建正则
+val time_piece = patten.findAllIn(t).next().toString.split(&quot;-&quot;) // 获取年、月、日
+// 将时间设置到calendar
+cal.set(time_piece3(0).toInt,time_piece3(1).toInt-1,time_piece3(2).toInt)
+val day_of__year = cal.get(Calendar.DAY_OF_YEAR) // 获取一年中的第几天
+</pre></div>
+</div>
+<p>map转json:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">org.json4s.DefaultFormats</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">org.json4s.jackson.Json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scala.collection.immutable.</span><span class="p">{</span><span class="n">ListMap</span><span class="p">,</span> <span class="n">Map</span><span class="p">}</span>
+
+<span class="n">var</span> <span class="n">map1</span> <span class="o">=</span> <span class="n">Map</span><span class="p">[</span><span class="n">String</span><span class="p">,</span><span class="n">String</span><span class="p">]()</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">&lt;-</span> <span class="o">-</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">3</span><span class="p">){</span><span class="n">map1</span> <span class="o">+=</span> <span class="p">((</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span> <span class="o">-&gt;</span> <span class="mf">0.2</span><span class="o">.</span><span class="n">toString</span><span class="p">)}</span>
+<span class="n">val</span> <span class="n">m</span> <span class="o">=</span> <span class="n">Json</span><span class="p">(</span><span class="n">DefaultFormats</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">map1</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>map排序:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">scala.collection.immutable.</span><span class="p">{</span><span class="n">ListMap</span><span class="p">,</span> <span class="n">Map</span><span class="p">}</span>
+
+<span class="n">var</span> <span class="n">map1</span> <span class="o">=</span> <span class="n">Map</span><span class="p">[</span><span class="n">String</span><span class="p">,</span><span class="n">String</span><span class="p">]()</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="o">&lt;-</span> <span class="o">-</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">3</span><span class="p">){</span><span class="n">map1</span> <span class="o">+=</span> <span class="p">((</span><span class="o">-</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">toString</span> <span class="o">-&gt;</span> <span class="mf">0.2</span><span class="o">.</span><span class="n">toString</span><span class="p">)}</span>
+<span class="o">//</span> <span class="n">根据key值的数值大小排序</span>
+<span class="n">println</span><span class="p">(</span><span class="n">ListMap</span><span class="p">(</span><span class="n">map1</span><span class="o">.</span><span class="n">toSeq</span><span class="o">.</span><span class="n">toList</span><span class="o">.</span><span class="n">sortBy</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">_1</span><span class="o">.</span><span class="n">toDouble</span><span class="p">):</span><span class="n">_</span><span class="o">*</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sphinx_note.html" class="btn btn-neutral float-left" title="Sphinx Note" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="Linux.html" class="btn btn-neutral float-right" title="Linux" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Lihao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,229 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spark &mdash; tiny 0.0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/documentation_options.js?v=d45e8c67"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="redis" href="redis.html" />
+    <link rel="prev" title="Python" href="python.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            tiny
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="sphinx_note.html">Sphinx Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scala.html">Scala Note</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python.html">Python</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Spark</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">spark 特性及其配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">spark 相关端口及配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">spark 执行流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">spark 优化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#windowsideamysql">windows下运行idea连接MySQL</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="redis.html">redis</a></li>
+<li class="toctree-l1"><a class="reference internal" href="code.html">加密&amp;解密</a></li>
+<li class="toctree-l1"><a class="reference internal" href="go.html">golang(够浪)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mat.html">机器学习算法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image_process.html">遥感影像处理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="support.html">Support</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">tiny</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Spark</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/spark.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="spark">
+<h1>Spark<a class="headerlink" href="#spark" title="Link to this heading">¶</a></h1>
+<p>创建sparkcontext:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">val</span> <span class="n">conf</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">SparkConf</span><span class="p">()</span><span class="o">.</span><span class="n">setMaster</span><span class="p">(</span><span class="s2">&quot;local[2]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s2">&quot;dataframe&quot;</span><span class="p">)</span>  <span class="o">//</span> <span class="n">创建配置</span>
+<span class="n">val</span> <span class="n">sc</span> <span class="o">=</span> <span class="n">new</span> <span class="n">spark</span><span class="o">.</span><span class="n">SparkContext</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>  <span class="o">//</span>
+<span class="n">SparkSession</span><span class="o">.</span><span class="n">Builder</span><span class="p">()</span><span class="o">.</span><span class="n">master</span><span class="p">(</span><span class="s2">&quot;local[2]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;data&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="id1">
+<h2>spark 特性及其配置<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>rdd是由一系列的partition组成;
+算子作用在partition上;
+rdd的容错性,partition可多可少;
+rdd的tuple是kv格式;
+partition提供计算最佳位置,使运算本地化;</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>driver,worker,master 是节点上的jvm进程
+checkpoint:很少对RDD持久化;惰性
+1.当job完成后,spark回溯找到checkpoint
+2.回溯完启动job重新计算并放到checkpoint目录,
+3.放到目录后会切断RDD的依赖关系
+4.注意可以在checkpoint前进行cache
+5.指定目录sc.setCheckpointDir(&quot;&quot;)
+
+cache:对下次的action算子优化
+uncache() unpersit()：取消持久化
+vim /etc/profile java_home;hadoop_home;spark_home;pyspark_python; export ~
+PATH=$PATH:$JAVA_HOME/bin 若配置过java_home 则改为PATH=$JAVA_HOME/bin：$PATH
+
+spark-env.sh
+export SPARK_MASTER_HOST=hao
+export SPARK_MASTER_PORT=7077
+export SPARK_WORKER_CORES=2
+export SPARK_WORKER_MEMORY=3g
+export HADOOP_CONF_DIR=/
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>spark 相关端口及配置<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>web页面port:8080</p>
+<p>历史服务器port:18080</p>
+<p>spark-default.sh 文件中配置以下几项:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">spark</span><span class="o">.</span><span class="n">eventLog</span><span class="o">.</span><span class="n">enabled</span>           <span class="n">true</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">eventLog</span><span class="o">.</span><span class="n">dir</span>               <span class="n">hdfs</span><span class="p">:</span><span class="o">//</span><span class="n">hao</span><span class="p">:</span><span class="mi">9000</span><span class="o">/</span><span class="n">directory</span>
+<span class="n">spark</span><span class="o">.</span><span class="n">history</span><span class="o">.</span><span class="n">fs</span><span class="o">.</span><span class="n">logDirectory</span>    <span class="n">hdfs</span><span class="p">:</span><span class="o">//</span><span class="n">hao</span><span class="p">:</span><span class="mi">9000</span><span class="o">/</span><span class="n">directory</span>
+</pre></div>
+</div>
+<p>spark-env.sh 文件中配置:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">SPARK_MASTER_WEBUI_PORT</span><span class="o">=</span><span class="mi">18080</span>
+</pre></div>
+</div>
+<p>hbase:60010#16010  hbase端口</p>
+<p>hbase shell        启动hbase</p>
+<p>date -s “”         查看时间</p>
+<p>ntpdate ntp1.aliyun.com 同步时间</p>
+</section>
+<section id="id3">
+<h2>spark 执行流程<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<p>nm中的executor是执行者</p>
+<p>spark 基于yarn(:8088):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.客户端启动driver
+2.driver向rs申请启动am
+3.rs找到一台nm启动am
+4.am向rs申请资源用于启动executor
+5.rs找到资源后返回给am节点信息
+6.am找到节点启动executor()
+7.executor反向注册给driver（client:driver在客户端,cluster:driver为am）
+8.driver发送任务
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2>spark 优化<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h2>
+<p>Kryo 类库进行序列化:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>--conf &quot;spark.executor.extraJavaOption=-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps&quot;
+rdd的缓存空间调整（降低缓存,增加任务的内存）
+sparkconf.set(&quot;spark storage memoryFraction&quot;,&quot;0,5&quot;) 0.2 都可以
+分配给task的内存就是jvm堆空间大小
+-XX:SurvivorRatio=4 如果值为4 代表两个Survivor 跟Eden 的比例市2：4
+-XX:NewRatio=4 调节新生代和老年的比例
+
+// 调整序列化的方式
+conf.set(&quot;spark.serializer&quot;,&quot;org.apache.spark.serializer.KryoSerializer&quot;)
+conf.registerKryoClasses(classof[])
+</pre></div>
+</div>
+</section>
+<section id="windowsideamysql">
+<h2>windows下运行idea连接MySQL<a class="headerlink" href="#windowsideamysql" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ne">Exception</span> <span class="ow">in</span> <span class="n">thread</span> <span class="s2">&quot;main&quot;</span> <span class="n">java</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">SQLException</span><span class="p">:</span> <span class="n">No</span> <span class="n">suitable</span> <span class="n">driver</span>
+<span class="n">需要下载mysql</span><span class="o">-</span><span class="n">connector</span><span class="o">-</span><span class="n">java</span><span class="p">,</span><span class="n">只要在meven</span> <span class="n">repository</span> <span class="n">搜索然后添加到sbt中</span>
+<span class="n">例</span><span class="p">:</span> <span class="n">libraryDependencies</span> <span class="o">+=</span> <span class="s2">&quot;mysql&quot;</span> <span class="o">%</span> <span class="s2">&quot;mysql-connector-java&quot;</span> <span class="o">%</span> <span class="s2">&quot;8.0.17&quot;</span>
+<span class="n">val</span> <span class="n">prop</span> <span class="o">=</span> <span class="n">new</span> <span class="n">java</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">Properties</span><span class="p">()</span>
+<span class="n">prop</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;user&quot;</span><span class="p">,</span><span class="s2">&quot;root&quot;</span><span class="p">)</span>
+<span class="n">prop</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;password&quot;</span><span class="p">,</span><span class="s2">&quot;123456&quot;</span><span class="p">)</span>
+<span class="n">prop</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;driver&quot;</span><span class="p">,</span><span class="s2">&quot;com.mysql.cj.jdbc.Driver&quot;</span><span class="p">)</span>
+<span class="n">val</span> <span class="n">table</span> <span class="o">=</span> <span class="s2">&quot;userinfo&quot;</span>
+<span class="n">val</span> <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;jdbc:mysql://192.168.0.132/db&quot;</span>
+<span class="n">val</span> <span class="n">sparksession</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="p">()</span><span class="o">.</span><span class="n">master</span><span class="p">(</span><span class="s2">&quot;local[*]&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;interpolation&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="n">val</span> <span class="n">df</span> <span class="o">=</span> <span class="n">sparksession</span><span class="o">.</span><span class="n">read</span><span class="o">.</span><span class="n">jdbc</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">table</span><span class="p">,</span><span class="n">prop</span><span class="p">)</span> <span class="o">//</span> <span class="n">读取整个表</span>
+<span class="n">df</span><span class="o">.</span><span class="n">createOrReplaceTempView</span><span class="p">(</span><span class="s2">&quot;t&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">将表注册为临时表以便使用sql语句</span>
+<span class="n">val</span> <span class="n">s</span> <span class="o">=</span> <span class="n">sparksession</span><span class="o">.</span><span class="n">sql</span><span class="p">(</span><span class="s2">&quot;select id from t&quot;</span><span class="p">)</span> <span class="o">//</span> <span class="n">使用sql语句</span>
+<span class="n">s</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="o">//</span> <span class="n">将表展示出来</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="python.html" class="btn btn-neutral float-left" title="Python" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="redis.html" class="btn btn-neutral float-right" title="redis" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, Lihao.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
