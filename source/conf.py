@@ -61,3 +61,6 @@ html_static_path = ['_static']
 html_js_files = [
     "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9666808780669786"
 ]
+html_js_files = [
+    'https://code.jquery.com/jquery-3.6.0.min.js'
+]
