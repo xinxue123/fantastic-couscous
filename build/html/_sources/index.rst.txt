@@ -5,7 +5,8 @@
 
 Welcome to tiny's documentation!
 ====================================
-
+.. literalinclude:: ads.txt
+   :language: none
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
